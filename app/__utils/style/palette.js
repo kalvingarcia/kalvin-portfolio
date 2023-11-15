@@ -1,4 +1,4 @@
-import {modulo} from '../../util';
+import {modulo} from '../auxillary';
 
 /**
  * This function converts from decimal to hexadecimal.

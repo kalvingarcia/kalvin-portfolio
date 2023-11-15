@@ -11,12 +11,12 @@ export function useTheme() {
     /**
      * 
      */
-    const themeGenerator = React.useMemo((currentTheme, mode) => {
+    const themeGenerator = React.useCallback((currentTheme, mode) => {
         //
         const lightness_mappings = {
             "light": {
                 "accent_color": {
-                    "accent": 30, "on_accent": 90, "container": 80, "on_container": 10,
+                    "main": 30, "on_main": 90, "container": 80, "on_container": 10,
                 },
                 "neutral_color": {
                     "container_lowest": 90, "container_lower": 88, "container": 86, "container_higher": 84, "container_highest": 80, 
@@ -25,7 +25,7 @@ export function useTheme() {
             },
             "dark": {
                 "accent_color": {
-                    "accent": 80, "on_accent": 20, "container": 30, "on_container": 90,
+                    "main": 80, "on_main": 20, "container": 30, "on_container": 90,
                 },
                 "neutral_color": {
                     "container_lowest": 10, "container_lower": 14, "container": 16, "container_higher": 18, "container_highest": 20,
@@ -38,14 +38,14 @@ export function useTheme() {
          * 
          */
         const augmentColors = (color, mode, neutral = false) => {
-            augmentation = {};
+            let augmentation = {};
 
             if(neutral)
                 for(const mapping of ["container_lowest", "container_lower", "container", "container_higher", "container_highest", "on_container", "outline", "shadow"])
-                    augmentation[mapping] = color(lightness_mappings[mode].neutral_color[mapping]);
+                    augmentation[mapping] = currentTheme.palette[color](lightness_mappings[mode].neutral_color[mapping]);
             else
-                for(const mapping of ["accent", "on_accent", "container", "on_container"])
-                    augmentation[mapping] = color(lightness_mappings[mode].accent_color[mapping]);
+                for(const mapping of ["main", "on_main", "container", "on_container"])
+                    augmentation[mapping] = currentTheme.palette[color](lightness_mappings[mode].accent_color[mapping]);
 
             return augmentation;
         };
@@ -69,11 +69,11 @@ export function useTheme() {
 
         return {
             palette: {
-                primary: augmentColors(currentTheme.palette.primary, mode),
-                secondary: augmentColors(currentTheme.palette.secondary, mode),
-                tertiary: augmentColors(currentTheme.palette.tertiary, mode),
-                neutral: augmentColors(currentTheme.palette.neutral, mode, true),
-                error: augmentColors(currentTheme.palette.error, mode),
+                primary: augmentColors('primary', mode),
+                secondary: augmentColors('secondary', mode),
+                tertiary: augmentColors('tertiary', mode),
+                neutral: augmentColors('neutral', mode, true),
+                error: augmentColors('error', mode),
                 code: getCodeColors()
             },
             typography: {
@@ -86,9 +86,9 @@ export function useTheme() {
                 code: currentTheme.typography.code()
             }
         };
-    }, [lightnessMappings]);
+    }, []);
 
-    const getTheme = React.useMemo(mode => ({
+    const getTheme = React.useCallback(mode => ({
         ...themeGenerator(currentTheme, mode)
     }), [currentTheme]);
 
@@ -96,7 +96,7 @@ export function useTheme() {
         Themer.addTheme(name, theme);
     }, []);
 
-    const changeTheme = React.useMemo(name => {
+    const changeTheme = React.useCallback(name => {
         setCurrentTheme(Themer.changeTheme(name));
     }, []);
 
