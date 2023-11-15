@@ -1,7 +1,16 @@
+import * as React from 'react';
+
 export default function Home() {
     return (
-        <main className={styles.main}>
-        
-        </main>
+        <React.Fragment>
+            <Landing />
+            <main className='home-page'>
+                <Overlay />
+                <AboutSection />
+                <FeaturedProjects />
+                <ContactMe />
+                <Footer />     
+            </main>
+        </React.Fragment>
     )
 }
