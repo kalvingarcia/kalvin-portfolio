@@ -1,0 +1,7 @@
+{
+    "test": {
+        "template": "test.md",
+        "title": "Test Project Page",
+        "description": "This is the test project page where I will test that markdown works properly."
+    }
+}
