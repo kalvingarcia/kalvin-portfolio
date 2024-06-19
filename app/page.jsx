@@ -1,21 +1,21 @@
-import * as React from 'react';
+"use client"
+import { useState } from "react";
+import {tss} from "tss-react";
 
-export const metadata = {
-    title: "Kalvin's Porfolio",
-    description: "Here you'll find all of Kalvin Garcia's work and projects. You can also find Kalvin's resume and contact information!",
-};
+const useStyles = tss.create(({color}) => ({
+    home: {
+        color
+    }
+}));
 
-export default function Home() {
+export default function Homepage({}) {
+    const [color, setColor] = useState(true);
+    const {classes, cx} = useStyles({color: color? "green" : "red"});
+
     return (
-        <React.Fragment>
-            <Landing />
-            <main className='home-page'>
-                <Overlay />
-                <AboutSection />
-                <FeaturedProjects />
-                <ContactMe />
-                <Footer />     
-            </main>
-        </React.Fragment>
-    )
+        <main className={classes.home}>
+            This is test text.
+            <button onClick={() => setColor(!color)}>Change</button>
+        </main>
+    );
 }
