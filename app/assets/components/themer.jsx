@@ -12,9 +12,15 @@ const melon = "#F0A49F";
 const silver = "#CDCDCD";
 
 // The theme context.
-export const ThemeContext = createContext();
+const ThemeContext = createContext();
+export function useThemeContext() {
+    return useContext(ThemeContext);
+}
 // The dark mode context.
-export const DarkModeContext = createContext();
+const DarkModeContext = createContext();
+export function useDarkModeContext() {
+    return useContext(DarkModeContext);
+}
 
 // The tss object provided by the createTss method.
 export const tss = createTss({useContext: () => {
