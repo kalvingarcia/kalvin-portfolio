@@ -1,12 +1,12 @@
-import {NextAppDirEmotionCacheProvider} from "tss-react/next/appDir";
+import Themer from "./assets/components/themer";
 
 export default function Layout({children}) {
     return (
         <html lang="en">
             <body>
-                <NextAppDirEmotionCacheProvider options={{key: "css"}}>
+                <Themer>
                     {children}
-                </NextAppDirEmotionCacheProvider>
+                </Themer>
             </body>
         </html>
     );
