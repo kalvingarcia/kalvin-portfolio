@@ -1,8 +1,10 @@
 "use client"
-import { useContext, useState} from "react";
+import {useEffect, useState} from "react";
 import {keyframes} from "tss-react";
-import {tss, DarkModeContext, ThemeContext} from './assets/components/themer';
-import Animator from "./assets/components/animator";
+import {tss, useDarkModeContext} from './assets/components/themer';
+import {Transition, Effect} from "./assets/components/animation";
+import {Subheading, Title} from "./assets/components/typography";
+import {ContainerContextProvider} from "./assets/helper/container";
 
 const fadeInUp = keyframes({
     "0%": {
@@ -27,7 +29,7 @@ const fadeOutDown = keyframes({
 });
 
 const useStyles = tss.create(({theme}) => ({
-    home: {
+    popup: {
         background: theme.neutral.surface.hex(),
         [`@media (max-width: ${500}px)`]: {
             width: 200,
@@ -41,24 +43,52 @@ const useStyles = tss.create(({theme}) => ({
         borderRadius: 20,
         transition: "background-color 300ms ease, width 300ms ease, left 300ms ease"
     },
+    stay: {
+        background: theme.primary.container.hex(),
+        width: 400,
+        height: 200,
+        opacity: 0
+    },
     enter: {
         animation: `${fadeInUp} 300ms ease-in forwards`
     },
     exit: {
         animation: `${fadeOutDown} 300ms ease-in forwards`
+    },
+    begin: {
+        animation: `${fadeInUp} 300ms ease-in forwards`
+    },
+    active: {
+        "&&": {
+            opacity: 1,
+            transform: "translate(0, 0)"
+        }
     }
 }));
 
 export default function Homepage({}) {
     const [show, setShow] = useState(false);
-    const {darkMode, toggleDarkMode} = useContext(DarkModeContext);
+    const [start, setStart] = useState(false);
+    useEffect(() => {
+        setTimeout(() => setStart(true), 1000);
+    }, []);
+    const {toggleDarkMode} = useDarkModeContext();
 
-    const {classes, cx} = useStyles();
+    const {classes} = useStyles();
     return (
         <main>
-            <Animator show={show} enter={classes.enter} exit={classes.exit}>
-                <div className={classes.home} />
-            </Animator>
+            <Transition show={show} enter={classes.enter} exit={classes.exit}>
+                <div className={classes.popup}>
+                    <Title>Text To See</Title>
+                </div>
+            </Transition>
+            <Effect start={start} begin={classes.begin} active={classes.active}>
+                <div className={classes.stay}>
+                    <ContainerContextProvider role="primary" type="container">
+                        <Subheading>Text To See</Subheading>
+                    </ContainerContextProvider>
+                </div>
+            </Effect>
             <button onClick={() => setShow(!show)}>Show</button>
             <button onClick={() => toggleDarkMode()}>Dark Mode</button>
         </main>
