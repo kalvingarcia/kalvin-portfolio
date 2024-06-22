@@ -151,12 +151,12 @@ export default function Themer({children}) {
                 },
                 neutral: {
                     background: neutral.lightness(lightness[darkMode? 'dark' : 'light'].background),
-                    surfaceLowest: neutral.lightness(lightness[darkMode? 'dark' : 'light'].surfaceLowest),
-                    surfaceLow: neutral.lightness(lightness[darkMode? 'dark' : 'light'].surfaceLow),
-                    surface: neutral.lightness(lightness[darkMode? 'dark' : 'light'].surface),
-                    surfaceHigh: neutral.lightness(lightness[darkMode? 'dark' : 'light'].surfaceHigh),
-                    surfaceHighest: neutral.lightness(lightness[darkMode? 'dark' : 'light'].surfaceHighest),
-                    onSurface: neutral.lightness(lightness[darkMode? 'dark' : 'light'].onSurface),
+                    containerLowest: neutral.lightness(lightness[darkMode? 'dark' : 'light'].surfaceLowest),
+                    containerLow: neutral.lightness(lightness[darkMode? 'dark' : 'light'].surfaceLow),
+                    container: neutral.lightness(lightness[darkMode? 'dark' : 'light'].surface),
+                    containerHigh: neutral.lightness(lightness[darkMode? 'dark' : 'light'].surfaceHigh),
+                    containerHighest: neutral.lightness(lightness[darkMode? 'dark' : 'light'].surfaceHighest),
+                    onContainer: neutral.lightness(lightness[darkMode? 'dark' : 'light'].onSurface),
                     outline: neutral.lightness(lightness[darkMode? 'dark' : 'light'].outline),
                     shadow: neutral.lightness(lightness[darkMode? 'dark' : 'light'].shadow)
                 }
