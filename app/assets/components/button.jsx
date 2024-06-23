@@ -1,4 +1,4 @@
-import {useCallback} from 'react';
+import {Children, cloneElement, useCallback} from 'react';
 import {tss} from './themer';
 import {useContainerContext, ContainerContextProvider} from '../helper/container';
 import useRippleEffect from '../hooks/ripple';
@@ -48,7 +48,7 @@ const useStyles = tss.create(({theme, role, appearance, containerRole}) => ({
  * It is a styled version with a ripple effect. It also has a container provider to
  * allow the text or icons inside to query what type of button they're inside of.
  *
- * @params props The component takes 6 props:
+ * @param props The component takes 6 props:
  *  *   The `className` prop is available to add extra styles to the button, but
  *      not necessary to the functionality.
  *  *   The `role` prop is used to assign the color role of the button. *Defaults
@@ -82,13 +82,13 @@ export default function Button({className, role, appearance, onMouseDown, onMous
     const mouseUpHandler = useCallback(event => {
         rippleFade(event);
         onMouseUp?.(event);
-    })
+    });
 
     const {classes} = useStyles({role, appearance, containerRole});
     return (
         <ContainerContextProvider role={role} type={type}>
             <button className={[classes.button, className?? ""].join(" ")} onMouseDown={mouseDownHandler} onMouseUp={mouseUpHandler} {...props}>
-                {children}
+                {Children.map(children, child => cloneElement(child, {__isInButton: true}))}
             </button>
         </ContainerContextProvider>
     );
