@@ -1,5 +1,5 @@
 "use client"
-import {useCallback} from 'react';
+import {useCallback, useState} from 'react';
 import {keyframes} from 'tss-react';
 import {tss} from '../components/themer';
 
@@ -16,10 +16,10 @@ const fadeEffect = keyframes({
 });
 
 // The ripple effect styles.
-tss.create(({theme}) => ({
-    ".ripple": {
+const useStyles = tss.create(() => ({
+    ripple: {
         position: "fixed",
-        tranform: "scale(0)",
+        transform: "scale(0)",
         pointerEvents: "none",
         borderRadius: "50%",
         opacity: "0.3",
@@ -41,6 +41,9 @@ tss.create(({theme}) => ({
  * @returns 2 functions for the mouse event handlers.
  */
 export default function useRippleEffect() {
+    const {classes} = useStyles();
+    const [rippleClass] = useState(() => classes.ripple);
+
     // This is the onMouseDown event handler, which will add the expanding circle
     // effect to the component. The circle will grow slowly as the user holds the
     // mouse button.
@@ -56,12 +59,12 @@ export default function useRippleEffect() {
         circle.style.width = circle.style.height = `${diameter}px`;
         circle.style.left = `${event.clientX - radius}px`;
         circle.style.top = `${event.clientY - radius}px`;
-        circle.classList.add("ripple");
+        circle.classList.add(rippleClass);
 
         // Check if the component already has a circle and remove it.
         // I might look into a way to have the original ripple fade
         // instead, so that there isn't just a tiny circle getting spammed.
-        const ripple = target.getElementsByClassName("ripple")[0];
+        const ripple = target.getElementsByClassName(rippleClass)[0];
         ripple?.remove();
         target.appendChild(circle); //Here we append the new ripple.
 
@@ -73,12 +76,12 @@ export default function useRippleEffect() {
         const target = event.currentTarget; // Finding the component.
 
         // Getting the ripple circle.
-        const ripple = target.getElementsByClassName("ripple")[0];
+        const ripple = target.getElementsByClassName(rippleClass)[0];
         ripple?.classList.add("ripple-fade"); // We add the fade animation.
         setTimeout(() => ripple?.remove(), 600); // Set the timeout to kill it once the animation is over.
 
         event.stopPropagation();
     }, []);
 
-    return {rippleExpand, rippleFade};
+    return {rippleClass, rippleExpand, rippleFade};
 }

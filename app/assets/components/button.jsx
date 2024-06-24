@@ -4,10 +4,10 @@ import {useContainerContext, ContainerContextProvider} from '../helper/container
 import useRippleEffect from '../hooks/ripple';
 
 // Button styles.
-const useStyles = tss.create(({theme, role, appearance, containerRole}) => ({
-    button {
+const useStyles = tss.create(({theme, role, appearance, containerRole, rippleClass}) => ({
+    button: {
         outline: "none",
-        border: appearance === "outlined"? `1pt solid ${theme[role][role === "neutral"? "outline" : "onContainer"].hex()}` : "none",
+        border: appearance === "outlined"? `1pt solid ${theme[role].onContainer.hex()}` : "none",
 
         minWidth: "fit-content",
         minHeight: "fit-content",
@@ -23,7 +23,6 @@ const useStyles = tss.create(({theme, role, appearance, containerRole}) => ({
         gap: 5,
 
         backgroundColor: appearance === "text" || appearance === "outlined"? "transparent" : theme[role][appearance === "filled"? "accent" : "container"].hex(),
-        color: theme[role][appearance === "filled"? "onAccent" : "onContainer"].hex(),
         "&::after": {
             content: "''",
             width: "100%",
@@ -37,7 +36,7 @@ const useStyles = tss.create(({theme, role, appearance, containerRole}) => ({
         "&:hover::after": {
             opacity: 0.2
         },
-        "& .ripple": {
+        [`& .${rippleClass}`]: {
             backgroundColor: appearance === "text" || appearance === "outlined"? theme[containerRole].onContainer.hex() : theme[role][appearance === "filled"? "onAccent" : "onContainer"].hex()
         }
     }
@@ -59,19 +58,19 @@ const useStyles = tss.create(({theme, role, appearance, containerRole}) => ({
  *  *   The `onMouseDown` and `onMouseUp` mouse events are available to add extra
  *      callbacks to the events besides the ripple effect.
  *  *   The `children` prop is required to add text and an icon if wanted. For best results
- *  *   add only 1 icon with text.
+ *      add only 1 icon with text.
  *
  * The component also passes forward other props.
  *
  * @returns A styled `button` jsx element.
  */
-export default function Button({className, role, appearance, onMouseDown, onMouseUp, children, ...props}) {
+export default function Button({className, role = "primary", appearance = "filled", onMouseDown, onMouseUp, children, ...props}) {
     // Here we assign the container type depending on the appearance given.
     const type = appearance === "filled"? "accent" : "container";
     const {role: containerRole} = useContainerContext(); // We also request the parent container's role for text and outlined buttons.
 
     // We obtain the ripple effect handler.
-    const {rippleExpand, rippleFade} = useRippleEffect();
+    const {rippleClass, rippleExpand, rippleFade} = useRippleEffect();
     // Create handlers that apply both the ripple event.
     // They also call the mouse events provided by the user
     // if they exist.
@@ -84,10 +83,10 @@ export default function Button({className, role, appearance, onMouseDown, onMous
         onMouseUp?.(event);
     });
 
-    const {classes} = useStyles({role, appearance, containerRole});
+    const {cx, classes} = useStyles({role, appearance, containerRole, rippleClass});
     return (
         <ContainerContextProvider role={role} type={type}>
-            <button className={[classes.button, className?? ""].join(" ")} onMouseDown={mouseDownHandler} onMouseUp={mouseUpHandler} {...props}>
+            <button className={cx(classes.button, className?? "")} onMouseDown={mouseDownHandler} onMouseUp={mouseUpHandler} {...props}>
                 {Children.map(children, child => cloneElement(child, {__isInButton: true}))}
             </button>
         </ContainerContextProvider>
