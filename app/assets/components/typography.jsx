@@ -62,8 +62,8 @@ const useStyles = tss.create(({theme, role, type}) => ({
  */
 export function Display({className, children, ...props}) {
     const {role, type} = useContainerContext();
-    const {classes} = useStyles({role, type});
-    return <h1 className={[classes.display, className?? ""].join(" ")} {...props}>{children}</h1>;
+    const {cx, classes} = useStyles({role, type});
+    return <h1 className={cx(classes.display, className?? "")} {...props}>{children}</h1>;
 }
 
 /**
@@ -80,8 +80,8 @@ export function Display({className, children, ...props}) {
  */
 export function Title({className, children, ...props}) {
     const {role, type} = useContainerContext();
-    const {classes} = useStyles({role, type});
-    return <h2 className={[classes.title, className?? ""].join(" ")} {...props}>{children}</h2>;
+    const {cx, classes} = useStyles({role, type});
+    return <h2 className={cx(classes.title, className?? "")} {...props}>{children}</h2>;
 }
 
 /**
@@ -98,8 +98,8 @@ export function Title({className, children, ...props}) {
  */
 export function Subtitle({className, children, ...props}) {
     const {role, type} = useContainerContext();
-    const {classes} = useStyles({role, type});
-    return <h3 className={[classes.subtitle, className?? ""].join(" ")} {...props}>{children}</h3>;
+    const {cx, classes} = useStyles({role, type});
+    return <h3 className={cx(classes.subtitle, className?? "")} {...props}>{children}</h3>;
 }
 
 /**
@@ -116,8 +116,8 @@ export function Subtitle({className, children, ...props}) {
  */
 export function Heading({className, children, ...props}) {
     const {role, type} = useContainerContext();
-    const {classes} = useStyles({role, type});
-    return <h4 className={[classes.heading, className?? ""].join(" ")} {...props}>{children}</h4>;
+    const {cx, classes} = useStyles({role, type});
+    return <h4 className={cx(classes.heading, className?? "")} {...props}>{children}</h4>;
 }
 
 /**
@@ -134,8 +134,8 @@ export function Heading({className, children, ...props}) {
  */
 export function Subheading({className, children, ...props}) {
     const {role, type} = useContainerContext();
-    const {classes} = useStyles({role, type});
-    return <h1 className={[classes.subheading, className?? ""].join(" ")} {...props}>{children}</h1>;
+    const {cx, classes} = useStyles({role, type});
+    return <h1 className={cx(classes.subheading, className?? "")} {...props}>{children}</h1>;
 }
 
 /**
@@ -154,8 +154,8 @@ export function Subheading({className, children, ...props}) {
  */
 export function Body({className, children, ...props}) {
     const {role, type} = useContainerContext();
-    const {classes} = useStyles({role, type});
-    return <p className={[classes.body, className?? ""].join(" ")} {...props}>{children}</p>
+    const {cx, classes} = useStyles({role, type});
+    return <p className={cx(classes.body, className?? "")} {...props}>{children}</p>
 }
 
 /**
@@ -174,6 +174,6 @@ export function Body({className, children, ...props}) {
  */
 export function Label({className, children, ...props}) {
     const {role, type} = useContainerContext();
-    const {classes} = useStyles({role, type});
-    return <span className={[classes.body, className?? ""].join(" ")} {...props}>{children}</span>
+    const {cx, classes} = useStyles({role, type});
+    return <span className={cx(classes.body, className?? "")} {...props}>{children}</span>
 }
