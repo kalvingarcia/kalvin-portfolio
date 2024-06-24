@@ -45,9 +45,9 @@ export function Transition({show = false, enter, exit, duration = DEFAULT_ANIMAT
 
         const child = Children.only(children); // Assert that the child is an only child.
         return render && cloneElement(child, { 
-            className: [
-                state === "enter"? enter : state === "exit"? exit : "", 
-                child.props.className?? ""
+            className: [ 
+                child.props.className?? "",
+                state === "enter"? enter : state === "exit"? exit : ""
             ].join(" ")
         });
     } catch(error) {
