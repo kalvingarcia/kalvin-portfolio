@@ -1,22 +1,77 @@
 "use client"
+import {useCallback} from 'react';
 import {tss} from './themer';
 import Icon from './icon';
 import {useContainerContext, ContainerContextProvider} from '../helper/container';
 import useRippleEffect from '../hooks/ripple';
 
-const useStyles = tss.create(({theme, role, appearance, containerRole}) => ({
+// IconButton styles.
+const useStyles = tss.create(({theme, role, appearance, containerRole, rippleClass}) => ({
     iconButton: {
-        
+        outline: "none",
+        border: appearance === "outlined"? `1pt solid ${theme[role].onContainer.hex()}` : "none",
+
+        minWidth: "fit-content",
+        minHeight: "fit-content",
+        maxWidth: "fit-content",
+        maxHeight: "fit-content",
+        padding: "10px",
+        position: "relative",
+        overflow: "hidden",
+        clipPath: "inset(0 0 0 0 round 100%)",
+        borderRadius: "100%",
+
+        display: "flex",
+        justifyContent: "center",
+        gap: 5,
+        alignSelf: 'flex-start',
+
+        backgroundColor: appearance === "text" || appearance === "outlined"? "transparent" : theme[role][appearance === "filled"? "accent" : "container"].hex(),
+        "&::after": {
+            content: "''",
+            width: "100%",
+            height: "100%",
+            position: "absolute",
+            inset: 0,
+            backgroundColor: appearance === "text" || appearance === "outlined"? theme[containerRole].onContainer.hex() : theme[role][appearance === "filled"? "onAccent" : "onContainer"].hex(),
+            opacity: 0,
+            transition: "opacity 300ms ease"
+        },
+        "&:hover::after": {
+            opacity: 0.2
+        },
+        [`& .${rippleClass}`]: {
+            backgroundColor: appearance === "text" || appearance === "outlined"? theme[containerRole].onContainer.hex() : theme[role][appearance === "filled"? "onAccent" : "onContainer"].hex()
+        }
     }
 }));
 
-export default function IconButton({className, role, appearance, icon, iconClass = "material-icons", ...props}) {
+/**
+ * The IconButton is used to make buttons that only have icons. The reason there is
+ * a distinction between normal Button components and IconButtons is because IconButtons
+ * have to be perfectly round, so their padding it different. For a button with text
+ * use the Button component.
+ * 
+ * @param props This component takes 7 props:
+ *  *   The `className` prop is available to override any styles using a className.
+ *  *   The `role` prop is used to assign the color role of the button. *Defaults
+ *      to primary.*
+ *  *   The `appearance` prop is used to define which appearance the button takes
+ *      on. The options are "filled", "tonal", "outlined", and "text". *Defaults to
+ *      filled.*
+ *  *   The `onMouseDown` and `onMouseUp` mouse events are available to add extra
+ *      callbacks to the events besides the ripple effect.
+ * The component also passes forward other props.
+ *  
+ * @returns A styled `button` jsx element.
+ */
+export default function IconButton({className, role = "primary", appearance = "filled", icon, iconClass = "material-icons", onMouseDown, onMouseUp, ...props}) {
     // Here we assign the container type depending on the appearance given.
     const type = appearance === "filled"? "accent" : "container";
     const {role: containerRole} = useContainerContext(); // We also request the parent container's role for text and outlined buttons.
 
     // We obtain the ripple effect handler.
-    const {rippleExpand, rippleFade} = useRippleEffect();
+    const {rippleClass, rippleExpand, rippleFade} = useRippleEffect();
     // Create handlers that apply both the ripple event.
     // They also call the mouse events provided by the user
     // if they exist.
@@ -29,12 +84,10 @@ export default function IconButton({className, role, appearance, icon, iconClass
         onMouseUp?.(event);
     });
 
-    const {classes} = useStyles({role, type, containerRole})
+    const {cx, classes} = useStyles({role, appearance, containerRole, rippleClass})
     return (
         <ContainerContextProvider role={role} type={type}>
-            <button className={[classes.iconButton, className?? ""].join(" ")} {...props}>
-                <Icon icon={icon} iconClass={iconClass} />
-            </button>
+            <Icon className={cx(classes.iconButton, className?? "")} icon={icon} iconClass={iconClass} onMouseDown={mouseDownHandler} onMouseUp={mouseUpHandler} {...props} />
         </ContainerContextProvider>
     )
 }
