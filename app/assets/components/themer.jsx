@@ -1,4 +1,5 @@
 "use client"
+import Local from 'next/font/local';
 import {useState, useCallback, createContext, useContext, useRef, useEffect} from "react";
 import {NextAppDirEmotionCacheProvider} from "tss-react/next/appDir";
 import {createTss, GlobalStyles} from "tss-react";
@@ -10,6 +11,15 @@ const charcoal = "#364156";
 const honeydew = "#DFF8EB";
 const melon = "#F0A49F";
 const silver = "#CDCDCD";
+
+const materialIconFont = Local({
+    variable: "--material-icons",
+    src: [{
+        path: "../fonts/MaterialSymbolsOutlined[FILL,GRAD,opsz,wght].woff2",
+        weight: "400",
+        style: "normal"
+    }]
+});
 
 // The theme context.
 const ThemeContext = createContext();
@@ -41,7 +51,7 @@ const lightness = {
         surfaceHigh: 17.5,
         surfaceHighest: 20,
         onSurface: 90,
-        outline: 60,
+        rule: 60,
         shadow: 0
     },
     light: {
@@ -56,7 +66,7 @@ const lightness = {
         surfaceHigh: 82.5,
         surfaceHighest: 8,
         onSurface: 10,
-        outline: 50,
+        rule: 50,
         shadow: 0
     },
     code: {
@@ -157,7 +167,7 @@ export default function Themer({children}) {
                     containerHigh: neutral.lightness(lightness[darkMode? 'dark' : 'light'].surfaceHigh),
                     containerHighest: neutral.lightness(lightness[darkMode? 'dark' : 'light'].surfaceHighest),
                     onContainer: neutral.lightness(lightness[darkMode? 'dark' : 'light'].onSurface),
-                    outline: neutral.lightness(lightness[darkMode? 'dark' : 'light'].outline),
+                    rule: neutral.lightness(lightness[darkMode? 'dark' : 'light'].rule),
                     shadow: neutral.lightness(lightness[darkMode? 'dark' : 'light'].shadow)
                 }
             };
@@ -205,7 +215,7 @@ export default function Themer({children}) {
         },
         body: {
             backgroundColor: theme.neutral.background.hex(),
-            color: theme.neutral.onSurface.hex(),
+            color: theme.neutral.onContainer.hex(),
         },
         "body, h1, h2, h3, h4, p, figure, blockquote, dl, dd": {
             margin: 0
@@ -253,6 +263,23 @@ export default function Themer({children}) {
         },
         ":target": {
             scrollMarginBlock: "5ex"
+        },
+        ".material-icons": {
+            fontFamily: "var(--material-icons)",
+            fontWeight: "normal",
+            fontStyle: "normal",
+            display: "inline-block",
+            lineHeight: 1,
+            textTransform: "none",
+            letterSpacing: "normal",
+            wordWrap: "normal",
+            whiteSpace: "nowrap",
+            direction: "ltr",
+    
+            WebkitFontSmoothing: "antialiased",
+            textRendering: "optimizeLegibility",
+            MosOsxFontSmoothing: "grayscale",
+            fontFeatureSettings: "'liga'"
         }
     };
 
@@ -261,7 +288,9 @@ export default function Themer({children}) {
             <ThemeContext.Provider value={{theme, changeTheme, addPalette, removePalette}} >
                 <DarkModeContext.Provider value={{darkMode, toggleDarkMode}}>
                     <GlobalStyles styles={defaults} />
-                    {children}
+                    <main id="root" className={materialIconFont.variable}>
+                        {children}
+                    </main>
                 </DarkModeContext.Provider>
             </ThemeContext.Provider>
         </NextAppDirEmotionCacheProvider>
