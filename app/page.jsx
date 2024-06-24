@@ -1,96 +1,31 @@
 "use client"
-import {useEffect, useState} from "react";
-import {keyframes} from "tss-react";
-import {tss, useDarkModeContext} from './assets/components/themer';
-import {Transition, Effect} from "./assets/components/animation";
-import {Subheading, Title} from "./assets/components/typography";
-import {ContainerContextProvider} from "./assets/helper/container";
+import {useState} from "react";
+import {tss, useThemeContext} from './assets/components/themer';
+import Splash from "./assets/components/splash";
 
-const fadeInUp = keyframes({
-    "0%": {
-        opacity: 0,
-        transform: "translate(0, 100px) scale(0.75)"
-    },
-    "100%": {
-        opacity: 1,
-        transform: "translate(0, 0)"
-    }
-});
-
-const fadeOutDown = keyframes({
-    "0%": {
-        opacity: 1,
-        transform: "translate(0, 0)"
-    },
-    "100%": {
-        opacity: 0,
-        transform: "translate(0, 100px) scale(0.75)"
-    }
-});
+// Default Palette for Kalvin's Portfolio
+const pink = "#EDBDDC";
+const thistle = "#D2BDD1";
+const celadon = "#B2DEBB";
+const cordovan = "#96484D";
+const raisin = "#34202C";
 
 const useStyles = tss.create(({theme}) => ({
-    popup: {
-        background: theme.neutral.surface.hex(),
-        [`@media (max-width: ${500}px)`]: {
-            width: 200,
-            left: "calc((100% - 200px) / 2)",
-        },
-        width: 400,
-        height: 200,
-        position: "fixed",
-        top: "calc((100% - 200px) / 2)",
-        left: "calc((100% - 400px) / 2)",
-        borderRadius: 20,
-        transition: "background-color 300ms ease, width 300ms ease, left 300ms ease"
-    },
-    stay: {
-        background: theme.primary.container.hex(),
-        width: 400,
-        height: 200,
-        opacity: 0
-    },
-    enter: {
-        animation: `${fadeInUp} 300ms ease-in forwards`
-    },
-    exit: {
-        animation: `${fadeOutDown} 300ms ease-in forwards`
-    },
-    begin: {
-        animation: `${fadeInUp} 300ms ease-in forwards`
-    },
-    active: {
-        "&&": {
-            opacity: 1,
-            transform: "translate(0, 0)"
-        }
+    homepage: {
+
     }
 }));
 
 export default function Homepage({}) {
-    const [show, setShow] = useState(false);
-    const [start, setStart] = useState(false);
-    useEffect(() => {
-        setTimeout(() => setStart(true), 1000);
-    }, []);
-    const {toggleDarkMode} = useDarkModeContext();
+    const [show, setShow] = useState(true);
+
+    const {addPalette} = useThemeContext();
+    addPalette("default", {primary: pink, secondary: thistle, tertiary: celadon, error: cordovan, neutral: raisin});
 
     const {classes} = useStyles();
     return (
-        <main>
-            <Transition show={show} enter={classes.enter} exit={classes.exit}>
-                <div className={classes.popup}>
-                    <Title>Text To See</Title>
-                </div>
-            </Transition>
-            <Effect start={start} begin={classes.begin} active={classes.active}>
-                <div className={classes.stay}>
-                    <ContainerContextProvider role="primary" type="container">
-                        <Subheading>Text To See</Subheading>
-                    </ContainerContextProvider>
-                </div>
-            </Effect>
-            <button onClick={() => setShow(!show)}>Show</button>
-            <button onClick={() => toggleDarkMode()}>Dark Mode</button>
-        </main>
+        <section className={classes.homepage}>
+            <Splash show={show} setShow={setShow} />
+        </section>
     );
 }
