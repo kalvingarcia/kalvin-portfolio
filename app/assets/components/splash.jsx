@@ -28,7 +28,7 @@ const useStyles = tss.create(({theme}) => ({
             position: "absolute",
             top: 0,
             right: -150,
-            transform: "skew(-10deg)"
+            // transform: "skew(-10deg)"
         },
         "&::after": {
             content: "''",
@@ -38,7 +38,7 @@ const useStyles = tss.create(({theme}) => ({
             position: "absolute",
             top: 0,
             right: -250,
-            transform: "skew(-10deg)"
+            // transform: "skew(-10deg)"
         }
     },
     splashExit: {
