@@ -172,7 +172,7 @@ export function Body({className, children, ...props}) {
  *
  * @returns A `span` jsx component.
  */
-export function Label({className, children, ...props}) {
+export function Label({className, children, __isInButton = false, ...props}) {
     const {role, type} = useContainerContext();
     const {cx, classes} = useStyles({role, type});
     return <span className={cx(classes.body, className?? "")} {...props}>{children}</span>
