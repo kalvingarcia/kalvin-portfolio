@@ -1,10 +1,10 @@
 "use client"
 import {keyframes} from "tss-react";
-import {tss} from "./themer";
-import {Transition} from "./animation";
-import {Title, Label} from "./typography";
-import {Icon} from "./icon-button";
-import Button from "./button";
+import {tss} from "../assets/components/themer";
+import {Transition} from "../assets/components/animation";
+import {Title, Label} from "../assets/components/typography";
+import {Icon} from "../assets/components/icon-button";
+import Button from "../assets/components/button";
 import {useCallback, useState} from "react";
 
 const slideLeft = keyframes({
