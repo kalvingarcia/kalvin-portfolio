@@ -1,8 +1,9 @@
+"use client"
 import {keyframes} from "tss-react";
 import {tss} from "./themer";
 import {Transition} from "./animation";
 import {Title, Label} from "./typography";
-import Icon from "./icon";
+import {Icon} from "./icon-button";
 import Button from "./button";
 import {useCallback, useState} from "react";
 
