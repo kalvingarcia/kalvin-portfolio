@@ -11,6 +11,8 @@ const useStyles = tss.create(({theme, role, appearance, containerRole, rippleCla
 
         minWidth: "fit-content",
         minHeight: "fit-content",
+        maxWidth: "fit-content",
+        maxHeight: "fit-content",
         position: "relative",
         overflow: "hidden",
         clipPath: "inset(0 0 0 0 round 2000px)",
@@ -38,6 +40,9 @@ const useStyles = tss.create(({theme, role, appearance, containerRole, rippleCla
         },
         [`& .${rippleClass}`]: {
             backgroundColor: appearance === "text" || appearance === "outlined"? theme[containerRole].onContainer.hex() : theme[role][appearance === "filled"? "onAccent" : "onContainer"].hex()
+        },
+        "& > *": {
+            textWrap: "nowrap"
         }
     }
 }));
