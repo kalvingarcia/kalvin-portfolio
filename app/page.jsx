@@ -1,7 +1,8 @@
 "use client"
 import {useState} from "react";
 import {tss, useThemeContext} from './assets/components/themer';
-import Splash from "./assets/components/splash";
+import Splash from "./content/splash";
+import Button from "./assets/components/button";
 
 // Default Palette for Kalvin's Portfolio
 const pink = "#EDBDDC";
@@ -26,6 +27,7 @@ export default function Homepage({}) {
     return (
         <section className={classes.homepage}>
             <Splash show={show} setShow={setShow} />
+            <Button onClick={() => window.location.href = "/projects"} />
         </section>
     );
 }
