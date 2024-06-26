@@ -92,7 +92,7 @@ const lightness = {
  * @param props The component only takes 1 prop. The `children` prop is specifically used to hold everything that will be themed.
  * @returns A React component.
  */
-export default function Themer({children}) {
+export default function Themer({presets, children}) {
     // The dark mode boolean which won't be directly mutable by the user. Instead a toggle function is given.
     const [darkMode, setDarkMode] = useState(true);
     // The toggle function which alternated the dark mode boolean between true and false.
@@ -103,7 +103,12 @@ export default function Themer({children}) {
     // This is the palette dictionary object, which will keep track of all the added palettes.
     // The dictionary is given a default palette, which is just a generic looking color
     // palette.
-    const paletteDictionary = useRef({default: {primary: oxford, secondary: charcoal, tertiary: honeydew, error: melon, neutral: silver}});
+    const paletteDictionary = useRef(presets?
+        {...presets}
+        :
+        {default: {primary: oxford, secondary: charcoal, tertiary: honeydew, error: melon, neutral: silver}}
+    );
+    console.log(paletteDictionary.current);
     // This function is used to add the palettes to the dictionary using a provided name.
     // By using this method, any palette can be overwritten, even the default palette.
     const addPalette = useCallback((themeName, paletteObject) => {
@@ -230,7 +235,7 @@ export default function Themer({children}) {
             maxWidth: "100%",
             overflowX: "hidden",
             minHeight: "100vh",
-            lineHeight: 1.5,
+            lineHeight: 1,
             overscrollBehavior: "none", // This part was specifically to avoid MacOS overscroll, which was bugging me.
         
             fontFamily: "var()",

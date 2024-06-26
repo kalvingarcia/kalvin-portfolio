@@ -1,15 +1,8 @@
 "use client"
 import {useState} from "react";
-import {tss, useThemeContext} from './assets/components/themer';
+import {tss} from './assets/components/themer';
 import Splash from "./content/splash";
 import Button from "./assets/components/button";
-
-// Default Palette for Kalvin's Portfolio
-const pink = "#EDBDDC";
-const thistle = "#D2BDD1";
-const celadon = "#B2DEBB";
-const cordovan = "#96484D";
-const raisin = "#34202C";
 
 const useStyles = tss.create(({theme}) => ({
     homepage: {
@@ -19,9 +12,6 @@ const useStyles = tss.create(({theme}) => ({
 
 export default function Homepage({}) {
     const [show, setShow] = useState(true);
-
-    const {addPalette} = useThemeContext();
-    addPalette("default", {primary: pink, secondary: thistle, tertiary: celadon, error: cordovan, neutral: raisin});
 
     const {classes} = useStyles();
     return (
