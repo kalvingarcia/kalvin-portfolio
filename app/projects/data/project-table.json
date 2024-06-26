@@ -1,0 +1,213 @@
+{
+    "columns": ["Date", "Name", "Made For", "Technologies Used", "Links"],
+    "rows": [
+        {
+            "directory": "arcadia-engine",
+            "name": "Arcadia 2D Game Engine",
+            "madeFor": "Fun",
+            "technologiesUsed": ["C#", "OpenGL"],
+            "links": {
+                "github": "https://www.github.com/kalvingarcia/arcadia-engine/"
+            },
+            "completionDate": "",
+            "display": false
+        },
+        {
+            "directory": "project-magia",
+            "name": "Project Magia",
+            "madeFor": "Fun",
+            "technologiesUsed": ["Python", "PyTorch"],
+            "links": {
+                "github": "https://www.github.com/kalvingarcia/project-magia/",
+                "deployment": "https://project-magia.kalvin.live/"
+            },
+            "completionDate": "",
+            "display": false
+        },
+        {
+            "directory": "database-visualizer",
+            "name": "Database Dashboard App",
+            "madeFor": "Fun",
+            "technologiesUsed": ["TypeScript", "React Native", "C++", "PostgresQL"],
+            "links": {
+                "github": "https://www.github.com/kalvingarcia/arcadia-engine/",
+                "docs": "https://projects.kalvingarcia.com/database-visualizer/"
+            },
+            "completionDate": "",
+            "display": false
+        },
+        {
+            "directory": "kalvin-food-blog",
+            "name": "Personal Food Blog",
+            "madeFor": "",
+            "technologiesUsed": ["TypeScript", "Next.js", "React.js", "TSS"],
+            "links": {
+                "github": "https://www.github.com/kalvingarcia/kalvin-food-blog/",
+                "deployment": "https://food.kalvingarcia.com/"
+            },
+            "completionDate": "October 2024",
+            "display": false
+        },
+        {
+            "directory": "arroz",
+            "name": "Arroz React Components",
+            "madeFor": "",
+            "technologiesUsed": ["TypeScript", "React.js", "React Native", "TSS"],
+            "links": {
+                "github": "https://www.github.com/kalvingarcia/arroz/",
+                "docs": "https://projects.kalvingarcia.com/arroz"
+            },
+            "completionDate": "September 2024",
+            "display": false
+        },
+        {
+            "directory": "camera-product-page",
+            "name": "Product Page Proof of Concept",
+            "madeFor": "Coalition Interview",
+            "technologiesUsed": ["HTML", "JavaScript", "CSS"],
+            "links": {
+                "github": "https://www.github.com/kalvingarcia/camera-product-page/"
+            },
+            "completionDate": "September 2024",
+            "display": false
+        },
+        {
+            "directory": "urbarch-dashboard-v2",
+            "name": "Urban Archaeology Dashboard v2",
+            "madeFor": "Urban Archaeology",
+            "technologiesUsed": ["JavaScript", "React Native", "PostgresQL"],
+            "links": {
+                "github": "https://www.github.com/kalvingarcia/urbarch-dashboard-v2/"
+            },
+            "completionDate": "August 2024",
+            "display": false
+        },
+        {
+            "directory": "kalvin-portfolio",
+            "name": "Personal Website",
+            "madeFor": "",
+            "technologiesUsed": ["JavaScript", "Next.js", "React.js", "TSS"],
+            "links": {
+                "github": "https://www.github.com/kalvingarcia/kalvin-portfolio/",
+                "deployment": "https://www.kalvingarcia.com/"
+            },
+            "completionDate": "July 2024",
+            "display": true
+        },
+        {
+            "directory": "urbarch-website",
+            "name": "Urban Archaeology Website",
+            "madeFor": "Urban Archaeology",
+            "technologiesUsed": ["JavaScript", "Next.js", "React.js", "SCSS", "PostgresQL"],
+            "links": {
+                "github": "https://www.github.com/kalvingarcia/urbarch-website/",
+                "deployment": "https://urbarch-website.kalvin.live/"
+            },
+            "completionDate": "July 2024",
+            "display": true
+        },
+        {
+            "directory": "urbarch-dashboard-v1",
+            "name": "Urban Archaeology Dashboard v1",
+            "madeFor": "Urban Archaeology",
+            "technologiesUsed": ["Python", "Kivy", "KivyMD", "PostgresQL"],
+            "links": {
+                "github": "https://www.github.com/kalvingarcia/urbarch-dashboard-v1/"
+            },
+            "completionDate": "June 2024",
+            "display": true
+        },
+        {
+            "directory": "catalog-demo",
+            "name": "Catalog Demonstration",
+            "madeFor": "Urban Archaeology",
+            "technologiesUsed": ["HTML", "CSS", "JavaScript"],
+            "links": {
+                "github": "https://www.github.com/kalvingarcia/catalog-demo/",
+                "deployment": "https://projects.kalvingarcia.com/catalog-demo/"
+            },
+            "completionDate": "December 2023",
+            "display": true
+        },
+        {
+            "directory": "mountain-website",
+            "name": "Los Angeles Mountains Website",
+            "madeFor": "Coalition Interview",
+            "technologiesUsed": ["HTML", "JavaScript", "CSS"],
+            "links": {
+                "github": "https://www.github.com/kalvingarcia/mountain-website/",
+                "deployment": "https://projects.kalvingarcia.com/mountain-website/"
+            },
+            "completionDate": "August 2023",
+            "display": true
+        },
+        {
+            "directory": "toy-food-blog",
+            "name": "Faux Food Blog Homepage",
+            "madeFor": "",
+            "technologiesUsed": ["JavaScript", "React.js", "Python", "Django", "CSS"],
+            "links": {
+                "github": "https://www.github.com/kalvingarcia/toy-food-blog/",
+                "deployment": "https://projects.kalvingarcia.com/toy-food-blog/"
+            },
+            "completionDate": "August 2023",
+            "display": true
+        },
+        {
+            "directory": "ai-collections",
+            "name": "AI Project Menagerie",
+            "madeFor": "Various",
+            "technologiesUsed": ["Python", "PyTorch"],
+            "links": {
+                "github": "https://www.github.com/kalvingarcia/ai-collection/"
+            },
+            "completionDate": "June 2023",
+            "display": true
+        },
+        {
+            "directory": "slime-mold-sim",
+            "name": "Physarum Slime Mold Simulation",
+            "madeFor": "Fun",
+            "technologiesUsed": ["C++"],
+            "links": {
+                "github": "https://www.github.com/kalvingarcia/slime-mold-sim/"
+            },
+            "completionDate": "November 2022",
+            "display": true
+        },
+        {
+            "directory": "image-processor",
+            "name": "Image Processing Webapp",
+            "madeFor": "Academic",
+            "technologiesUsed": [],
+            "links": {
+                "github": "https://www.github.com/kalvingarcia/image-processor/",
+                "deployment": "https://projects.kalvingarcia.com/image-processor/"
+            },
+            "completionDate": "December 2021",
+            "display": true
+        },
+        {
+            "directory": "toy-AES",
+            "name": "Toy AES Implementation",
+            "madeFor": "Academic",
+            "technologiesUsed": ["C++"],
+            "links": {
+                "github": "https://github.com/kalvingarcia/toy-AES/"
+            },
+            "completionDate": "November 2021",
+            "display": true
+        },
+        {
+            "directory": "micro-R-parser",
+            "name": "Toy Parser Implementation",
+            "madeFor": "Academic",
+            "technologiesUsed": ["Java", "JFlex", "CUP"],
+            "links": {
+                "github": "https://github.com/kalvingarcia/mirco-R-parser/"
+            },
+            "completionDate": "October 2021",
+            "display": true
+        }
+    ]
+}
