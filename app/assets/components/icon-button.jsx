@@ -111,7 +111,7 @@ export default function IconButton({className, role = "primary", appearance = "f
         onMouseUp?.(event);
     });
 
-    const {cx, classes} = useStyles({role, appearance, containerRole, rippleClass})
+    const {cx, classes} = useStyles({role, type, appearance, containerRole, rippleClass})
     return (
         <ContainerContextProvider role={role} type={type}>
             <Icon className={cx(classes.iconButton, className?? "")} icon={icon} iconClass={iconClass} onMouseDown={mouseDownHandler} onMouseUp={mouseUpHandler} {...props} />
