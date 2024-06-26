@@ -122,6 +122,7 @@ const useStyles = tss.withName("Splash").create(({theme}) => ({
         color: theme.primary.accent.hex(),
         lineHeight: 1,
         textDecoration: `${theme.tertiary.accent.hex()} wavy underline`,
+        textDecorationSkipInk: "none",
         textUnderlineOffset: "10px"
     },
     buttons: {
