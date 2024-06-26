@@ -3,6 +3,7 @@ import {tss} from "./themer";
 import {ContainerContextProvider} from "../helper/container";
 import {Label} from "./typography";
 
+// Chip styles.
 const useStyles = tss.create(({theme, role, active}) => ({
     chip: {
         minWidth: "fit-content",
@@ -37,7 +38,24 @@ const useStyles = tss.create(({theme, role, active}) => ({
     }
 }));
 
-export default function Chip({className, role="primary", activeDefault = false, children, onClick, ...props}) {
+/**
+ * The Chip is used when information needs to be presented to the user. They
+ * function much like labels, filters, or buttons.
+ *
+ * @param props The component takes 5 props:
+ *  *   The `classNames` prop is used to override the Chip's styles.
+ *  *   The `role` prop is used to define the color role the component has. *Defaults
+ *      to primary.*
+ *  *   The `activeDefault` prop can be used to set the chip to active by default.
+ *      *Defaults to false.*
+ *  *   The `children` prop is used to give the chip its text.
+ *  *   The `onClick` prop is used to define what the Chip should do on click.
+ *
+ * The component passes other props forward.
+ *
+ * @returns A styled Label component.
+ */
+export default function Chip({className, role="primary", activeDefault = false, onClick, children, ...props}) {
     const [active, setActive] = useState(activeDefault);
     const clickHandler = useCallback(event => {
         onClick?.(event);
