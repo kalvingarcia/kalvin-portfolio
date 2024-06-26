@@ -5,10 +5,11 @@ import { Transition } from "./animation";
 import { ContainerContextProvider } from "../helper/container";
 import { useEffect, useState } from "react";
 
+// The transition animations for the modal component.
 const fadeInUp = keyframes({
     "0%": {
         opacity: 0,
-        transform: "translate(0, 1000px) scale(0.5)"
+        transform: "translate(0, 1000px)"
     },
     "100%": {
         opacity: 1,
@@ -22,10 +23,11 @@ const fadeOutDown = keyframes({
     },
     "100%": {
         opacity: 0,
-        transform: "translate(0, 1000px) scale(0.5)"
+        transform: "translate(0, 1000px)"
     }
 });
 
+// Modal styles.
 const useStyles = tss.create(({theme, role, elevation, delay}) => ({
     modal: {
         position: "absolute",
@@ -62,7 +64,29 @@ const useStyles = tss.create(({theme, role, elevation, delay}) => ({
 
 const DEFAULT_DELAY = 500;
 
-export default function Modal({role = "neutral", elevation = "normal", open, setOpen, delay = DEFAULT_DELAY, children}) {
+/**
+ * The Modal component is used content should appear above the content on the
+ * screen, obsuring the content below. The component is made using the createPortal
+ * function and the Transition component to animate the render.
+ *
+ * @param props The component takes 7 props:
+ *  *   The `className` prop is used to override styles of the content `div`.
+ *  *   The `role` prop is used to describe which palette color the modal should
+ *      use. *Defaults to neutral.*
+ *  *   The `elevation` prop can only be used when the role is neutral. The prop
+ *      allows the user to specify which elevation level the container will have
+ *      changing the color. *Defaults to normal.*
+ *  *   The `open` and `setOpen` props are used to specify when the modal should
+ *      open. The callback is used to close the modal when clicking outside of it.
+ *  *   The `delay` prop describes how long the transition animation should take.
+ *      *Defaults to 500 milliseconds.*
+ *  *   The `children` prop is used to define the content of the modal.
+ *
+ *  The component passes on other props to the `div` housing the content.
+ *
+ *  @returns A portal to the root component.
+ */
+export default function Modal({className, role = "neutral", elevation = "normal", open, setOpen, delay = DEFAULT_DELAY, children, ...props}) {
     if(role != "neutral")
         elevation = "normal";
 
@@ -74,13 +98,13 @@ export default function Modal({role = "neutral", elevation = "normal", open, set
             setShow(true);
     }, [open]);
 
-    const {classes} = useStyles({role, elevation, delay});
+    const {cx, classes} = useStyles({role, elevation, delay});
     return show && createPortal(
         <ContainerContextProvider role={role} type="container">
             <div className={classes.modal}>
                 <div className={classes.scrim} onClick={() => setOpen(false)} />
                 <Transition show={open} enter={classes.enter} exit={classes.exit} duration={delay}>
-                    <div className={classes.content}>
+                    <div className={cx(classes.content, className)} {...props}>
                         {children}
                     </div>
                 </Transition>
