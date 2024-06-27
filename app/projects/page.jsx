@@ -1,13 +1,14 @@
 "use client"
-import {tss} from "../assets/components/themer";
-import {Display, Label, Title} from "../assets/components/typography";
-import IconButton, {Icon} from "../assets/components/icon-button";
-import Button from "../assets/components/button";
-import Table, {Row} from "../assets/components/table";
-import projects from "./data/project-table.json";
-import Modal from "../assets/components/modal";
-import { useCallback } from "react";
-import Chip from "../assets/components/chip";
+import {useCallback, useState} from "react";
+import {tss} from "../source/components/themer";
+import {Display, Label} from "../source/components/typography";
+import IconButton, {Icon} from "../source/components/icon-button";
+import Button from "../source/components/button";
+import Table, {Row} from "../source/components/table";
+import Modal from "../source/components/modal";
+import Remark from "../source/components/remark";
+import Chip from "../source/components/chip";
+import projects from "../../public/projects.json";
 
 const useStyles = tss.create(({theme}) => ({
     projects: {
@@ -62,8 +63,11 @@ const useStyles = tss.create(({theme}) => ({
 }));
 
 export default function Projects({}) {
+    const [open, setOpen] = useState(false);
+    const [markdown, setMarkdown] = useState("");
     const openProject = useCallback(async directory => {
-        console.log(directory)
+        setMarkdown((await import(`../../public/projects/${directory}.md`)).default);
+        setOpen(true);
     }, []);
 
     const {classes} = useStyles();
@@ -77,7 +81,7 @@ export default function Projects({}) {
             <Table className={classes.list} headers={projects.columns}>
                 {projects.rows.map((row, index) => (
                     row.display?
-                        <Row key={`row-${index}`} className={`${index % 2 === 0? "even" : "odd"}-row`}>
+                        <Row key={`row-${index}`}>
                             <Label>{row.completionDate}</Label>
                             <Label className={classes.openModal} onClick={() => openProject(row.directory)}>{row.name} <Icon icon="arrow_outward" /></Label>
                             <Label>{row.madeFor}</Label>
@@ -88,8 +92,10 @@ export default function Projects({}) {
                         ""
                 ))}
             </Table>
-            <Modal>
-
+            <Modal elevation="highest" open={open} setOpen={setOpen}>
+                <Remark>
+                    {markdown}
+                </Remark>
             </Modal>
         </section>
     );

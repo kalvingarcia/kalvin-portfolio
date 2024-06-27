@@ -1,10 +1,10 @@
 "use client"
 import {keyframes} from "tss-react";
-import {tss} from "../assets/components/themer";
-import {Transition} from "../assets/components/animation";
-import {Title, Label} from "../assets/components/typography";
-import {Icon} from "../assets/components/icon-button";
-import Button from "../assets/components/button";
+import {tss} from "../source/components/themer";
+import {Transition} from "../source/components/animation";
+import {Title, Label} from "../source/components/typography";
+import {Icon} from "../source/components/icon-button";
+import Button from "../source/components/button";
 import {useCallback, useState} from "react";
 
 const slideLeft = keyframes({
@@ -22,16 +22,16 @@ const useStyles = tss.withName("Splash").create(({theme}) => ({
     splash: {
         overscrollBehavior: "contain",
         backgroundColor: theme.neutral.containerLowest.hex(),
-        width: "calc(100% + 1000px)",
+        width: "calc(100% + 1280px)",
         height: "100%",
         position: "fixed",
         left: -500,
         top: 0,
-        [`@media (max-width: ${1000}px)`]: {
+        [`@media (max-width: ${1280}px)`]: {
             left: 0,
             top: -500,
             width: "100%",
-            height: "calc(100% + 1000px)",
+            height: "calc(100% + 1280px)",
         },
         "&::before": {
             content: "''",
@@ -41,7 +41,7 @@ const useStyles = tss.withName("Splash").create(({theme}) => ({
             position: "absolute",
             bottom: "auto",
             right: 0,
-            [`@media (max-width: ${1000}px)`]: {
+            [`@media (max-width: ${1280}px)`]: {
                 width: "100%",
                 height: 500,
                 bottom: 0,
@@ -56,7 +56,7 @@ const useStyles = tss.withName("Splash").create(({theme}) => ({
             position: "absolute",
             bottom: "auto",
             right: -250,
-            [`@media (max-width: ${1000}px)`]: {
+            [`@media (max-width: ${1280}px)`]: {
                 width: "100%",
                 height: 500,
                 bottom: -250,
@@ -65,14 +65,14 @@ const useStyles = tss.withName("Splash").create(({theme}) => ({
         }
     },
     splashExit: {
-        animation: `${slideLeft} 1000ms ease`,
-        [`@media (max-width: ${1000}px)`]: {
-            animation: `${slideUp} 1000ms ease`,
+        animation: `${slideLeft} 1280ms ease`,
+        [`@media (max-width: ${1280}px)`]: {
+            animation: `${slideUp} 1280ms ease`,
         }
     },
     content: {
         overflow: "hidden",
-        width: "calc(100% - 1000px)",
+        width: "calc(100% - 1280px)",
         height: "100%",
         position: "absolute",
         top: 0,
@@ -81,9 +81,9 @@ const useStyles = tss.withName("Splash").create(({theme}) => ({
         alignItems: "center",
         justifyContent: "center",
         gap: 50,
-        [`@media (max-width: ${1000}px)`]: {
+        [`@media (max-width: ${1280}px)`]: {
             width: "100%",
-            height: "calc(100% - 1000px)",
+            height: "calc(100% - 1280px)",
             top: 500,
             left: 0,
             flexDirection: "column-reverse",
@@ -96,7 +96,7 @@ const useStyles = tss.withName("Splash").create(({theme}) => ({
         width: "50%",
         height: "fit-content",
         justifyContent: "flex-end",
-        [`@media (max-width: ${1000}px)`]: {
+        [`@media (max-width: ${1280}px)`]: {
             width: "fit-content",
             height: "50%"
         }
@@ -106,7 +106,7 @@ const useStyles = tss.withName("Splash").create(({theme}) => ({
         display: "flex",
         flexDirection: "column",
         gap: 10,
-        [`@media (max-width: ${1000}px)`]: {
+        [`@media (max-width: ${1280}px)`]: {
             alignItems: "center"
         },
         "& > *": {
@@ -129,7 +129,7 @@ const useStyles = tss.withName("Splash").create(({theme}) => ({
         display: "flex",
         flexWrap: "nowrap",
         gap: 10,
-        [`@media (max-width: ${1000}px)`]: {
+        [`@media (max-width: ${1280}px)`]: {
             alignItems: "center",
             flexDirection: "column"
         }
@@ -137,7 +137,7 @@ const useStyles = tss.withName("Splash").create(({theme}) => ({
     portrait: {
         width: "50%",
         height: "fit-content",
-        [`@media (max-width: ${1000}px)`]: {
+        [`@media (max-width: ${1280}px)`]: {
             width: "fit-content",
             height: "50%"
         }

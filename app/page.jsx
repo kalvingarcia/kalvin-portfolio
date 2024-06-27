@@ -1,8 +1,8 @@
 "use client"
 import {useState} from "react";
-import {tss} from './assets/components/themer';
+import {tss} from './source/components/themer';
 import Splash from "./content/splash";
-import Button from "./assets/components/button";
+import Button from "./source/components/button";
 
 const useStyles = tss.create(({theme}) => ({
     homepage: {
