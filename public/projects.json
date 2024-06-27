@@ -130,13 +130,13 @@
             "display": true
         },
         {
-            "directory": "mountain-website",
+            "directory": "mountains-website",
             "name": "Los Angeles Mountains Website",
             "madeFor": "Coalition Interview",
             "technologiesUsed": ["HTML", "JavaScript", "CSS"],
             "links": {
-                "github": "https://www.github.com/kalvingarcia/mountain-website/",
-                "deployment": "https://projects.kalvingarcia.com/mountain-website/"
+                "github": "https://www.github.com/kalvingarcia/mountains-website/",
+                "deployment": "https://projects.kalvingarcia.com/mountains-website/"
             },
             "completionDate": "August 2023",
             "display": true
