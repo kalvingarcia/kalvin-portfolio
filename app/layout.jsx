@@ -1,6 +1,6 @@
 import Local from "next/font/local";
 import {GlobalStyles} from "tss-react";
-import Themer from "./assets/components/themer";
+import Themer from "./source/components/themer";
 
 // Default Palette for Kalvin's Portfolio
 const pink = "#EDBDDC";
@@ -12,7 +12,7 @@ const raisin = "#34202C";
 const kalvinIconsFont = Local({
     variable: "--kalvin-icons",
     src: [{
-        path: "./assets/fonts/KalvinIcons.woff",
+        path: "../public/fonts/KalvinIcons.woff",
         weight: "400",
         style: "normal"
     }]
