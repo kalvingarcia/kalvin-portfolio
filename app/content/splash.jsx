@@ -183,7 +183,7 @@ export default function Splash({show, setShow}) {
                                 <Icon icon="info" />
                                 <Label>Learn More</Label>
                             </Button>
-                            <Button className={classes.projectsButton} role="secondary" appearance="text">
+                            <Button className={classes.projectsButton} role="secondary" appearance="text" onClick={() => setTimeout(() => window.location.href = "https://projects.kalvingarcia.com/", 300)}>
                                 <Label>My Projects</Label>
                             </Button>
                         </div>
