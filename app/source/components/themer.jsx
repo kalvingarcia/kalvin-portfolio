@@ -68,17 +68,6 @@ const lightness = {
         onSurface: 10,
         rule: 50,
         shadow: 0
-    },
-    code: {
-        background: 10,
-        onBackground: 90,
-        keyword: 60,
-        entity: 70,
-        constant: 60,
-        string: 60,
-        variable: 90,
-        comment: 20,
-        tag: 50
     }
 };
 
@@ -108,7 +97,6 @@ export default function Themer({presets, children}) {
         :
         {default: {primary: oxford, secondary: charcoal, tertiary: honeydew, error: melon, neutral: silver}}
     );
-    console.log(paletteDictionary.current);
     // This function is used to add the palettes to the dictionary using a provided name.
     // By using this method, any palette can be overwritten, even the default palette.
     const addPalette = useCallback((themeName, paletteObject) => {
