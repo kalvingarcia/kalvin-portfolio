@@ -17,6 +17,8 @@ const lightness = {
 
 const useStyles = tss.create(({theme}) => ({
     codeContainer: {
+        width: "100%",
+        overflowX: "scroll",
         padding: 20,
         borderRadius: 20,
         backgroundColor: theme.primary.container.lightness(lightness.background).hex(),
