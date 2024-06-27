@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Markdown from "react-markdown";
 import {Title, Subtitle, Heading, Subheading, Body, Label} from "./typography";
+import Code from "./code";
 
 export default function Remark({children}) {
     return (
@@ -25,6 +26,12 @@ export default function Remark({children}) {
             },
             img({src, alt}) {
                 return src? <Image src={src} alt={alt} width={200} height={200} /> : "";
+            },
+            code({className, children}) {
+                return <Code language={className.replace("language-", "")}>{children}</Code>;
+            },
+            pre({children}) {
+                return children;
             },
         }}>
             {children}
