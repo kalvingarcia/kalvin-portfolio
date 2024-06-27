@@ -1,4 +1,4 @@
-import {Children, createContext, useContext} from "react";
+import {Children, createContext, useCallback, useContext, useEffect, useRef, useState} from "react";
 import {tss} from "./themer";
 
 // Table and Row component styles.
@@ -15,16 +15,16 @@ const useStyles = tss.withNestedSelectors().create(({theme}) => ({
         },
         "& tbody :last-child": {
             borderBottom: "none"
-        },
-        // For some reason, the table header refuses to be sticky.
-        "& thead": {
-            position: "sticky",
-            top: 0
         }
     },
     header: {
         fontWeight: "bold",
-        color: theme.secondary.accent.hex()
+        color: theme.secondary.accent.hex(),
+        position: "relative",
+        zIndex: 10,
+        "& th": {
+            backdropFilter: "blur(8px)"
+        }
     },
     row: {
         position: "relative"

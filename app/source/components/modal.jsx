@@ -6,26 +6,37 @@ import { ContainerContextProvider } from "../helper/container";
 import { useEffect, useState } from "react";
 
 // The transition animations for the modal component.
-const fadeInUp = keyframes({
+const fadeIn = keyframes({
     "0%": {
-        opacity: 0,
-        transform: "translate(0, 1000px)"
-    },
-    "100%": {
-        opacity: 1,
-        transform: "translate(0, 0)"
+        opacity: 0
     }
 });
-const fadeOutDown = keyframes({
-    "0%": {
-        opacity: 1,
-        transform: "translate(0, 0)"
-    },
+const fadeOut = keyframes({
     "100%": {
-        opacity: 0,
+        opacity: 0
+    }
+});
+const slideUp = keyframes({
+    "0%": {
         transform: "translate(0, 1000px)"
     }
 });
+const slideDown = keyframes({
+    "100%": {
+        transform: "translate(0, 1000px)"
+    }
+});
+const zoomIn = keyframes({
+    "0%": {
+        transform: "scale(0.95)"
+    }
+});
+const zoomOut = keyframes({
+    "100%": {
+        transform: "scale(0.95)"
+    }
+});
+
 
 // Modal styles.
 const useStyles = tss.create(({theme, role, elevation, delay}) => ({
@@ -52,17 +63,29 @@ const useStyles = tss.create(({theme, role, elevation, delay}) => ({
         borderRadius: 20,
         overflowX: "hidden",
         overflowY: "auto",
-        backgroundColor: theme[role][`container${elevation === "normal"? "" : elevation[0].toUpper() + elevation.slice(1)}`].hex()
+        backgroundColor: theme[role][`container${elevation === "normal"? "" : elevation[0].toUpperCase() + elevation.slice(1)}`].hex()
     },
-    enter: {
-        animation: `${fadeInUp} ${delay}ms ease-in forwards`
+    fadeIn: {
+        animation: `${fadeIn} ${delay}ms ease-out forwards`
     },
-    exit: {
-        animation: `${fadeOutDown} ${delay}ms ease-in forwards`
+    fadeOut: {
+        animation: `${fadeOut} ${delay}ms ease-in forwards`
+    },
+    slideUp: {
+        animation: `${slideUp} ${delay}ms ease-in-out forwards`
+    },
+    slideDown: {
+        animation: `${slideDown} ${delay}ms ease-in forwards`
+    },
+    zoomIn: {
+        animation: `${zoomIn} ${delay}ms ease-in-out forwards`
+    },
+    zoomOut: {
+        animation: `${zoomOut} ${delay}ms ease-in forwards`
     }
 }));
 
-const DEFAULT_DELAY = 500;
+const DEFAULT_DELAY = 300;
 
 /**
  * The Modal component is used content should appear above the content on the
@@ -92,24 +115,30 @@ export default function Modal({className, role = "neutral", elevation = "normal"
 
     const [show, setShow] = useState(open);
     useEffect(() => {
-        if(show && !open)
-            setTimeout(() => setShow(false), delay);
-        else if(!show && open)
+        if(show && !open) {
+            document.getElementById("root").classList.remove(classes.zoomOut);
+            document.getElementById("root").classList.add(classes.zoomIn);
+            setTimeout(() => setShow(false) ||  document.getElementById("root").classList.remove(classes.zoomIn), delay);
+        } else if(!show && open) {
+            document.getElementById("root").classList.add(classes.zoomOut);
             setShow(true);
+        }
     }, [open]);
 
     const {cx, classes} = useStyles({role, elevation, delay});
     return show && createPortal(
         <ContainerContextProvider role={role} type="container">
             <div className={classes.modal}>
-                <div className={classes.scrim} onClick={() => setOpen(false)} />
-                <Transition show={open} enter={classes.enter} exit={classes.exit} duration={delay}>
+                <Transition show={open} enter={classes.fadeIn} exit={classes.fadeOut} duration={delay}>
+                    <div className={classes.scrim} onClick={() => setOpen(false)} />
+                </Transition>
+                <Transition show={open} enter={cx(classes.fadeIn, classes.slideUp)} exit={cx(classes.fadeOut, classes.slideDown)} duration={delay}>
                     <div className={cx(classes.content, className)} {...props}>
                         {children}
                     </div>
                 </Transition>
             </div>
         </ContainerContextProvider>,
-        document.getElementById("root")
+        document.body
     );
 }
