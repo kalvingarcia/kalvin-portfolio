@@ -1,0 +1,37 @@
+{
+    "default": {
+        "primary": "#EDBDDC",
+        "secondary": "#D2BDD1",
+        "tertiary": "#B2DEBB",
+        "error": "#96484D",
+        "neutral": "#34202C"
+    },
+    "ghibli_grass": {
+        "primary": "#59A96A",
+        "secondary": "#9BDEAC",
+        "tertiary": "#B4E7CE",
+        "error": "#FFC09F",
+        "neutral": "#494A3D"
+    },
+    "nonbinary": {
+        "primary": "#7739C2",
+        "secondary": "#8A75A7",
+        "tertiary": "#EFCB68",
+        "error": "#E9C784",
+        "neutral": "#000411"
+    },
+    "office_best": {
+        "primary": "#BFD7EA",
+        "secondary": "#839788",
+        "tertiary": "#BAA898",
+        "error": "#7E302A",
+        "neutral": "#000000"
+    },
+    "pretty_pink_princess": {
+        "primary": "#FF8CC6",
+        "secondary": "#EAA7C5",
+        "tertiary": "#613F75",
+        "error": "#EF6F94",
+        "neutral": "#EFD6D2"
+    }
+}

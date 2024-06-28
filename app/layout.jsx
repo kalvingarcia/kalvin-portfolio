@@ -1,13 +1,8 @@
 import Local from "next/font/local";
 import {GlobalStyles} from "tss-react";
 import Themer from "./source/components/themer";
-
-// Default Palette for Kalvin's Portfolio
-const pink = "#EDBDDC";
-const thistle = "#D2BDD1";
-const celadon = "#B2DEBB";
-const cordovan = "#96484D";
-const raisin = "#34202C";
+import PalettePicker from './content/palette-picker';
+import customPalettes from "../public/palettes.json";
 
 const kalvinIconsFont = Local({
     variable: "--kalvin-icons",
@@ -43,7 +38,8 @@ export default function Layout({children}) {
         <html lang="en">
             <body className={kalvinIconsFont.variable}>
                 <GlobalStyles styles={kalvinIcons} />
-                <Themer presets={palettes}>
+                    <Themer palettePresets={customPalettes} setDarkModeCookie={setDarkModeCookie} setThemeCookie={setThemeCookie}>
+                        <PalettePicker />
                     {children}
                 </Themer>
             </body>
