@@ -85,7 +85,7 @@ export default function Projects({}) {
                             <Label>{row.completionDate}</Label>
                             <Label className={classes.openModal} onClick={() => openProject(row.directory)}>{row.name} <Icon icon="arrow_outward" /></Label>
                             <Label>{row.madeFor}</Label>
-                            <div className={classes.technologies}>{row.technologiesUsed.map((tech, index) => <Chip>{tech}</Chip>)}</div>
+                            <div className={classes.technologies}>{row.technologiesUsed.map((tech, index) => <Chip key={tech}>{tech}</Chip>)}</div>
                             <div className={classes.links}>{Object.entries(row.links).map(([name, link]) => <IconButton key={name} appearance="text" icon={name} iconClass="kalvin-icons" onClick={() => setTimeout(() => window.open(link, "_blank"), 300)} />)}</div>
                         </Row>
                         :
