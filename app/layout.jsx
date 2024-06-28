@@ -1,4 +1,6 @@
+"use client"
 import Local from "next/font/local";
+import {useState, useCallback, useEffect} from "react";
 import {GlobalStyles} from "tss-react";
 import Themer from "./source/components/themer";
 import PalettePicker from './content/palette-picker';
@@ -14,7 +16,6 @@ const kalvinIconsFont = Local({
 });
 
 export default function Layout({children}) {
-    const palettes = {default: {primary: pink, secondary: thistle, tertiary: celadon, error: cordovan, neutral: raisin}};
     const kalvinIcons = {
         ".kalvin-icons": {
             fontFamily: "var(--kalvin-icons)",
@@ -34,15 +35,29 @@ export default function Layout({children}) {
             fontFeatureSettings: "'liga'"
         }
     }
+
+    // const cookies = {};
+    // const cookieStrings = document.cookie.split("; ");
+    // for(const cookieString of cookieStrings) {
+    //     const [name, value] = cookieString.split('=');
+    //     cookies[name] = value;
+    // }
+
+    const setDarkModeCookie = useCallback(darkMode => {
+        document.cookie = `kalvinPortfolioDarkMode=${darkMode}; path=/; secure; SameSite=Strict; expires=Fri, 31 Dec 9999 23:59:59 GMT`;
+    }, []);
+    const setThemeCookie = useCallback(themeName => {
+        document.cookie = `kalvinPortfolioTheme=${themeName}; path=/; secure; SameSite=Strict; expires=Fri, 31 Dec 9999 23:59:59 GMT`;
+    }, []);
     return (
-        <html lang="en">
-            <body className={kalvinIconsFont.variable}>
-                <GlobalStyles styles={kalvinIcons} />
+            <html lang="en">
+                <body className={kalvinIconsFont.variable}>
+                    <GlobalStyles styles={kalvinIcons} />
                     <Themer palettePresets={customPalettes} setDarkModeCookie={setDarkModeCookie} setThemeCookie={setThemeCookie}>
                         <PalettePicker />
-                    {children}
-                </Themer>
-            </body>
-        </html>
+                        {children}
+                    </Themer>
+                </body>
+            </html>
     );
 }
