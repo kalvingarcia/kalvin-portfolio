@@ -11,6 +11,7 @@
   "dependencies": {
     "@emotion/react": "^11.11.4",
     "color": "^4.2.3",
+    "cookies-next": "^4.2.1",
     "highlight.js": "^11.9.0",
     "next": "^14.0.2",
     "raw-loader": "^4.0.2",

@@ -1,6 +1,7 @@
 "use client"
+import {getCookie, setCookie} from "cookies-next";
 import Local from "next/font/local";
-import {useState, useCallback, useEffect} from "react";
+import {useCallback} from "react";
 import {GlobalStyles} from "tss-react";
 import Themer from "./source/components/themer";
 import PalettePicker from './content/palette-picker';
@@ -36,24 +37,17 @@ export default function Layout({children}) {
         }
     }
 
-    // const cookies = {};
-    // const cookieStrings = document.cookie.split("; ");
-    // for(const cookieString of cookieStrings) {
-    //     const [name, value] = cookieString.split('=');
-    //     cookies[name] = value;
-    // }
-
     const setDarkModeCookie = useCallback(darkMode => {
-        document.cookie = `kalvinPortfolioDarkMode=${darkMode}; path=/; secure; SameSite=Strict; expires=Fri, 31 Dec 9999 23:59:59 GMT`;
+        setCookie("kalvinPortfolioDarkMode", darkMode);
     }, []);
     const setThemeCookie = useCallback(themeName => {
-        document.cookie = `kalvinPortfolioTheme=${themeName}; path=/; secure; SameSite=Strict; expires=Fri, 31 Dec 9999 23:59:59 GMT`;
+        setCookie("kalvinPortfolioTheme", themeName);
     }, []);
     return (
             <html lang="en">
                 <body className={kalvinIconsFont.variable}>
                     <GlobalStyles styles={kalvinIcons} />
-                    <Themer palettePresets={customPalettes} setDarkModeCookie={setDarkModeCookie} setThemeCookie={setThemeCookie}>
+                    <Themer darkModeDefault={(/true/i).test(getCookie("kalvinPortfolioDarkMode"))} themeDefault={getCookie("kalvinPortfolioTheme")} palettePresets={customPalettes} setDarkModeCookie={setDarkModeCookie} setThemeCookie={setThemeCookie}>
                         <PalettePicker />
                         {children}
                     </Themer>
