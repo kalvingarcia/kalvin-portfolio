@@ -1,3 +1,4 @@
+"use client"
 import {createPortal} from "react-dom";
 import {keyframes} from "tss-react";
 import {tss} from "./themer";
@@ -63,6 +64,7 @@ const useStyles = tss.create(({theme, role, elevation, delay}) => ({
         borderRadius: 20,
         overflowX: "hidden",
         overflowY: "auto",
+        clip: "inset(0 0 0 0 20px)",
         backgroundColor: theme[role][`container${elevation === "normal"? "" : elevation[0].toUpperCase() + elevation.slice(1)}`].hex()
     },
     fadeIn: {
@@ -81,7 +83,11 @@ const useStyles = tss.create(({theme, role, elevation, delay}) => ({
         animation: `${zoomIn} ${delay}ms ease-in-out forwards`
     },
     zoomOut: {
-        animation: `${zoomOut} ${delay}ms ease-in forwards`
+        animation: `${zoomOut} ${delay}ms ease-in forwards`,
+        overflow: "hidden"
+    },
+    lockScroll: {
+        overflow: "hidden"
     }
 }));
 
@@ -118,9 +124,13 @@ export default function Modal({className, role = "neutral", elevation = "normal"
         if(show && !open) {
             document.getElementById("root").classList.remove(classes.zoomOut);
             document.getElementById("root").classList.add(classes.zoomIn);
+            document.body.classList.remove(classes.lockScroll);
+            document.documentElement.classList.remove(classes.lockScroll);
             setTimeout(() => setShow(false) ||  document.getElementById("root").classList.remove(classes.zoomIn), delay);
         } else if(!show && open) {
             document.getElementById("root").classList.add(classes.zoomOut);
+            document.body.classList.add(classes.lockScroll);
+            document.documentElement.classList.add(classes.lockScroll);
             setShow(true);
         }
     }, [open]);
