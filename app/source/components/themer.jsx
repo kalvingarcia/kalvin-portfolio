@@ -64,7 +64,7 @@ const lightness = {
         surfaceLow: 87.5,
         surface: 85,
         surfaceHigh: 82.5,
-        surfaceHighest: 8,
+        surfaceHighest: 80,
         onSurface: 10,
         rule: 50,
         shadow: 0
@@ -81,22 +81,22 @@ const lightness = {
  * @param props The component only takes 1 prop. The `children` prop is specifically used to hold everything that will be themed.
  * @returns A React component.
  */
-export default function Themer({presets, children}) {
+export default function Themer({darkModeDefault = true, themeDefault = "default", palettePresets, setDarkModeCookie, setThemeCookie, children}) {
     // The dark mode boolean which won't be directly mutable by the user. Instead a toggle function is given.
-    const [darkMode, setDarkMode] = useState(true);
+    const [darkMode, setDarkMode] = useState(darkModeDefault);
     // The toggle function which alternated the dark mode boolean between true and false.
     const toggleDarkMode = useCallback(() => {
+        setDarkModeCookie?.(!darkMode);
         setDarkMode(!darkMode);
     }, [darkMode]);
 
     // This is the palette dictionary object, which will keep track of all the added palettes.
     // The dictionary is given a default palette, which is just a generic looking color
     // palette.
-    const paletteDictionary = useRef(presets?
-        {...presets}
-        :
-        {default: {primary: oxford, secondary: charcoal, tertiary: honeydew, error: melon, neutral: silver}}
-    );
+    const paletteDictionary = useRef({
+        default: {primary: oxford, secondary: charcoal, tertiary: honeydew, error: melon, neutral: silver},
+        ...palettePresets
+    });
     // This function is used to add the palettes to the dictionary using a provided name.
     // By using this method, any palette can be overwritten, even the default palette.
     const addPalette = useCallback((themeName, paletteObject) => {
@@ -174,37 +174,39 @@ export default function Themer({presets, children}) {
 
     // The theme object is only mutable using the changeTheme method. It is given a default value of the
     // default palette.
-    const [theme, setTheme] = useState(createTheme("default", paletteDictionary.current.default, darkMode));
-    const changeTheme = useCallback((themeName) => {
+    const [theme, setTheme] = useState(createTheme(themeDefault, paletteDictionary.current[themeDefault], darkMode));
+    const changeTheme = useCallback((themeName, setCookie = true) => {
         try {
             // The new theme is created.
             const newTheme = createTheme(themeName, paletteDictionary.current[themeName], darkMode);
             if(!newTheme) // If the theme isn't defined, then that means the palette object was structured incorrectly.
                 return console.warn("Theme was not created sucessfully. Please ensure your palette object has primary, secondary, tertiary, error, and neutral as properties.");
             setTheme(newTheme);
+
+            if(setCookie)
+                setThemeCookie?.(themeName);
         } catch(error) { // If an invalid themeName is given, then the function displays an error.
             console.error("While setting a theme an error occured: " + error.message);
         }
     }, [paletteDictionary, paletteDictionary.current, darkMode]);
     // Whenever darkMode changes, the theme also needs to be updated.
     useEffect(() => {
-        changeTheme(theme.name);
+        changeTheme(theme.name, false);
     }, [darkMode]);
 
     const defaults = {
         "*": {
             boxSizing: "border-box",
+            transition: "background-color 300ms ease",
             "&::before, &::after": {
                 boxSizing: "border-box",
+                transition: "opacity 300ms ease, background-color 300ms ease"
             }
         },
         html: {
             MozTextSizeAdjust: "none",
             WebkitTextSizeAdjust: "none",
             textSizeAdjust: "none",
-            "& *": {
-                transition: "background-color 300ms ease"
-            }
         },
         body: {
             backgroundColor: theme.neutral.background.hex(),
@@ -278,7 +280,7 @@ export default function Themer({presets, children}) {
 
     return (
         <NextAppDirEmotionCacheProvider options={{key: "css"}}>
-            <ThemeContext.Provider value={{theme, changeTheme, addPalette, removePalette}} >
+            <ThemeContext.Provider value={{theme, palettes: paletteDictionary.current, changeTheme, addPalette, removePalette}} >
                 <DarkModeContext.Provider value={{darkMode, toggleDarkMode}}>
                     <GlobalStyles styles={defaults} />
                     <main id="root" className={materialIconFont.variable}>
