@@ -11,18 +11,27 @@ const lightness = {
     constant: 60,
     string: 60,
     variable: 90,
-    comment: 20,
+    comment: 30,
     tag: 50
 };
 
 const useStyles = tss.create(({theme}) => ({
     codeContainer: {
+        margin: 0,
         width: "100%",
         overflowX: "scroll",
         padding: 20,
         borderRadius: 20,
+
         backgroundColor: theme.primary.container.lightness(lightness.background).hex(),
         color: theme.primary.accent.lightness(lightness.onBackground).hex(),
+        fontSize: "0.75rem",
+        lineHeight: 1.5,
+
+        scrollbarWidth: "none",
+        "&::-webkit-scrollbar": {
+            display: "none"
+        },
         [`
             & .hljs-doctag,
             & .hljs-keyword,
