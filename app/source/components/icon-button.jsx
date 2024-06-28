@@ -14,7 +14,7 @@ const useStyles = tss.create(({theme, role, type, appearance, containerRole, rip
     },
     iconButton: {
         outline: "none",
-        border: appearance === "outlined"? `1pt solid ${theme[role].onContainer.hex()}` : "none",
+        border: appearance === "outlined"? `1pt solid ${theme[role][`on${type[0].toUpperCase() + type.slice(1)}`].hex()}` : "none",
 
         minWidth: "fit-content",
         minHeight: "fit-content",
