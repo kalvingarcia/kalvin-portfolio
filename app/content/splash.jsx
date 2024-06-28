@@ -22,16 +22,17 @@ const useStyles = tss.withName("Splash").create(({theme}) => ({
     splash: {
         overscrollBehavior: "contain",
         backgroundColor: theme.neutral.containerLowest.hex(),
-        width: "calc(100% + 1280px)",
+        width: "calc(100% + 1000px)",
         height: "100%",
         position: "fixed",
         left: -500,
         top: 0,
+        zIndex: 1000,
         [`@media (max-width: ${1280}px)`]: {
             left: 0,
             top: -500,
             width: "100%",
-            height: "calc(100% + 1280px)",
+            height: "calc(100% + 1000px)",
         },
         "&::before": {
             content: "''",
@@ -65,14 +66,14 @@ const useStyles = tss.withName("Splash").create(({theme}) => ({
         }
     },
     splashExit: {
-        animation: `${slideLeft} 1280ms ease`,
+        animation: `${slideLeft} 1000ms ease`,
         [`@media (max-width: ${1280}px)`]: {
-            animation: `${slideUp} 1280ms ease`,
+            animation: `${slideUp} 1000ms ease`,
         }
     },
     content: {
         overflow: "hidden",
-        width: "calc(100% - 1280px)",
+        width: "calc(100% - 1000px)",
         height: "100%",
         position: "absolute",
         top: 0,
@@ -83,7 +84,7 @@ const useStyles = tss.withName("Splash").create(({theme}) => ({
         gap: 50,
         [`@media (max-width: ${1280}px)`]: {
             width: "100%",
-            height: "calc(100% - 1280px)",
+            height: "calc(100% - 1000px)",
             top: 500,
             left: 0,
             flexDirection: "column-reverse",
@@ -167,7 +168,7 @@ export default function Splash({show, setShow}) {
 
     const {classes} = useStyles();
     return (
-        <Transition show={show} enter="none" exit={classes.splashExit} duration={600}>
+        <Transition show={show} enter="none" exit={classes.splashExit} duration={1000}>
             <div className={classes.splash}>
                 <div className={classes.content}>
                     <div className={classes.portrait}>
