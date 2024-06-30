@@ -1,7 +1,6 @@
-"use client"
-import {getCookie, setCookie} from "cookies-next";
+//import {cookies} from 'next/headers';
 import Local from "next/font/local";
-import {useCallback} from "react";
+import {getCookie} from "cookies-next";
 import {GlobalStyles} from "tss-react";
 import Themer from "./source/components/themer";
 import PalettePicker from './content/palette-picker';
@@ -36,18 +35,11 @@ export default function Layout({children}) {
             fontFeatureSettings: "'liga'"
         }
     }
-
-    const setDarkModeCookie = useCallback(darkMode => {
-        setCookie("kalvinPortfolioDarkMode", darkMode);
-    }, []);
-    const setThemeCookie = useCallback(themeName => {
-        setCookie("kalvinPortfolioTheme", themeName);
-    }, []);
     return (
             <html lang="en">
                 <body className={kalvinIconsFont.variable}>
                     <GlobalStyles styles={kalvinIcons} />
-                    <Themer darkModeDefault={(/true/i).test(getCookie("kalvinPortfolioDarkMode"))} themeDefault={getCookie("kalvinPortfolioTheme")} palettePresets={customPalettes} setDarkModeCookie={setDarkModeCookie} setThemeCookie={setThemeCookie}>
+                    <Themer darkModeDefault={(/true/i).test(getCookie("kalvinPortfolioDarkMode"))} themeDefault={getCookie("kalvinPortfolioTheme")} palettePresets={customPalettes}>
                         <PalettePicker />
                         {children}
                     </Themer>
