@@ -6,7 +6,7 @@ import { Transition } from "./animation";
 import { ContainerContextProvider } from "../helper/container";
 import { useEffect, useState } from "react";
 
-// The transition animations for the modal component.
+// The transition animations for the drawer component.
 const open = keyframes({
     "0%": {
         height: 0
@@ -18,12 +18,21 @@ const close = keyframes({
     }
 });
 
-// Modal styles.
+// Drawer styles.
 const useStyles = tss.create(({theme, height, duration}) => ({
+    barrier: {
+        position: "fixed",
+        width: "100%",
+        height: "100%",
+        inset: 0,
+        backgroundColor: "transparent",
+        zIndex: 10
+    },
     drawer: {
         position: "relative",
         width: "100%",
         height,
+        zIndex: 100,
 
         "&::before": {
             content: "''",
@@ -60,28 +69,25 @@ const DEFAULT_ANIMATION_DURATION = 300;
 const DEFAULT_HEIGHT = 200;
 
 /**
- * The Modal component is used content should appear above the content on the
- * screen, obsuring the content below. The component is made using the createPortal
- * function and the Transition component to animate the render.
+ * The Drawer component is used content should appear in a container at the top of
+ * the screen, moving other content down. The component should be places at the top
+ * of the root of the DOM. A Transition component is used to animate the render.
  *
- * @param props The component takes 7 props:
+ * @param props The component takes 6 props:
  *  *   The `className` prop is used to override styles of the content `div`.
- *  *   The `role` prop is used to describe which palette color the modal should
- *      use. *Defaults to neutral.*
- *  *   The `elevation` prop can only be used when the role is neutral. The prop
- *      allows the user to specify which elevation level the container will have
- *      changing the color. *Defaults to normal.*
+ *  *   The `height` prop is used to define what height the drawer takes up.
+ *      *Defaults to 200px.*
  *  *   The `open` and `setOpen` props are used to specify when the modal should
  *      open. The callback is used to close the modal when clicking outside of it.
- *  *   The `delay` prop describes how long the transition animation should take.
- *      *Defaults to 500 milliseconds.*
+ *  *   The `duration` prop describes how long the transition animation should take.
+ *      *Defaults to 300 milliseconds.*
  *  *   The `children` prop is used to define the content of the modal.
  *
  *  The component passes on other props to the `div` housing the content.
  *
  *  @returns A portal to the root component.
  */
-export default function Drawer({className, height = DEFAULT_HEIGHT, open, duration = DEFAULT_ANIMATION_DURATION, children, ...props}) {
+export default function Drawer({className, height = DEFAULT_HEIGHT, open, setOpen, duration = DEFAULT_ANIMATION_DURATION, children, ...props}) {
     useEffect(() => {
         if(!open) {
             document.body.classList.remove(classes.lockScroll);
@@ -95,6 +101,7 @@ export default function Drawer({className, height = DEFAULT_HEIGHT, open, durati
     const {cx, classes} = useStyles({height, duration});
     return (
         <ContainerContextProvider role="primary" type="container">
+            <div className={cx(classes.barrier, open? "open" : "")} onClick={() => setOpen(false)} />
             <Transition show={open} enter={classes.open} exit={classes.close} duration={duration}>
                 <div className={classes.drawer} {...props}>
                     <div className={cx(classes.content, className)}>
