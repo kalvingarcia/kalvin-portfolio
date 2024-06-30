@@ -1,5 +1,6 @@
 "use client"
-import {useEffect, useState} from "react";
+import {useEffect, useState, useCallback} from "react";
+import {setCookie} from 'cookies-next';
 import {useThemeContext, useDarkModeContext, tss} from "../source/components/themer";
 import {ContainerContextProvider, useContainerContext} from "../source/helper/container";
 import Drawer from "../source/components/drawer";
@@ -59,7 +60,7 @@ const useStyles = tss.create(({theme, role, type}) => ({
         position: "absolute",
         top: 0,
         right: 0,
-        zIndex: 10
+        zIndex: 1000
     }
 }));
 
@@ -81,18 +82,27 @@ export default function PalettePicker() {
     const {darkMode, toggleDarkMode} = useDarkModeContext();
     const [open, setOpen] = useState(false);
 
+    const handleDarkMode = useCallback(() => {
+        setCookie("kalvinPortfolioDarkMode", !darkMode);
+        toggleDarkMode();
+    }, [darkMode]);
+    const handleTheme = useCallback(themeName => {
+        setCookie("kalvinPortfolioTheme", themeName);
+        changeTheme(themeName);
+    }, []);
+
     const {classes} = useStyles();
     return (
         <ContainerContextProvider role={open? "primary" : role} type={open? "accent" : type} >
             <section className={classes.picker}>
-                <Drawer height={200} open={open}>
+                <Drawer height={200} open={open} setOpen={setOpen}>
                     <div className={classes.palettes}>
-                        {Object.entries(palettes).map(([name, palette]) => <PaletteCard key={name} name={name} current={theme.name === name} palette={palette} onClick={() => changeTheme(name)} />)}
+                        {Object.entries(palettes).map(([name, palette]) => <PaletteCard key={name} name={name} current={theme.name === name} palette={palette} onClick={() => handleTheme(name)} />)}
                     </div>
                 </Drawer>
                 <div className={classes.buttons}>
                     <IconButton appearance={open? "filled" : "outlined"} icon="palette" onClick={() => setOpen(!open)} />
-                    <IconButton role="neutral" appearance="outlined" icon={darkMode? "dark_mode" : 'light_mode'} onClick={toggleDarkMode} />
+                    <IconButton role="neutral" appearance="outlined" icon={darkMode? "dark_mode" : 'light_mode'} onClick={handleDarkMode} />
                 </div>
             </section>
         </ContainerContextProvider>
