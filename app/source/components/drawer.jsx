@@ -26,7 +26,11 @@ const useStyles = tss.create(({theme, height, duration}) => ({
         height: "100%",
         inset: 0,
         backgroundColor: "transparent",
-        zIndex: 10
+        zIndex: 10,
+        display: "none",
+        "&.open": {
+            display: "block"
+        }
     },
     drawer: {
         position: "relative",
