@@ -6,28 +6,28 @@
         "error": "#96484D",
         "neutral": "#34202C"
     },
-    "ghibli_grass": {
+    "ghibli": {
         "primary": "#59A96A",
         "secondary": "#9BDEAC",
         "tertiary": "#B4E7CE",
         "error": "#FFC09F",
         "neutral": "#494A3D"
     },
-    "nonbinary": {
+    "twilight": {
         "primary": "#7739C2",
         "secondary": "#8A75A7",
         "tertiary": "#EFCB68",
         "error": "#E9C784",
         "neutral": "#000411"
     },
-    "office_best": {
+    "office_core": {
         "primary": "#BFD7EA",
         "secondary": "#839788",
         "tertiary": "#BAA898",
         "error": "#7E302A",
         "neutral": "#000000"
     },
-    "pretty_pink_princess": {
+    "bubble_gum": {
         "primary": "#FF8CC6",
         "secondary": "#EAA7C5",
         "tertiary": "#613F75",
