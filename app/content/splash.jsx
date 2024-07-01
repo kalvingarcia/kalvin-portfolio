@@ -168,7 +168,7 @@ export default function Splash({show, setShow}) {
 
     const {classes} = useStyles();
     return (
-        <Transition show={show} enter="none" exit={classes.splashExit} duration={1000}>
+        <Transition show={show} enter="none" exit={classes.splashExit} duration={990}>
             <div className={classes.splash}>
                 <div className={classes.content}>
                     <div className={classes.portrait}>
