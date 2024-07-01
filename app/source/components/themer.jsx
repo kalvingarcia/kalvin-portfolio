@@ -86,7 +86,6 @@ export default function Themer({darkModeDefault = true, themeDefault = "default"
     const [darkMode, setDarkMode] = useState(darkModeDefault);
     // The toggle function which alternated the dark mode boolean between true and false.
     const toggleDarkMode = useCallback(() => {
-        setDarkModeCookie?.(!darkMode);
         setDarkMode(!darkMode);
     }, [darkMode]);
 
@@ -116,6 +115,8 @@ export default function Themer({darkModeDefault = true, themeDefault = "default"
     // It is cached using the useCallback hook, such that when the method is called using the same parameters it returns
     // the value more quickly instead of needing to generate the theme each time.
     const createTheme = useCallback((themeName, paletteObject, darkMode) => {
+        if(!paletteObject)
+            paletteObject = paletteDictionary.current.default;
         try {
             const primary = Color(paletteObject.primary);
             const secondary = Color(paletteObject.secondary);
@@ -175,32 +176,28 @@ export default function Themer({darkModeDefault = true, themeDefault = "default"
     // The theme object is only mutable using the changeTheme method. It is given a default value of the
     // default palette.
     const [theme, setTheme] = useState(createTheme(themeDefault, paletteDictionary.current[themeDefault], darkMode));
-    const changeTheme = useCallback((themeName, setCookie = true) => {
+    const changeTheme = useCallback((themeName) => {
         try {
             // The new theme is created.
             const newTheme = createTheme(themeName, paletteDictionary.current[themeName], darkMode);
             if(!newTheme) // If the theme isn't defined, then that means the palette object was structured incorrectly.
                 return console.warn("Theme was not created sucessfully. Please ensure your palette object has primary, secondary, tertiary, error, and neutral as properties.");
             setTheme(newTheme);
-
-            if(setCookie)
-                setThemeCookie?.(themeName);
         } catch(error) { // If an invalid themeName is given, then the function displays an error.
-            console.error("While setting a theme an error occured: " + error.message);
+            console.error("While setting a theme an error occured: " + error.message); 
         }
-    }, [paletteDictionary, paletteDictionary.current, darkMode]);
+    }, [darkMode]);
     // Whenever darkMode changes, the theme also needs to be updated.
     useEffect(() => {
-        changeTheme(theme.name, false);
+        changeTheme(theme.name);
     }, [darkMode]);
 
     const defaults = {
-        "*": {
+        "body *": {
             boxSizing: "border-box",
-            transition: "background-color 300ms ease",
             "&::before, &::after": {
                 boxSizing: "border-box",
-                transition: "opacity 300ms ease, background-color 300ms ease"
+                transition: "opacity 300ms ease"
             }
         },
         html: {
@@ -210,7 +207,7 @@ export default function Themer({darkModeDefault = true, themeDefault = "default"
         },
         body: {
             backgroundColor: theme.neutral.background.hex(),
-            color: theme.neutral.onContainer.hex(),
+            color: theme.neutral.onContainer.hex()
         },
         "body, h1, h2, h3, h4, p, figure, blockquote, dl, dd": {
             margin: 0
@@ -227,10 +224,10 @@ export default function Themer({darkModeDefault = true, themeDefault = "default"
             minHeight: "100vh",
             lineHeight: 1,
             overscrollBehavior: "none", // This part was specifically to avoid MacOS overscroll, which was bugging me.
-        
-            fontFamily: "var()",
+
+            fontFamily: "var(--body)",
             fontWeight: "400",
-            fontStyle: "normal",
+            fontStyle: "normal"
         },
         "h1, h2, h3, h4, button, input, label": {
             lineHeight: 1
