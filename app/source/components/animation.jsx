@@ -1,5 +1,5 @@
 "use client"
-import {Children, cloneElement, useEffect, useState} from "react";
+import {Children, cloneElement, useEffect, useRef, useState} from "react";
 
 const ENTER_EXIT_ERROR_MESSAGE = "Both enter and exit props need to be defined";
 const BEGIN_ACTIVE_ERROR_MESSAGE = "Both begin and active props need to be defined";
@@ -28,17 +28,20 @@ export function Transition({show = false, enter, exit, duration = DEFAULT_ANIMAT
     if(!enter || !exit)
         throw new Error(ENTER_EXIT_ERROR_MESSAGE); // Throwing an error to inform that enter or exit or both are undefined.
 
-    const [render, setRender] = useState(false); // Defines whether to render the child or not.
-    const [state, setState] = useState("inactive");
+    const [render, setRender] = useState(enter === "none"? true : false); // Defines whether to render the child or not.
+    const [_, setState] = useState("inactive");
+    const queue = useRef([]);
     useEffect(() => {
         // Testing the cases of show and hide (mount and unmount).
         if(show && !render) {
             setState("enter"); // Updating the child to animated one.
+            queue.current.push(enter);
             setRender(true);
-            setTimeout(() => setState("active"), duration); // After the animation duration is over, we reset the child.
+            setTimeout(() => queue.current.shift(), duration); // After the animation duration is over, we reset the child.
         } else if(!show && render) {
             setState("exit"); // Updating the child to the animated one.
-            setTimeout(() => setRender(false) || setState("inactive"), duration); // After the animation, we unmount and reset the child.
+            queue.current.push(exit);
+            setTimeout(() => setRender(false) || queue.current.shift(), duration); // After the animation, we unmount and reset the child.
         }
     }, [show, render, duration]);
 
@@ -46,7 +49,8 @@ export function Transition({show = false, enter, exit, duration = DEFAULT_ANIMAT
     return render && cloneElement(child, { 
         className: [ 
             child.props.className?? "",
-            state === "enter"? enter : state === "exit"? exit : ""
+            ...queue.current
+            // state === "enter"? enter : state === "exit"? exit : ""
         ].join(" ")
     });
 }
@@ -74,23 +78,25 @@ export function Effect({start = false, begin, active, end = "end", duration = DE
         throw new Error(BEGIN_ACTIVE_ERROR_MESSAGE); // Throwing an error to inform that enter or exit or both are undefined.
 
     const [state, setState] = useState("inactive");
+    const queue = useRef([]);
     useEffect(() => {
         // Testing the cases of show and hide (mount and unmount).
         if(start && state === "inactive") {
             setState("begin"); // Updating the child to animated one.
-            setTimeout(() => setState("active"), duration); // After the animation duration is over, we reset the child.
+            queue.push(begin);
+            setTimeout(() => setState("active") || queue.shift() || queue.push(active), duration); // After the animation duration is over, we reset the child.
         } else if(!start && state === "active") {
             setState("end"); // Updating the child to the animated one.
-            setTimeout(() => setState("inactive"), duration); // After the animation, we unmount and reset the child.
+            queue.push(end);
+            setTimeout(() => setState("inactive") || queue.shift(), duration); // After the animation, we unmount and reset the child.
         }
     }, [start, duration]);
 
-    const style = {begin, active, end, inactive: "inactive"};
     const child = Children.only(children); // Assert that the child is an only child.
     return cloneElement(child, { 
         className: [
             child.props.className?? "",
-            style[state]
+            ...queue
         ].join(" ")
     });
 }
