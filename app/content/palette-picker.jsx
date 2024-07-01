@@ -35,11 +35,15 @@ const useStyles = tss.create(({theme, role, type}) => ({
         borderRadius: 20,
         overflow: "hidden",
         opacity: 0.5,
-        border: `1pt solid ${theme.primary.accent.alpha(0.5).hexa()}`,
+        backgroundColor: theme.primary.accent.hex(),
+        color: theme.primary.onAccent.hex(),
+        transition: "opacity 300ms ease",
         "&.current": {
-            opacity: 1,
-            border: `1pt solid ${theme.primary.accent.hex()}`
+            opacity: 1
         },
+        "&:hover": {
+            opacity: 1
+        }
     },
     palette: {
         height: "100%",
@@ -89,7 +93,7 @@ export default function PalettePicker() {
     const handleTheme = useCallback(themeName => {
         setCookie("kalvinPortfolioTheme", themeName);
         changeTheme(themeName);
-    }, []);
+    }, [darkMode]);
 
     const {classes} = useStyles();
     return (
