@@ -5,7 +5,6 @@ import {useEffect, useState} from "react";
 import {GlobalStyles} from "tss-react";
 import Themer from "./source/components/themer";
 import PalettePicker from './content/palette-picker';
-import customPalettes from "../public/palettes.json";
 
 const kalvinIconsFont = Local({
     variable: "--kalvin-icons",
@@ -18,8 +17,12 @@ const kalvinIconsFont = Local({
 
 export default function Layout({children}) {
     const [isClient, setIsClient] = useState(false);
+    const [customPalettes, setCustomPalettes] = useState({});
     useEffect(() => {
-        setIsClient(true);
+        (async () => {
+            setCustomPalettes(await fetch("./palettes.json").then(response => response.json()));
+            setIsClient(true);
+        })();
     }, []);
 
     const prerenderDefaults = {
