@@ -1,5 +1,5 @@
 "use client"
-import {useCallback, useState} from "react";
+import {useCallback, useEffect, useState} from "react";
 import {tss} from "../source/components/themer";
 import {Display, Label} from "../source/components/typography";
 import IconButton, {Icon} from "../source/components/icon-button";
@@ -8,7 +8,6 @@ import Table, {Row} from "../source/components/table";
 import Modal from "../source/components/modal";
 import Remark from "../source/components/remark";
 import Chip from "../source/components/chip";
-import projects from "../../public/projects.json";
 
 const useStyles = tss.create(({theme}) => ({
     projects: {
@@ -66,12 +65,21 @@ export default function Projects({}) {
     const [open, setOpen] = useState(false);
     const [markdown, setMarkdown] = useState("");
     const openProject = useCallback(async directory => {
-        setMarkdown((await import(`../../public/projects/${directory}.md`)).default);
+        setMarkdown(await fetch(`./projects/${directory}.md`).then(response => response.text()));
         setOpen(true);
     }, []);
 
+    const [projects, setProjects] = useState({});
+    const [isClient, setIsClient] = useState(false);
+    useEffect(() => {
+        (async () => {
+            setProjects(await fetch("./projects.json").then(response => response.json()));
+            setIsClient(true);
+        })();
+    }, []);
+
     const {classes} = useStyles();
-    return (
+    return (isClient?
         <section className={classes.projects}>
             <Button role="tertiary" appearance="text" className={classes.backLink} onClick={() => setTimeout(() => window.location.href = "https://www.kalvingarcia.com/", 300)}>
                 <Icon icon="arrow_back" />
@@ -98,5 +106,7 @@ export default function Projects({}) {
                 </Remark>
             </Modal>
         </section>
+        :
+        ""
     );
 }
