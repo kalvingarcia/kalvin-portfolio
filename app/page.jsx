@@ -20,12 +20,6 @@ export default function Homepage({}) {
     const [show, setShow] = useState(false);
     const {classes} = useStyles();
 
-    useSlideScroll(SLIDE_COUNT);
-    useEffect(() => {
-        document.body.classList.add(classes.slideScroll);
-        document.documentElement.classList.add(classes.slideScroll);
-    }, []);
-
     return (
         <section className={classes.homepage}>
             <Splash show={show} setShow={setShow} />
