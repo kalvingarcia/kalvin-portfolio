@@ -27,7 +27,7 @@ const useStyles = tss.withName("Splash").create(({theme}) => ({
         position: "fixed",
         left: -500,
         top: 0,
-        zIndex: 1000,
+        zIndex: 10000,
         [`@media (max-width: ${1280}px)`]: {
             left: 0,
             top: -500,
