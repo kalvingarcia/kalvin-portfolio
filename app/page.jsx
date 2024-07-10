@@ -4,23 +4,30 @@ import {tss} from './source/components/themer';
 import Splash from "./content/splash";
 import Button from "./source/components/button";
 import Slider from "./source/components/slider";
+import Bio from "./content/bio";
+import Project from "./content/project";
+import Overlay from "./content/overlay";
 
 const useStyles = tss.create(({theme}) => ({
-
+    homepage: {
+        margin: "auto",
+        width: "100%",
+        maxWidth: 1280,
+    }
 }));
 
 export default function Homepage({}) {
-    const [show, setShow] = useState(false);
+    const [show, setShow] = useState(true);
     const {classes} = useStyles();
 
     return (
-        <section className={classes.homepage}>
-            <Splash show={show} setShow={setShow} />
-            <div style={{width: "100%", height: "100vh"}}>
-                <Slider min={10} step={10} />
-            </div>
-            <div style={{width: "100%", height: "100vh"}} />
-            <div style={{width: "100%", height: "100vh"}} />
-        </section>
+        <>
+            <Overlay />
+            <section className={classes.homepage}>
+                <Splash show={show} setShow={setShow} />
+                <Bio />
+                <Project />
+            </section>
+        </>
     );
 }
