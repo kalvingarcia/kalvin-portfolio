@@ -6,12 +6,15 @@ const useStyles = tss.create(({theme, percentage}) => ({
         padding: 5
     },
     slider: {
+        margin: 0,
+        marginLeft: -2,
         boxSizing: "border-box",
         WebkitAppearance: "none",
         position: "relative",
         backgroundColor: theme.primary.container.alpha(0.5).hexa(),
         width: "100%",
         height: 10,
+        borderRadius: 20,
         "&::-webkit-slider-thumb": {
             WebkitAppearance: "none",
             backgroundColor: theme.primary.accent.hex(),
@@ -25,7 +28,8 @@ const useStyles = tss.create(({theme, percentage}) => ({
             inset: 0,
             width: `calc(${percentage} * 100%)`,
             height: 10,
-            backgroundColor: theme.primary.accent.hex()
+            borderRadius: 20,
+            backgroundColor: theme.primary.accent.alpha(0.75).hexa()
         }
     }
 }));
