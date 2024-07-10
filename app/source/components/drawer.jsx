@@ -26,7 +26,7 @@ const useStyles = tss.create(({theme, height, duration}) => ({
         height: "100%",
         inset: 0,
         backgroundColor: "transparent",
-        zIndex: 10,
+        zIndex: 1000,
         display: "none",
         "&.open": {
             display: "block"
@@ -36,7 +36,7 @@ const useStyles = tss.create(({theme, height, duration}) => ({
         position: "relative",
         width: "100%",
         height,
-        zIndex: 100,
+        zIndex: 1000,
 
         "&::before": {
             content: "''",
