@@ -19,7 +19,7 @@ GitHub Pages website.
 
 The design concept can be seen in the wireframes I made:
 
-![Personal website wireframes](/images/kalvin-portfolio/wireframes.png)
+![Personal website wireframes](/images/kalvin-portfolio/wireframes.jpg)
 
 I wanted to keep the UI minimalistic and elegant. I've always been inspired by
 the UI/UX design paradigms because they give a lot of structure to something, so
