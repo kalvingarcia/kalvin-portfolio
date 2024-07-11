@@ -7,7 +7,7 @@ const useStyles = tss.create(({theme, role, type}) => ({
     display: {
         display: "block",
         position: "relative",
-        fontSize: "4rem",
+        fontSize: "3rem",
         fontFamily: "var(--display-font)",
         color: theme[role][`on${type[0].toUpperCase() + type.slice(1)}`].hex()
     },

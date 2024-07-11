@@ -118,7 +118,7 @@ const useStyles = tss.withName("Splash").create(({theme}) => ({
         minHeight: "4rem",
         display: "block",
         position: "relative",
-        fontSize: "4rem",
+        fontSize: "3rem",
         fontFamily: "var(--display-font)",
         color: theme.primary.accent.hex(),
         lineHeight: 1,
