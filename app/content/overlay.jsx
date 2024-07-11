@@ -3,7 +3,6 @@ import {tss} from "../source/components/themer";
 
 const useStyles = tss.create(({theme}) => ({
     overlay: {
-        mixBlendMode: "hard-light",
         pointerEvents: "none",
         height: "100%",
         width: "100%",
