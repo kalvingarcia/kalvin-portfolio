@@ -1,7 +1,7 @@
 import {tss} from "../source/components/themer";
 import Slider from "../source/components/slider";
 import {useCallback, useState} from "react";
-import {Title} from "../source/components/typography";
+import {Body, Title} from "../source/components/typography";
 
 const useStyles = tss.create(({theme}) => ({
     slide: {
@@ -13,10 +13,6 @@ const useStyles = tss.create(({theme}) => ({
         justifyContent: "center",
         gap: 50,
         [`@media (max-width: ${1280}px)`]: {
-            height: "100vh",
-            width: "100vw",
-            top: 500,
-            left: 0,
             flexDirection: "column-reverse",
         }
     },
@@ -38,6 +34,7 @@ const useStyles = tss.create(({theme}) => ({
         justifyContent: "flex-end",
         [`@media (max-width: ${1280}px)`]: {
             width: "100%",
+            maxWidth: 640,
             height: "50%"
         }
     },
@@ -73,7 +70,7 @@ export default function Bio({}) {
                     <Title>About me...</Title>
                 </div>
                 <div className={classes.bio}>
-                    <p>{bio}</p>
+                    <Body>{bio}</Body>
                 </div>
                 <Slider min={0} max={4} value={DEFAULT_BIO} onChange={changeBio} step={1} />
             </div>
