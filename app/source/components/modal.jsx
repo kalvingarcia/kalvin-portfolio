@@ -119,7 +119,7 @@ export default function Modal({className, role = "neutral", elevation = "normal"
     if(role != "neutral")
         elevation = "normal";
 
-    const [show, setShow] = useState(open);
+    const [show, setShow] = useState(false);
     useEffect(() => {
         if(show && !open) {
             document.getElementById("root").classList.remove(classes.zoomOut);
