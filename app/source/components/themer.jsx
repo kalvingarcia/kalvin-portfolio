@@ -193,6 +193,11 @@ export default function Themer({darkModeDefault = true, themeDefault = "default"
     }, [darkMode]);
 
     const defaults = {
+        "*": {
+            scrollbarWidth: "thin",
+            scrollbarColor: `${theme.primary.accent.hex()} ${theme.primary.container.alpha(0.5).hexa()}`,
+            transition: "scrollbar 300ms ease"
+        },
         "body *": {
             boxSizing: "border-box",
             "&::before, &::after": {
