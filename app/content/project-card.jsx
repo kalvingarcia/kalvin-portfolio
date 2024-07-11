@@ -1,20 +1,50 @@
 import { tss } from "../source/components/themer";
 import {Body, Heading} from "../source/components/typography";
+import {ContainerContextProvider} from "../source/helper/container";
 import useRippleEffect from "../source/hooks/ripple";
 
 const useStyles = tss.create(({theme, rippleClass}) => ({
     card: {
-        height: 400,
-        position: "relative"
-    },
-    image: {
-        position: "absolute",
-        inset: 0,
-        width: "75%",
-        height: "100%",
+        display: "flex",
+        width: 400,
+        height: 600,
+        position: "relative",
+        flexDirection: "column",
+        backgroundColor: theme.secondary.container.hex(),
         borderRadius: 20,
         overflow: "hidden",
         clipPath: "inset(0 0 0 0 round 20px)",
+        [`@media (max-width: ${1280}px)`]: {
+            width: "100%",
+            height: 200,
+            flexDirection: "row",
+        },
+        "&::before": {
+            content: "''",
+            position: "absolute",
+            width: "100%",
+            height: "100%",
+            inset: 0,
+            backgroundColor:theme.secondary.onContainer.hex(),
+            opacity: 0
+        },
+        "&:hover::before": {
+            opacity: 0.2
+        },
+        [`& .${rippleClass}`]: {
+            backgroundColor: theme.secondary.onContainer.hex()
+        }
+    },
+    image: {
+        width: "100%",
+        height: "60%",
+        borderRadius: 20,
+        overflow: "hidden",
+        clipPath: "inset(0 0 0 0 round 20px)",
+        [`@media (max-width: ${1280}px)`]: {
+            width: "50%",
+            height: "100%"
+        },
         "& img": {
             width: "100%",
             height: "100%",
@@ -27,43 +57,41 @@ const useStyles = tss.create(({theme, rippleClass}) => ({
             width: "100%",
             height: "100%",
             inset: 0,
-            backgroundColor:theme.neutral.onContainer.hex(),
+            backgroundColor:theme.primary.onContainer.hex(),
             opacity: 0
         },
         "&:hover::after": {
             opacity: 0.2
         },
         [`& .${rippleClass}`]: {
-            backgroundColor: theme.neutral.onContainer.hex()
+            backgroundColor: theme.primary.onContainer.hex()
         }
     },
     text: {
-        position: "absolute",
+        display: "flex",
+        flexDirection: "column",
+        gap: 20,
         padding: 20,
-        top: 20,
-        right: 0,
-        width: "75%",
-        height: "fit-content",
-        maxHeight: 200,
-        backgroundColor: theme.secondary.container.hex(),
-        borderRadius: 20,
+        width: "100%",
+        height: "40%",
         overflow: "hidden",
-        clipPath: "inset(0 0 0 0 round 20px)",
-        textOverflow: "ellipsis",
-        "&::after": {
-            content: "''",
-            position: "absolute",
+        [`@media (max-width: ${1280}px)`]: {
+            width: "50%",
+            height: "100%"
+        },
+        "& h4": {
             width: "100%",
-            height: "100%",
-            inset: 0,
-            backgroundColor:theme.secondary.onContainer.hex(),
-            opacity: 0
+            overflow: "hidden",
+            whiteSpace: "nowrap",
+            textOverflow: "ellipsis"
         },
-        "&:hover::after": {
-            opacity: 0.2
-        },
-        [`& .${rippleClass}`]: {
-            backgroundColor: theme.secondary.onContainer.hex()
+        "& p": {
+            display: "-webkit-box",
+            WebkitLineClamp: 4,
+            WebkitBoxOrient: "vertical",
+            width: "100%",
+            overflow: "hidden",
+            textOverflow: "ellipsis"
         }
     }
 }));
@@ -72,14 +100,20 @@ export default function ProjectCard({image, heading, body, directory}) {
     const {rippleClass, rippleExpand, rippleFade} = useRippleEffect();
     const {classes} = useStyles({rippleClass});
     return (
-        <div className={classes.card} onClick={() => setTimeout(() => window.location.href = "https://projects.kalvingarcia.com/", 300)}>
-            <figure className={classes.image} onMouseDown={rippleExpand} onMouseUp={rippleFade}>
-                <img src={image} alt="Project Card Image" />
-            </figure>
-            <div className={classes.text} onMouseDown={rippleExpand} onMouseUp={rippleFade}>
-                <Heading>{heading}</Heading>
-                <Body>{body}</Body>
-            </div>
+        <div className={classes.card} 
+            onMouseDown={rippleExpand}
+            onMouseUp={rippleFade}
+            onClick={() => setTimeout(() => window.location.href = `https://projects.kalvingarcia.com?open=${directory}`, 300)}
+        >
+            <ContainerContextProvider role="secondary" type="container">
+                <figure className={classes.image} onMouseDown={rippleExpand} onMouseUp={rippleFade}>
+                    <img src={image} alt="Project Card Image" />
+                </figure>
+                <div className={classes.text}>
+                    <Heading>{heading}</Heading>
+                    <Body>{body}</Body>
+                </div>
+            </ContainerContextProvider>
         </div>
     );
 }
