@@ -31,11 +31,7 @@ const useStyles = tss.create(({theme}) => ({
     image: {
         marginBottom: 10,
         width: "100%",
-        height: "100%",
-        "& img": {
-            objectPosition: "center",
-            objectFit: "contain"
-        }
+        height: "100%"
     },
     code: {
         marginBottom: 10
@@ -71,9 +67,7 @@ export default function Remark({children}) {
             },
             img({src, alt}) {
                 return (src?
-                    <div className={classes.image}>
-                        <img src={src} alt={alt} /> 
-                    </div>
+                    <img className={classes.image} src={src} alt={alt} /> 
                     : 
                     ""
                 );
