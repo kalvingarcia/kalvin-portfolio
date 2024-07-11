@@ -8,6 +8,7 @@ import Table, {Row} from "../source/components/table";
 import Modal from "../source/components/modal";
 import Remark from "../source/components/remark";
 import Chip from "../source/components/chip";
+import PalettePicker from "../content/palette-picker";
 
 const useStyles = tss.create(({theme}) => ({
     projects: {
@@ -80,32 +81,35 @@ export default function Projects({}) {
 
     const {classes} = useStyles();
     return (isClient?
-        <section className={classes.projects}>
-            <Button role="tertiary" appearance="text" className={classes.backLink} onClick={() => setTimeout(() => window.location.href = "https://www.kalvingarcia.com/", 300)}>
-                <Icon icon="arrow_back" />
-                <Label>kalvingarcia.com</Label>
-            </Button>
-            <Display>Projects</Display>
-            <Table className={classes.list} headers={projects.columns}>
-                {projects.rows.map((row, index) => (
-                    row.display?
-                        <Row key={`row-${index}`}>
-                            <Label>{row.completionDate}</Label>
-                            <Label className={classes.openModal} onClick={() => openProject(row.directory)}>{row.name} <Icon icon="arrow_outward" /></Label>
-                            <Label>{row.madeFor}</Label>
-                            <div className={classes.technologies}>{row.technologiesUsed.map((tech, index) => <Chip key={tech}>{tech}</Chip>)}</div>
-                            <div className={classes.links}>{Object.entries(row.links).map(([name, link]) => <IconButton key={name} appearance="text" icon={name} iconClass="kalvin-icons" onClick={() => setTimeout(() => window.open(link, "_blank"), 300)} />)}</div>
-                        </Row>
-                        :
-                        ""
-                ))}
-            </Table>
-            <Modal elevation="highest" open={open} setOpen={setOpen}>
-                <Remark>
-                    {markdown}
-                </Remark>
-            </Modal>
-        </section>
+        <>
+            <PalettePicker />
+            <section className={classes.projects}>
+                <Button role="tertiary" appearance="text" className={classes.backLink} onClick={() => setTimeout(() => window.location.href = "https://www.kalvingarcia.com/", 300)}>
+                    <Icon icon="arrow_back" />
+                    <Label>kalvingarcia.com</Label>
+                </Button>
+                <Display>Projects</Display>
+                <Table className={classes.list} headers={projects.columns}>
+                    {projects.rows.map((row, index) => (
+                        row.display?
+                            <Row key={`row-${index}`}>
+                                <Label>{row.completionDate}</Label>
+                                <Label className={classes.openModal} onClick={() => openProject(row.directory)}>{row.name} <Icon icon="arrow_outward" /></Label>
+                                <Label>{row.madeFor}</Label>
+                                <div className={classes.technologies}>{row.technologiesUsed.map((tech, index) => <Chip key={tech}>{tech}</Chip>)}</div>
+                                <div className={classes.links}>{Object.entries(row.links).map(([name, link]) => <IconButton key={name} appearance="text" icon={name} iconClass="kalvin-icons" onClick={() => setTimeout(() => window.open(link, "_blank"), 300)} />)}</div>
+                            </Row>
+                            :
+                            ""
+                    ))}
+                </Table>
+                <Modal elevation="highest" open={open} setOpen={setOpen}>
+                    <Remark>
+                        {markdown}
+                    </Remark>
+                </Modal>
+            </section>
+        </>
         :
         ""
     );

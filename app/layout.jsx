@@ -4,7 +4,6 @@ import {getCookie} from "cookies-next";
 import {useEffect, useState} from "react";
 import {GlobalStyles} from "tss-react";
 import Themer from "./source/components/themer";
-import PalettePicker from './content/palette-picker';
 
 const kalvinIconsFont = Local({
     variable: "--kalvin-icons",
@@ -50,7 +49,6 @@ export default function Layout({children}) {
                     <GlobalStyles styles={prerenderDefaults} />
                     {isClient?
                         <Themer darkModeDefault={(/true/i).test(getCookie("kalvinPortfolioDarkMode"))} themeDefault={getCookie("kalvinPortfolioTheme")} palettePresets={customPalettes}>
-                            <PalettePicker />
                             {children}
                         </Themer>
                         :
