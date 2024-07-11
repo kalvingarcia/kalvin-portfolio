@@ -1,5 +1,6 @@
 "use client"
-import {useCallback, useEffect, useState} from "react";
+import {useSearchParams, useRouter} from "next/navigation";
+import {useCallback, useEffect, useRef, useState} from "react";
 import {tss} from "../source/components/themer";
 import {Display, Label} from "../source/components/typography";
 import IconButton, {Icon} from "../source/components/icon-button";
@@ -65,16 +66,32 @@ const useStyles = tss.create(({theme}) => ({
 export default function Projects({}) {
     const [open, setOpen] = useState(false);
     const [markdown, setMarkdown] = useState("");
-    const openProject = useCallback(async directory => {
+    const openModal = useCallback(async directory => {
         setMarkdown(await fetch(`./projects/${directory}.md`).then(response => response.text()));
         setOpen(true);
     }, []);
 
-    const [projects, setProjects] = useState({});
+    const router = useRouter();
+    const handleModalOpen = useCallback(open => {
+        if(!open)
+            router.push("/");
+        setOpen(open);
+    }, [open]);
+
+    const searchParams = useSearchParams();
+    useEffect(() => {
+        const directory = searchParams.get("open");
+        if(directory)
+            openModal(directory);
+        else
+            setOpen(false);
+    }, [searchParams.get("open")]);
+
+    const projects = useRef({});
     const [isClient, setIsClient] = useState(false);
     useEffect(() => {
         (async () => {
-            setProjects(await fetch("./projects.json").then(response => response.json()));
+            projects.current = await fetch("./projects.json").then(response => response.json());
             setIsClient(true);
         })();
     }, []);
@@ -89,12 +106,12 @@ export default function Projects({}) {
                     <Label>kalvingarcia.com</Label>
                 </Button>
                 <Display>Projects</Display>
-                <Table className={classes.list} headers={projects.columns}>
-                    {projects.rows.map((row, index) => (
+                <Table className={classes.list} headers={projects.current.columns}>
+                    {projects.current.rows.map((row, index) => (
                         row.display?
                             <Row key={`row-${index}`}>
                                 <Label>{row.completionDate}</Label>
-                                <Label className={classes.openModal} onClick={() => openProject(row.directory)}>{row.name} <Icon icon="arrow_outward" /></Label>
+                                <Label className={classes.openModal} onClick={() => router.push(`?open=${row.directory}`)}>{row.name} <Icon icon="arrow_outward" /></Label>
                                 <Label>{row.madeFor}</Label>
                                 <div className={classes.technologies}>{row.technologiesUsed.map((tech, index) => <Chip key={tech}>{tech}</Chip>)}</div>
                                 <div className={classes.links}>{Object.entries(row.links).map(([name, link]) => <IconButton key={name} appearance="text" icon={name} iconClass="kalvin-icons" onClick={() => setTimeout(() => window.open(link, "_blank"), 300)} />)}</div>
@@ -103,10 +120,8 @@ export default function Projects({}) {
                             ""
                     ))}
                 </Table>
-                <Modal elevation="highest" open={open} setOpen={setOpen}>
-                    <Remark>
-                        {markdown}
-                    </Remark>
+                <Modal elevation="highest" open={open} setOpen={handleModalOpen}>
+                    <Remark>{markdown}</Remark>
                 </Modal>
             </section>
         </>
