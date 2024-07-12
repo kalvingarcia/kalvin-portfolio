@@ -6,8 +6,8 @@ import useRippleEffect from "../source/hooks/ripple";
 const useStyles = tss.create(({theme, rippleClass}) => ({
     card: {
         display: "flex",
-        width: 400,
-        height: 600,
+        width: 300,
+        height: 500,
         position: "relative",
         flexDirection: "column",
         backgroundColor: theme.secondary.container.hex(),
@@ -16,7 +16,7 @@ const useStyles = tss.create(({theme, rippleClass}) => ({
         clipPath: "inset(0 0 0 0 round 20px)",
         [`@media (max-width: ${1280}px)`]: {
             width: "100%",
-            height: 200,
+            maxHeight: 150,
             flexDirection: "row",
         },
         "&::before": {
@@ -42,7 +42,7 @@ const useStyles = tss.create(({theme, rippleClass}) => ({
         overflow: "hidden",
         clipPath: "inset(0 0 0 0 round 20px)",
         [`@media (max-width: ${1280}px)`]: {
-            width: "50%",
+            width: "40%",
             height: "100%"
         },
         "& img": {
