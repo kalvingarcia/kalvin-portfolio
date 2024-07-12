@@ -17,7 +17,7 @@ const useStyles = tss.create(({theme}) => ({
     socials: {
         position: "absolute",
         bottom: 0,
-        right: 20,
+        right: 10,
         "& .line": {
             margin: "auto",
             height: 100,
@@ -32,9 +32,9 @@ export default function Overlay({}) {
     return (
         <section className={classes.overlay}>
             <div className={classes.socials}>
-                <IconButton appearance="text" icon="github" iconClass="kalvin-icons"/>
-                <IconButton appearance="text" icon="linkedin" iconClass="kalvin-icons"/>
-                <IconButton appearance="text" icon="itchio" iconClass="kalvin-icons"/>
+                <IconButton appearance="text" icon="github" iconClass="kalvin-icons" onClick={() => setTimeout(() => window.open("https://github.com/kalvingarcia/", "_blank"), 300)} />
+                <IconButton appearance="text" icon="linkedin" iconClass="kalvin-icons" onClick={() => setTimeout(() => window.open("https://linkedin.com/in/kalvin-garcia/", "_blank"), 300)} />
+                <IconButton appearance="text" icon="itchio" iconClass="kalvin-icons" onClick={() => setTimeout(() => window.open("https://kalvingarcia.itch.io/", "_blank"), 300)} />
                 <div className="line" />
             </div>
         </section>
