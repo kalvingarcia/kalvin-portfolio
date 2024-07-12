@@ -7,24 +7,34 @@ import { Icon } from "../source/components/icon-button";
 
 const useStyles = tss.create(({theme}) => ({
     slide: {
-        height: "100vh",
+        paddingTop: 40,
+        paddingBottom: 40,
+        position: "relative",
+        height: "100%",
         width: "100%",
-        overflow: "hidden",
         display: "flex",
+        gap: 20,
         alignItems: "center",
         justifyContent: "center",
         flexDirection: "column",
+        "&::before": {
+            content: "''",
+            position: "absolute",
+            top: 0,
+            left: "calc(-1 * (100vw - 100%) / 2)",
+            width: "100vw",
+            height: "100%",
+            backgroundColor: theme.neutral.containerLowest.hex()
+        }
     },
     projects: {
-        width: "100%",
-        padding: 20,
+        width: "80%",
         display: "flex",
-        gap: 20,
+        gap: 10,
         overflow: "hidden",
         overflowX: "auto",
-        "& > *": {
-            flex: "0 0 400px",
-        },
+        alignItems: "center",
+        justifyContent: "center",
         [`@media (max-width: ${1280}px)`]: {
             flexDirection: "column",
             "& > *": {
@@ -50,7 +60,7 @@ export default function Project({}) {
             <Subtitle>Featured Projects</Subtitle>
             <div className={classes.projects}>{isClient?
                 featured.map(({directory, name, description}) => (
-                    <ProjectCard image={`/images/${directory}/wireframes.png`} heading={name} body={description} directory={directory} />
+                    <ProjectCard image={`/images/${directory}/wireframes.jpg`} heading={name} body={description} directory={directory} />
                 ))
                 :
                 ""
