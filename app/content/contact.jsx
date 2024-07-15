@@ -1,14 +1,16 @@
 import Button from "../source/components/button";
-import Form, {TextArea, TextField} from "../source/components/form";
+import Form from "../source/components/form";
+import TextField from "../source/components/text-field";
+import {TextArea} from "../source/components/text-area";
 import { Icon } from "../source/components/icon-button";
 import {tss} from "../source/components/themer";
-import { Heading, Label } from "../source/components/typography";
+import { Title, Label } from "../source/components/typography";
 
 const useStyles = tss.create(({theme}) => ({
     slide: {
         paddingTop: 40,
         paddingBottom: 40,
-        height: "100%",
+        height: "100vh",
         width: "100%",
         overflow: "hidden",
         display: "flex",
@@ -23,6 +25,9 @@ const useStyles = tss.create(({theme}) => ({
         maxWidth: "calc(0.8 * 1280px)",
         borderRadius: 20,
         backgroundColor: theme.neutral.container.hex()
+    },
+    submit: {
+        alignSelf: "flex-end"
     }
 }));
 
@@ -30,13 +35,14 @@ export default function Contact({}) {
     const {classes} = useStyles();
     return (
         <div className={classes.slide}>
-            <Heading>Contact Me</Heading>
+            <Title>Contact Me</Title>
             <div className={classes.contact}>
-                <Form>
-                    <TextField label="Name" />
-                    <TextField label="Email" />
-                    {/* <TextArea /> */}
-                    <Button type="submit">
+                <Form className="gform" data-email="kalvigarcia@gmail.com" action="https://script.google.com/macros/s/AKfycbwbQkVagBCDvywt_KQrXJyEQX9QkPwnYTF1IV9chdv_m5gBrlWFCc8dIhfYiJzfJnMi7Q/exec">
+                    <TextField label="Name" placeholder="John Doe" required />
+                    <TextField label="Email" placeholder="sample@email.com" helperText="This will let me know where I can contact you." required />
+                    <TextField label="Phone (optional)" placeholder="123-456-7890" />
+                    <TextArea label="Message" required>Hello, I'm inquiring about your car's extended warranty.</TextArea>
+                    <Button className={classes.submit} type="submit">
                         <Icon icon="send" />
                         <Label>Send</Label>
                     </Button>
