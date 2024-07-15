@@ -1,7 +1,7 @@
 import {useState, useEffect} from "react";
 import Button from "../source/components/button";
 import {tss} from "../source/components/themer";
-import { Label, Subtitle } from "../source/components/typography";
+import { Label, Title } from "../source/components/typography";
 import ProjectCard from "./project-card";
 import { Icon } from "../source/components/icon-button";
 
@@ -10,7 +10,7 @@ const useStyles = tss.create(({theme}) => ({
         paddingTop: 40,
         paddingBottom: 40,
         position: "relative",
-        height: "100%",
+        height: "100vh",
         width: "100%",
         display: "flex",
         gap: 20,
@@ -57,7 +57,7 @@ export default function Project({}) {
     const {classes} = useStyles();
     return (
         <div className={classes.slide}>
-            <Subtitle>Featured Projects</Subtitle>
+            <Title>Featured Projects</Title>
             <div className={classes.projects}>{isClient?
                 featured.map(({directory, name, description}) => (
                     <ProjectCard image={`/images/${directory}/wireframes.jpg`} heading={name} body={description} directory={directory} />
