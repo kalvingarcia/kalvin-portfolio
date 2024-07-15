@@ -30,7 +30,7 @@ jobs:
           static_site_generator: next
 
       - name: Build
-        uses: npm run build
+        run: npm run build
 
       - name: Upload
         uses: actions/upload-pages-artifact@v3
