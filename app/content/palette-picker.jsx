@@ -6,7 +6,7 @@ import {ContainerContextProvider, useContainerContext} from "../source/helper/co
 import Drawer from "../source/components/drawer";
 import IconButton from "../source/components/icon-button";
 
-const useStyles = tss.create(({theme, role, type}) => ({
+const useStyles = tss.create(({theme, open}) => ({
     picker: {
         margin: "auto",
         position: "relative",
@@ -55,16 +55,16 @@ const useStyles = tss.create(({theme, role, type}) => ({
             width: "100%"
         }
     },
-    buttons: {
-        padding: 20,
-        display: "flex",
-        flexDirection: "column",
-        gap: 10,
-        alignItems: "center",
+    theme: {
         position: "absolute",
-        top: 0,
-        right: 0,
+        top: 20,
+        right: 20,
         zIndex: 1000
+    },
+    scheme: {
+        position: "absolute",
+        top: 80,
+        right: 20
     }
 }));
 
@@ -95,7 +95,7 @@ export default function PalettePicker() {
         changeTheme(themeName);
     }, [darkMode]);
 
-    const {classes} = useStyles();
+    const {classes} = useStyles({open});
     return (
         <ContainerContextProvider role={open? "primary" : role} type={open? "accent" : type} >
             <section className={classes.picker}>
@@ -103,11 +103,9 @@ export default function PalettePicker() {
                     <div className={classes.palettes}>
                         {Object.entries(palettes).map(([name, palette]) => <PaletteCard key={name} name={name} current={theme.name === name} palette={palette} onClick={() => handleTheme(name)} />)}
                     </div>
+                    <IconButton className={classes.scheme} role="neutral" appearance="outlined" icon={darkMode? "dark_mode" : 'light_mode'} onClick={handleDarkMode} />
                 </Drawer>
-                <div className={classes.buttons}>
-                    <IconButton appearance={open? "filled" : "outlined"} icon="palette" onClick={() => setOpen(!open)} />
-                    <IconButton role="neutral" appearance="outlined" icon={darkMode? "dark_mode" : 'light_mode'} onClick={handleDarkMode} />
-                </div>
+                <IconButton className={classes.theme} appearance={open? "filled" : "outlined"} icon="palette" onClick={() => setOpen(!open)} />
             </section>
         </ContainerContextProvider>
     );

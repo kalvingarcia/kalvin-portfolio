@@ -50,6 +50,7 @@ const useStyles = tss.create(({theme, height, duration}) => ({
         }
     },
     content: {
+        position: "relative",
         margin: "auto",
         width: "100%",
         maxWidth: 1280,
