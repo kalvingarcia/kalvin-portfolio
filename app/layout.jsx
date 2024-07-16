@@ -14,6 +14,64 @@ const kalvinIconsFont = Local({
     }]
 });
 
+const displayFont = Local({
+    variable: "--display-font",
+    src: [{
+        path: "../public/fonts/Display.woff2",
+        weight: "800",
+        style: "normal"
+    }]
+});
+const titleFont = Local({
+    variable: "--title-font",
+    src: [{
+        path: "../public/fonts/Title.woff2",
+        weight: "600",
+        style: "normal"
+    }]
+});
+const headingFont = Local({
+    variable: "--heading-font",
+    src: [{
+        path: "../public/fonts/Heading.woff2",
+        weight: "500",
+        style: "normal"
+    }]
+});
+const bodyFont = Local({
+    variable: "--body-font",
+    src: [
+        {
+            path: "../public/fonts/Body.woff2",
+            weight: "200",
+            style: "normal"
+        },
+        {
+            path: "../public/fonts/BodyItalic.woff2",
+            weight: "200",
+            style: "italic"
+        },
+        {
+            path: "../public/fonts/BodyBold.woff2",
+            weight: "700",
+            style: "normal"
+        },
+        {
+            path: "../public/fonts/BodyBoldItalic.woff2",
+            weight: "700",
+            style: "italic"
+        },
+    ]
+});
+const codeFont = Local({
+    variable: "--code-font",
+    src: [{
+        path: "../public/fonts/Code.woff2",
+        weight: "400",
+        style: "normal"
+    }]
+});
+
 export default function Layout({children}) {
     const [isClient, setIsClient] = useState(false);
     const [customPalettes, setCustomPalettes] = useState({});
@@ -44,7 +102,7 @@ export default function Layout({children}) {
         }
     }
     return (
-            <html lang="en" className={kalvinIconsFont.variable}>
+            <html lang="en" className={[kalvinIconsFont.variable, displayFont.variable, titleFont.variable, headingFont.variable, bodyFont.variable, codeFont.variable].join(" ")}>
                 <body>
                     <GlobalStyles styles={prerenderDefaults} />
                     {isClient?
