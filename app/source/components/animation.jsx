@@ -99,9 +99,3 @@ export function Effect({start = false, begin, active, end = "end", duration = DE
         ].join(" ")
     });
 }
-
-export function Trail({start = false, delay = DEFAULT_DELAY_DURATION, children}) {
-    return Children.map(children, (child, index) => {
-        return cloneElement(child, {show: start, start: start, __DELAY: index * delay});
-    });
-}

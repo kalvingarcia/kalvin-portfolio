@@ -43,7 +43,7 @@ const useStyles = tss.create(({theme}) => ({
     },
     inactive: {
         opacity: 0,
-        transform: "translate(0, 25%)"
+        transform: "translate(0, 100px)"
     },
     fadeUp: {
         animation: `${fadeUp} 300ms ease-in forwards`
@@ -74,25 +74,23 @@ export default function Contact({}) {
     const {cx, classes} = useStyles();
     return (
         <div ref={createObserver} className={classes.slide}>
-            <Trail start={start}>
-                <Effect begin={classes.fadeUp} active={classes.active}>
-                    <Title className={classes.inactive}>Contact Me</Title>
-                </Effect>
-                <Effect begin={classes.fadeUp} active={classes.active}>
-                    <div className={classes.contact}>
-                        <Form className="gform" data-email="kalvigarcia@gmail.com" action="https://script.google.com/macros/s/AKfycbwbQkVagBCDvywt_KQrXJyEQX9QkPwnYTF1IV9chdv_m5gBrlWFCc8dIhfYiJzfJnMi7Q/exec">
-                            <TextField label="Name" placeholder="John Doe" required />
-                            <TextField label="Email" placeholder="sample@email.com" helperText="This will let me know where I can contact you." required />
-                            <TextField label="Phone (optional)" placeholder="123-456-7890" />
-                            <TextArea label="Message" required>Hello, I'm inquiring about your car's extended warranty.</TextArea>
-                            <Button className={classes.submit} type="submit">
-                                <Icon icon="send" />
-                                <Label>Send</Label>
-                            </Button>
-                        </Form>
-                    </div>
-                </Effect>
-            </Trail>
+            <Effect start={start} begin={classes.fadeUp} active={classes.active}>
+                <Title className={classes.inactive}>Contact Me</Title>
+            </Effect>
+            <Effect start={start} begin={classes.fadeUp} active={classes.active}>
+                <div className={classes.contact}>
+                    <Form className="gform" data-email="kalvigarcia@gmail.com" action="https://script.google.com/macros/s/AKfycbwbQkVagBCDvywt_KQrXJyEQX9QkPwnYTF1IV9chdv_m5gBrlWFCc8dIhfYiJzfJnMi7Q/exec">
+                        <TextField label="Name" placeholder="John Doe" required />
+                        <TextField label="Email" placeholder="sample@email.com" helperText="This will let me know where I can contact you." required />
+                        <TextField label="Phone (optional)" placeholder="123-456-7890" />
+                        <TextArea label="Message" required>Hello, I'm inquiring about your car's extended warranty.</TextArea>
+                        <Button className={classes.submit} type="submit">
+                            <Icon icon="send" />
+                            <Label>Send</Label>
+                        </Button>
+                    </Form>
+                </div>
+            </Effect>
         </div>
     )
 }

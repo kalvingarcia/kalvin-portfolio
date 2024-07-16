@@ -5,7 +5,7 @@ import {tss} from "../source/components/themer";
 import { Label, Title } from "../source/components/typography";
 import ProjectCard from "./project-card";
 import { Icon } from "../source/components/icon-button";
-import { Trail, Effect } from "../source/components/animation";
+import {Effect} from "../source/components/animation";
 
 const fadeIn = keyframes({
     "to": {
@@ -58,7 +58,7 @@ const useStyles = tss.create(({theme}) => ({
     },
     inactive: {
         opacity: 0,
-        transform: "translate(0, 25%)"
+        transform: "translate(0, 100px)"
     },
     fadeIn: {
         animation: `${fadeIn} 300ms ease-in forwards`
@@ -99,21 +99,19 @@ export default function Project({}) {
     const {classes} = useStyles();
     return (
         <div ref={createObserver} className={classes.slide}>
-            <Effect start={start} begin={classes.fadeIn} active={classes.active}>
+            <Effect start={start} begin={classes.fadeUp} active={classes.active}>
                 <Title className={classes.inactive}>Featured Projects</Title>
             </Effect>
             <div className={classes.projects}>{isClient?
-                    <Trail start={start}>{
-                        featured.map(({directory, name, description}) => (
-                            <Effect begin={classes.fadeUp} active={classes.active}>
-                                <ProjectCard className={classes.inactive} image={`/images/${directory}/wireframes.jpg`} heading={name} body={description} directory={directory} />
-                            </Effect>
-                        ))
-                    }</Trail>
-                    :
-                    ""
+                featured.map(({directory, name, description}) => (
+                    <Effect start={start} begin={classes.fadeUp} active={classes.active}>
+                        <ProjectCard className={classes.inactive} image={`/images/${directory}/wireframes.jpg`} heading={name} body={description} directory={directory} />
+                    </Effect>
+                ))
+                :
+                ""
             }</div>
-            <Effect start={start} begin={classes.fadeIn} active={classes.active}>
+            <Effect start={start} begin={classes.fadeUp} active={classes.active}>
                 <Button className={classes.inactive} appearance="outlined" onClick={() => setTimeout(() => window.location.href = "https://projects.kalvingarcia.com/", 300)}>
                     <Label>Want to see more?</Label>
                     <Icon icon="arrow_outward" />

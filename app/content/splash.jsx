@@ -115,7 +115,7 @@ const useStyles = tss.withName("Splash").create(({theme}) => ({
         flexDirection: "column",
         gap: 10,
         opacity: 0,
-        transform: "translate(0, 25%)",
+        transform: "translate(0, 100px)",
         [`@media (max-width: ${1280}px)`]: {
             alignItems: "center"
         },
@@ -143,7 +143,7 @@ const useStyles = tss.withName("Splash").create(({theme}) => ({
         flexWrap: "nowrap",
         gap: 10,
         opacity: 0,
-        transform: "translate(0, 25%)",
+        transform: "translate(0, 100px)",
         [`@media (max-width: ${1280}px)`]: {
             alignItems: "center",
             flexDirection: "column"
@@ -189,32 +189,30 @@ export default function Splash({show, setShow}) {
 
     const {classes} = useStyles();
     return (
-        <Transition show={show} enter="none" exit={classes.splashExit} duration={1000}>
+        <Transition show={show} enter="none" exit={classes.splashExit} duration={900}>
             <div className={classes.splash}>
                 <div className={classes.content}>
                     <div className={classes.portrait}>
 
                     </div>
                     <div className={classes.text}>
-                        <Trail start>
-                            <Effect begin={classes.fadeUp} active={classes.active}>
-                                <div className={classes.tagline}>
-                                    <Title className={classes.intro}>Hello, I'm...</Title>
-                                    <span ref={element => element? typeAnimation(element, 0, 0) : console.assert(!element, "Tagline not Rendered")} className={classes.typewriter} />
-                                </div>
-                            </Effect>
-                            <Effect begin={classes.fadeUp} active={classes.active}>
-                                <div className={classes.buttons}>
-                                    <Button role="primary" appearance="filled" onClick={() => setShow(false)}>
-                                        <Icon icon="info" />
-                                        <Label>Learn More</Label>
-                                    </Button>
-                                    <Button className={classes.projectsButton} role="secondary" appearance="text" onClick={() => setTimeout(() => window.location.href = "https://projects.kalvingarcia.com/", 300)}>
-                                        <Label>My Projects</Label>
-                                    </Button>
-                                </div>
-                            </Effect>
-                        </Trail>
+                        <Effect start begin={classes.fadeUp} active={classes.active}>
+                            <div className={classes.tagline}>
+                                <Title className={classes.intro}>Hello, I'm...</Title>
+                                <span ref={element => element? typeAnimation(element, 0, 0) : console.assert(!element, "Tagline not Rendered")} className={classes.typewriter} />
+                            </div>
+                        </Effect>
+                        <Effect start begin={classes.fadeUp} active={classes.active}>
+                            <div className={classes.buttons}>
+                                <Button role="primary" appearance="filled" onClick={() => setShow(false)}>
+                                    <Icon icon="info" />
+                                    <Label>Learn More</Label>
+                                </Button>
+                                <Button className={classes.projectsButton} role="secondary" appearance="text" onClick={() => setTimeout(() => window.location.href = "https://projects.kalvingarcia.com/", 300)}>
+                                    <Label>My Projects</Label>
+                                </Button>
+                            </div>
+                        </Effect>
                     </div>
                 </div>
             </div>
