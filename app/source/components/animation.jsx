@@ -6,7 +6,7 @@ const BEGIN_ACTIVE_ERROR_MESSAGE = "Both begin and active props need to be defin
 const SINGLE_CHILD_ERROR_MESSAGE = "Expected to receive a single React element child."
 
 const DEFAULT_ANIMATION_DURATION = 300;
-const DEFAULT_DELAY_DURATION = 30;
+const DEFAULT_DELAY_DURATION = 300;
 
 /**
  * A wrapper component that animates the child component using CSS classes. The animation uses “events,”
@@ -23,7 +23,7 @@ const DEFAULT_DELAY_DURATION = 30;
  *  *   The `children` prop should only have 1 child. **This prop is required.**
  * @returns The child React component when `show` is true.
  */
-export function Transition({show = false, enter, exit, duration = DEFAULT_ANIMATION_DURATION, children}) {
+export function Transition({show = false, enter, exit, duration = DEFAULT_ANIMATION_DURATION, children, __DELAY = 0}) {
     // Testing that enter and exit are defined.
     if(!enter || !exit)
         throw new Error(ENTER_EXIT_ERROR_MESSAGE); // Throwing an error to inform that enter or exit or both are undefined.
@@ -35,9 +35,8 @@ export function Transition({show = false, enter, exit, duration = DEFAULT_ANIMAT
         // Testing the cases of show and hide (mount and unmount).
         if(show && !render) {
             setState("enter"); // Updating the child to animated one.
-            queue.current.push(enter);
-            setRender(true);
-            setTimeout(() => queue.current.shift(), duration); // After the animation duration is over, we reset the child.
+            setTimeout(() => setRender(true) || queue.current.push(enter), __DELAY);
+            setTimeout(() => queue.current.shift(), duration + __DELAY); // After the animation duration is over, we reset the child.
         } else if(!show && render) {
             setState("exit"); // Updating the child to the animated one.
             queue.current.push(exit);
@@ -72,7 +71,7 @@ export function Transition({show = false, enter, exit, duration = DEFAULT_ANIMAT
  *  *   The `children` prop should only have 1 child. **This prop is required.**
  * @returns The child React component with the given style applied.
  */
-export function Effect({start = false, begin, active, end = "end", duration = DEFAULT_ANIMATION_DURATION, children}) {
+export function Effect({start = false, begin, active, end = "end", duration = DEFAULT_ANIMATION_DURATION, children, __DELAY = 0}) {
     // Testing that enter and exit are defined.
     if(!begin || !active)
         throw new Error(BEGIN_ACTIVE_ERROR_MESSAGE); // Throwing an error to inform that enter or exit or both are undefined.
@@ -82,13 +81,13 @@ export function Effect({start = false, begin, active, end = "end", duration = DE
     useEffect(() => {
         // Testing the cases of show and hide (mount and unmount).
         if(start && state === "inactive") {
-            setState("begin"); // Updating the child to animated one.
-            queue.push(begin);
-            setTimeout(() => setState("active") || queue.shift() || queue.push(active), duration); // After the animation duration is over, we reset the child.
+            setTimeout(() => setState("begin") || queue.current.push(begin), __DELAY); // Updating the child to animated one.
+            setTimeout(() => setState("active") || queue.current.push(active) && queue.current.shift(), duration + __DELAY); // After the animation duration is over, we reset the child.
         } else if(!start && state === "active") {
             setState("end"); // Updating the child to the animated one.
-            queue.push(end);
-            setTimeout(() => setState("inactive") || queue.shift(), duration); // After the animation, we unmount and reset the child.
+            queue.current.shift();
+            queue.current.push(end);
+            setTimeout(() => setState("inactive") || queue.current.shift(), duration); // After the animation, we unmount and reset the child.
         }
     }, [start, duration]);
 
@@ -96,11 +95,13 @@ export function Effect({start = false, begin, active, end = "end", duration = DE
     return cloneElement(child, { 
         className: [
             child.props.className?? "",
-            ...queue
+            ...queue.current
         ].join(" ")
     });
 }
 
 export function Trail({start = false, delay = DEFAULT_DELAY_DURATION, children}) {
-
+    return Children.map(children, (child, index) => {
+        return cloneElement(child, {show: start, start: start, __DELAY: index * delay});
+    });
 }
