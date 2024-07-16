@@ -25,6 +25,7 @@ const useStyles = tss.create(({theme}) => ({
 
         backgroundColor: theme.primary.container.lightness(lightness.background).hex(),
         color: theme.primary.accent.lightness(lightness.onBackground).hex(),
+        fontFamily: "var(--code-font)",
         fontSize: "0.75rem",
         lineHeight: 1.5,
 
