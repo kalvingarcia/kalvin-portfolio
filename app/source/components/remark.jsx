@@ -6,7 +6,7 @@ import Button from "./button";
 
 const useStyles = tss.create(({theme}) => ({
     title: {
-        marginBottom: 40,
+        marginBottom: 20,
         color: theme.primary.accent.hex()
     },
     subtitle: {
@@ -25,7 +25,8 @@ const useStyles = tss.create(({theme}) => ({
         display: "inline-flex"
     },
     body: {
-        marginBottom: 10,
+        marginBottom: 15,
+        lineHeight: 1.5,
         opacity: 0.75
     },
     image: {
