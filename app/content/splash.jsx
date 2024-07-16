@@ -1,8 +1,8 @@
 "use client"
 import {keyframes} from "tss-react";
 import {tss} from "../source/components/themer";
-import {Transition} from "../source/components/animation";
-import {Title, Label} from "../source/components/typography";
+import {Trail, Transition, Effect} from "../source/components/animation";
+import {Display, Title, Label} from "../source/components/typography";
 import {Icon} from "../source/components/icon-button";
 import Button from "../source/components/button";
 import {useCallback, useState} from "react";
@@ -16,7 +16,14 @@ const slideUp = keyframes({
     "to": {
         height: 0
     }
-})
+});
+
+const fadeUp = keyframes({
+    "to": {
+        transform: "translate(0, 0)",
+        opacity: 1
+    }
+});
 
 const useStyles = tss.withName("Splash").create(({theme}) => ({
     splash: {
@@ -107,12 +114,17 @@ const useStyles = tss.withName("Splash").create(({theme}) => ({
         display: "flex",
         flexDirection: "column",
         gap: 10,
+        opacity: 0,
+        transform: "translate(0, 25%)",
         [`@media (max-width: ${1280}px)`]: {
             alignItems: "center"
         },
         "& > *": {
             textWrap: "nowrap"
         }
+    },
+    intro: {
+        fontFamily: "var(--body-font)"
     },
     typewriter: {
         minHeight: "4rem",
@@ -130,6 +142,8 @@ const useStyles = tss.withName("Splash").create(({theme}) => ({
         display: "flex",
         flexWrap: "nowrap",
         gap: 10,
+        opacity: 0,
+        transform: "translate(0, 25%)",
         [`@media (max-width: ${1280}px)`]: {
             alignItems: "center",
             flexDirection: "column"
@@ -142,6 +156,13 @@ const useStyles = tss.withName("Splash").create(({theme}) => ({
             width: "fit-content",
             height: "50%"
         }
+    },
+    fadeUp: {
+        animation: `${fadeUp} 300ms ease-in forwards`
+    },
+    active: {
+        opacity: 1,
+        transform: "translate(0, 0)"
     }
 }));
 
@@ -168,26 +189,32 @@ export default function Splash({show, setShow}) {
 
     const {classes} = useStyles();
     return (
-        <Transition show={show} enter="none" exit={classes.splashExit} duration={990}>
+        <Transition show={show} enter="none" exit={classes.splashExit} duration={1000}>
             <div className={classes.splash}>
                 <div className={classes.content}>
                     <div className={classes.portrait}>
 
                     </div>
                     <div className={classes.text}>
-                        <div className={classes.tagline}>
-                            <Title>Hello, I'm...</Title>
-                            <span ref={element => element? typeAnimation(element, 0, 0) : console.assert(!element, "Tagline not Rendered")} className={classes.typewriter} />
-                        </div>
-                        <div className={classes.buttons}>
-                            <Button role="primary" appearance="filled" onClick={() => setShow(false)}>
-                                <Icon icon="info" />
-                                <Label>Learn More</Label>
-                            </Button>
-                            <Button className={classes.projectsButton} role="secondary" appearance="text" onClick={() => setTimeout(() => window.location.href = "https://projects.kalvingarcia.com/", 300)}>
-                                <Label>My Projects</Label>
-                            </Button>
-                        </div>
+                        <Trail start>
+                            <Effect begin={classes.fadeUp} active={classes.active}>
+                                <div className={classes.tagline}>
+                                    <Title className={classes.intro}>Hello, I'm...</Title>
+                                    <span ref={element => element? typeAnimation(element, 0, 0) : console.assert(!element, "Tagline not Rendered")} className={classes.typewriter} />
+                                </div>
+                            </Effect>
+                            <Effect begin={classes.fadeUp} active={classes.active}>
+                                <div className={classes.buttons}>
+                                    <Button role="primary" appearance="filled" onClick={() => setShow(false)}>
+                                        <Icon icon="info" />
+                                        <Label>Learn More</Label>
+                                    </Button>
+                                    <Button className={classes.projectsButton} role="secondary" appearance="text" onClick={() => setTimeout(() => window.location.href = "https://projects.kalvingarcia.com/", 300)}>
+                                        <Label>My Projects</Label>
+                                    </Button>
+                                </div>
+                            </Effect>
+                        </Trail>
                     </div>
                 </div>
             </div>
