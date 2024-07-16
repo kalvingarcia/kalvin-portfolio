@@ -75,7 +75,8 @@ const useStyles = tss.create(({theme, filled, rippleClass}) => ({
             position: "relative",
             bottom: -10,
             backgroundColor: "transparent",
-            fontFamily: "var(--body)",
+            fontFamily: "var(--body-font)",
+            lineHeight: 1.5,
             color: theme.neutral.onContainer.hex(),
             "&:autofill": {
                 outline: "none",
