@@ -44,6 +44,7 @@ const useStyles = tss.create(({theme, role, type}) => ({
         position: "relative",
         fontSize: "1rem",
         fontFamily: "var(--body-font)",
+        lineHeight: 1.5,
         color: theme[role][`on${type[0].toUpperCase() + type.slice(1)}`].hex()
     }
 }));
