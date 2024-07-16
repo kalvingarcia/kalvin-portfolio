@@ -96,11 +96,11 @@ const useStyles = tss.create(({theme, rippleClass}) => ({
     }
 }));
 
-export default function ProjectCard({image, heading, body, directory}) {
+export default function ProjectCard({className, image, heading, body, directory}) {
     const {rippleClass, rippleExpand, rippleFade} = useRippleEffect();
-    const {classes} = useStyles({rippleClass});
+    const {cx, classes} = useStyles({rippleClass});
     return (
-        <div className={classes.card} 
+        <div className={cx(classes.card, className)} 
             onMouseDown={rippleExpand}
             onMouseUp={rippleFade}
             onClick={() => setTimeout(() => window.location.href = `https://projects.kalvingarcia.com?open=${directory}`, 300)}
