@@ -70,10 +70,11 @@ const useStyles = tss.create(({theme, filled, rippleClass}) => ({
             position: "relative",
             bottom: -10,
             backgroundColor: "transparent",
-            fontFamily: "var(--body)",
+            fontFamily: "var(--body-font)",
             color: theme.neutral.onContainer.hex(),
             "&::placeholder": {
-                color: "transparent"
+                color: "transparent",
+                fontFamily: "var(--body-font)"
             },
             "&:focus::placeholder": {
                 color: theme.neutral.onContainer.alpha(0.5).hexa()
@@ -81,7 +82,8 @@ const useStyles = tss.create(({theme, filled, rippleClass}) => ({
             "&:autofill": {
                 outline: "none",
                 border: "none",
-                transition: "background-color 600000s 0s, color 600000s 0s"
+                transition: "background-color 600000s 0s, color 600000s 0s, font 600000s 0s",
+                fontFamily: "var(--body-font)",
             }
         },
         "& .label": {
@@ -95,6 +97,7 @@ const useStyles = tss.create(({theme, filled, rippleClass}) => ({
         },
         "&:focus-within .label": {
             transform: "translate(0, -100%) scale(0.8)",
+            fontWeight: "bold",
             opacity: 1,
             color: theme.tertiary.accent.hex()
         },
@@ -160,7 +163,7 @@ export default function TextField({className, label, sampleText, helperText, onC
                     />
                 </label>
             </div>
-            {helperText? <span className="helper">{helperText}</span> : ""}
+            {helperText? <Label className="helper">{helperText}</Label> : ""}
         </div>
     )
 }

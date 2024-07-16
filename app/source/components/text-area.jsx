@@ -94,6 +94,7 @@ const useStyles = tss.create(({theme, filled, rippleClass}) => ({
         },
         "&:focus-within .label": {
             transform: "translate(0, -100%) scale(0.8)",
+            fontWeight: "bold",
             opacity: 1,
             color: theme.tertiary.accent.hex()
         },
@@ -171,7 +172,7 @@ export function TextArea({className, label, children: sampleText, helperText, on
                     />
                 </label>
             </div>
-            {helperText? <span className="helper">{helperText}</span> : ""}
+            {helperText? <Label className="helper">{helperText}</Label> : ""}
         </div>
     )
 }
