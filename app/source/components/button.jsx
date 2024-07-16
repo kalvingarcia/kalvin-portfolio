@@ -9,6 +9,7 @@ const useStyles = tss.create(({theme, role, appearance, containerRole, rippleCla
     button: {
         outline: "none",
         border: appearance === "outlined"? `1pt solid ${theme[role].onContainer.hex()}` : "none",
+        fontWeight: "bold",
 
         minWidth: "fit-content",
         minHeight: "fit-content",
