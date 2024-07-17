@@ -71,23 +71,25 @@ export function Transition({show = false, enter, exit, duration = DEFAULT_ANIMAT
  *  *   The `children` prop should only have 1 child. **This prop is required.**
  * @returns The child React component with the given style applied.
  */
-export function Effect({start = false, begin, active, end = "end", duration = DEFAULT_ANIMATION_DURATION, children, __DELAY = 0}) {
+export function Effect({start = false, inactive, begin, active, end = undefined, duration = DEFAULT_ANIMATION_DURATION, children}) {
     // Testing that enter and exit are defined.
     if(!begin || !active)
         throw new Error(BEGIN_ACTIVE_ERROR_MESSAGE); // Throwing an error to inform that enter or exit or both are undefined.
 
     const [state, setState] = useState("inactive");
-    const queue = useRef([]);
+    const queue = useRef([inactive]);
     useEffect(() => {
         // Testing the cases of show and hide (mount and unmount).
         if(start && state === "inactive") {
-            setTimeout(() => setState("begin") || queue.current.push(begin), __DELAY); // Updating the child to animated one.
-            setTimeout(() => setState("active") || queue.current.push(active) && queue.current.shift(), duration + __DELAY); // After the animation duration is over, we reset the child.
+            queue.current.shift();
+            setState("begin"); // Updating the child to animated one.
+            queue.current.push(begin);
+            setTimeout(() => setState("active") || queue.current.push(active) && queue.current.shift(), duration); // After the animation duration is over, we reset the child.
         } else if(!start && state === "active") {
             setState("end"); // Updating the child to the animated one.
             queue.current.shift();
             queue.current.push(end);
-            setTimeout(() => setState("inactive") || queue.current.shift(), duration); // After the animation, we unmount and reset the child.
+            setTimeout(() => setState("inactive") || queue.current.push(inactive) && queue.current.shift(), duration); // After the animation, we unmount and reset the child.
         }
     }, [start, duration]);
 
