@@ -1,23 +1,22 @@
 import { tss } from "../source/components/themer";
-import {Body, Heading} from "../source/components/typography";
+import {Body, Subtitle} from "../source/components/typography";
 import {ContainerContextProvider} from "../source/helper/container";
 import useRippleEffect from "../source/hooks/ripple";
 
 const useStyles = tss.create(({theme, rippleClass}) => ({
     card: {
         display: "flex",
-        width: 300,
-        height: 500,
         position: "relative",
-        flexDirection: "column",
-        backgroundColor: theme.secondary.container.hex(),
+        backgroundColor: theme.neutral.containerLow.hex(),
         borderRadius: 20,
         overflow: "hidden",
         clipPath: "inset(0 0 0 0 round 20px)",
-        [`@media (max-width: ${1280}px)`]: {
-            width: "100%",
-            maxHeight: 150,
-            flexDirection: "row",
+        width: "100%",
+        height: 200,
+        flexDirection: "row",
+        [`@media (max-width: ${640}px)`]: {
+            flexDirection: "column",
+            height: 500,
         },
         "&::before": {
             content: "''",
@@ -25,25 +24,25 @@ const useStyles = tss.create(({theme, rippleClass}) => ({
             width: "100%",
             height: "100%",
             inset: 0,
-            backgroundColor:theme.secondary.onContainer.hex(),
+            backgroundColor:theme.neutral.onContainer.hex(),
             opacity: 0
         },
         "&:hover::before": {
             opacity: 0.2
         },
         [`& .${rippleClass}`]: {
-            backgroundColor: theme.secondary.onContainer.hex()
+            backgroundColor: theme.neutral.onContainer.hex()
         }
     },
     image: {
-        width: "100%",
-        height: "60%",
         borderRadius: 20,
         overflow: "hidden",
         clipPath: "inset(0 0 0 0 round 20px)",
-        [`@media (max-width: ${1280}px)`]: {
-            width: "40%",
-            height: "100%"
+        width: "40%",
+        height: "100%",
+        [`@media (max-width: ${640}px)`]: {
+            width: "100%",
+            height: "60%"
         },
         "& img": {
             width: "100%",
@@ -57,14 +56,14 @@ const useStyles = tss.create(({theme, rippleClass}) => ({
             width: "100%",
             height: "100%",
             inset: 0,
-            backgroundColor:theme.primary.onContainer.hex(),
+            backgroundColor:theme.neutral.onContainer.hex(),
             opacity: 0
         },
         "&:hover::after": {
             opacity: 0.2
         },
         [`& .${rippleClass}`]: {
-            backgroundColor: theme.primary.onContainer.hex()
+            backgroundColor: theme.neutral.onContainer.hex()
         }
     },
     text: {
@@ -72,27 +71,24 @@ const useStyles = tss.create(({theme, rippleClass}) => ({
         flexDirection: "column",
         gap: 20,
         padding: 20,
-        width: "100%",
-        height: "40%",
         overflow: "hidden",
-        [`@media (max-width: ${1280}px)`]: {
-            width: "50%",
-            height: "100%"
-        },
-        "& h4": {
+        width: "60%",
+        height: "100%",
+        [`@media (max-width: ${640}px)`]: {
             width: "100%",
-            overflow: "hidden",
-            whiteSpace: "nowrap",
-            textOverflow: "ellipsis"
+            height: "40%"
         },
         "& p": {
             display: "-webkit-box",
-            WebkitLineClamp: 4,
+            WebkitLineClamp: 2,
             WebkitBoxOrient: "vertical",
             width: "100%",
             overflow: "hidden",
             textOverflow: "ellipsis"
         }
+    },
+    title: {
+        fontSize: "2.5rem"
     }
 }));
 
@@ -110,7 +106,7 @@ export default function ProjectCard({className, image, heading, body, directory}
                     <img src={image} alt="Project Card Image" />
                 </figure>
                 <div className={classes.text}>
-                    <Heading>{heading}</Heading>
+                    <Subtitle className={classes.title}>{heading}</Subtitle>
                     <Body>{body}</Body>
                 </div>
             </ContainerContextProvider>
