@@ -6,21 +6,29 @@ import PalettePicker from "./content/palette-picker";
 import Bio from "./content/bio";
 import Project from "./content/project";
 import Contact from "./content/contact";
-import Splash from "./content/splash";
+import Tagline from "./content/tagline";
+import { Label } from "./source/components/typography";
 
 const useStyles = tss.create(({theme}) => ({
     homepage: {
-        margin: "auto",
         width: "100%",
         maxHeight: "100vh",
         overflowX: "hidden",
-        overflowY: "auto"
+        overflowY: "auto",
+        scrollBehavior: "smooth"
     },
     content: {
         margin: "auto",
         width: "100%",
         maxWidth: 1280,
-        maxHeight: "100%"
+        minHeight: "100%"
+    },
+    accredation: {
+        margin: "auto",
+        textAlign: "center",
+        padding: 10,
+        fontSize: "0.75rem",
+        color: theme.secondary.accent.alpha(0.75).hexa()
     }
 }));
 
@@ -34,11 +42,14 @@ export default function Homepage({}) {
             <PalettePicker />
             <section className={classes.homepage}>
                 <div className={classes.content}>
-                    <Bio />
+                    <Tagline show />
+                    <Bio show />
                     <Project />
                     <Contact />
+                    <Label className={classes.accredation}>
+                        Website designed and built by Kalvin Garcia.
+                    </Label>
                 </div>
-                <Splash show={show} setShow={setShow} />
             </section>
         </>
     );

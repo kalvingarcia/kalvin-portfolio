@@ -6,78 +6,67 @@ import TextField from "../source/components/text-field";
 import {TextArea} from "../source/components/text-area";
 import { Icon } from "../source/components/icon-button";
 import {tss} from "../source/components/themer";
-import { Title, Label } from "../source/components/typography";
+import { Title, Label, Heading } from "../source/components/typography";
 import { Trail, Effect } from "../source/components/animation";
-
-const fadeUp = keyframes({
-    "to": {
-        transform: "translate(0, 0)",
-        opacity: 1
-    }
-});
+import { useFadeAnimation } from "../source/hooks/fade";
 
 const useStyles = tss.create(({theme}) => ({
-    slide: {
-        paddingTop: 40,
-        paddingBottom: 40,
-        height: "100vh",
+    content: {
+        padding: 40,
         width: "100%",
         overflow: "hidden",
         display: "flex",
         gap: 40,
-        alignItems: "center",
-        justifyContent: "center",
-        flexDirection: "column",
+        flexDirection: "column"
+    },
+    flavorText: {
+        color: theme.secondary.accent.hex()
+    },
+    title: {
+        fontSize: "5rem"
     },
     contact: {
         padding: 20,
-        width: "80%",
-        maxWidth: "calc(0.8 * 1280px)",
+        width: "100%",
+        maxWidth: 640,
         borderRadius: 20,
         backgroundColor: theme.neutral.container.hex(),
-        opacity: 0,
-        transform: "translate(0, 25%)"
     },
     submit: {
         alignSelf: "flex-end"
     },
-    inactive: {
-        opacity: 0,
-        transform: "translate(0, 100px)"
-    },
-    fadeUp: {
-        animation: `${fadeUp} 300ms ease-in forwards`
-    },
-    active: {
-        "&&": {
-            opacity: 1,
-            transform: "translate(0, 0)"
+    email: {
+        color: theme.tertiary.onContainer.hex(),
+        "&:hover": {
+            color: theme.tertiary.accent.hex()
         }
     }
 }));
 
 export default function Contact({}) {
+    const {fadeInactive, fadeIn, fadeActive} = useFadeAnimation();
     const [start, setStart] = useState(false);
-    const createObserver = useCallback(element => {
-        const observer = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if(entry.isIntersecting) {
-                    setStart(true);
-                }
-            });
-        }, {
-            threshold: 0.8
-        });
-        observer.observe(element);
-    }, []);
+    // const createObserver = useCallback(element => {
+    //     const observer = new IntersectionObserver((entries, observer) => {
+    //         entries.forEach(entry => {
+    //             if(entry.isIntersecting) {
+    //                 setStart(true);
+    //             }
+    //         });
+    //     }, {
+    //         threshold: 0.8
+    //     });
+    //     observer.observe(element);
+    // }, []);
 
     const {cx, classes} = useStyles();
     return (
-        <div ref={createObserver} className={classes.slide}>
-            <Effect start={start} begin={classes.fadeUp} active={classes.active}>
-                <Title className={classes.inactive}>Contact Me</Title>
-            </Effect>
-            <Effect start={start} begin={classes.fadeUp} active={classes.active}>
+        <Effect start inactive={fadeInactive} begin={fadeIn} active={fadeActive}>
+            <div id="contact" className={classes.content}>
+                <div>
+                    <Heading className={classes.flavorText}>Need to reach me?</Heading>
+                    <Title className={classes.title}>Contact Me*</Title>
+                </div>
                 <div className={classes.contact}>
                     <Form className="gform" data-email="kalvigarcia@gmail.com" action="https://script.google.com/macros/s/AKfycbwbQkVagBCDvywt_KQrXJyEQX9QkPwnYTF1IV9chdv_m5gBrlWFCc8dIhfYiJzfJnMi7Q/exec">
                         <TextField label="Name" placeholder="John Doe" required />
@@ -90,7 +79,10 @@ export default function Contact({}) {
                         </Button>
                     </Form>
                 </div>
-            </Effect>
-        </div>
+                <Label>
+                    *You can also send emails directy to <a className={classes.email} href="mailto:contact@kalvingarcia.com">contact@kalvingarcia.com</a>!
+                </Label>
+            </div>
+        </Effect>
     )
 }

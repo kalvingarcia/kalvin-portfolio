@@ -2,73 +2,37 @@ import {useState, useEffect, useCallback} from "react";
 import {keyframes} from "tss-react";
 import Button from "../source/components/button";
 import {tss} from "../source/components/themer";
-import { Label, Title } from "../source/components/typography";
+import {Label, Title, Heading} from "../source/components/typography";
 import ProjectCard from "./project-card";
 import { Icon } from "../source/components/icon-button";
 import {Effect} from "../source/components/animation";
-
-const fadeIn = keyframes({
-    "to": {
-        opacity: 1
-    }
-});
-const fadeUp = keyframes({
-    "to": {
-        transform: "translate(0, 0)",
-        opacity: 1
-    }
-});
+import { useFadeAnimation } from "../source/hooks/fade";
 
 const useStyles = tss.create(({theme}) => ({
-    slide: {
-        paddingTop: 40,
-        paddingBottom: 40,
-        position: "relative",
-        height: "100vh",
+    content: {
+        padding: 40,
         width: "100%",
         display: "flex",
         gap: 20,
-        alignItems: "center",
-        justifyContent: "center",
         flexDirection: "column",
-        "&::before": {
-            content: "''",
-            position: "absolute",
-            top: 0,
-            left: "calc(-1 * (100vw - 100%) / 2)",
-            width: "100vw",
-            height: "100%",
-            backgroundColor: theme.neutral.containerLowest.hex()
-        }
+    },
+    flavorText: {
+        color: theme.secondary.accent.hex()
+    },
+    headline: {
+        fontSize: "6rem",
     },
     projects: {
-        width: "80%",
         display: "flex",
+        flexDirection: "column",
         gap: 10,
         overflowX: "auto",
         alignItems: "center",
         justifyContent: "center",
-        overflow: "visible",
-        [`@media (max-width: ${1280}px)`]: {
-            flexDirection: "column",
-            "& > *": {
-                flex: "1 1 200px",
-            },
-        }
+        overflow: "visible"
     },
-    inactive: {
-        opacity: 0,
-        transform: "translate(0, 100px)"
-    },
-    fadeIn: {
-        animation: `${fadeIn} 300ms ease-in forwards`
-    },
-    fadeUp: {
-        animation: `${fadeUp} 300ms ease-in forwards`
-    },
-    active: {
-        opacity: 1,
-        transform: "translate(0, 0)"
+    button: {
+        alignSelf: "center"
     }
 }));
 
@@ -82,41 +46,41 @@ export default function Project({}) {
         })();
     }, []);
     
+    const {fadeInactive, fadeIn, fadeActive} = useFadeAnimation();
     const [start, setStart] = useState(false);
-    const createObserver = useCallback(element => {
-        const observer = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if(entry.isIntersecting) {
-                    setStart(true);
-                }
-            });
-        }, {
-            threshold: 0.8
-        });
-        observer.observe(element);
-    }, []);
+    // const createObserver = useCallback(element => {
+    //     const observer = new IntersectionObserver((entries, observer) => {
+    //         entries.forEach(entry => {
+    //             if(entry.isIntersecting) {
+    //                 setStart(true);
+    //             }
+    //         });
+    //     }, {
+    //         threshold: 0.5
+    //     });
+    //     observer.observe(element);
+    // }, []);
 
     const {classes} = useStyles();
     return (
-        <div ref={createObserver} className={classes.slide}>
-            <Effect start={start} begin={classes.fadeUp} active={classes.active}>
-                <Title className={classes.inactive}>Featured Projects</Title>
-            </Effect>
-            <div className={classes.projects}>{isClient?
-                featured.map(({directory, name, description}) => (
-                    <Effect start={start} begin={classes.fadeUp} active={classes.active}>
-                        <ProjectCard className={classes.inactive} image={`/images/${directory}/wireframes.jpg`} heading={name} body={description} directory={directory} />
-                    </Effect>
-                ))
-                :
-                ""
-            }</div>
-            <Effect start={start} begin={classes.fadeUp} active={classes.active}>
-                <Button className={classes.inactive} appearance="outlined" onClick={() => setTimeout(() => window.location.href = "https://projects.kalvingarcia.com/", 300)}>
+        <Effect start inactive={fadeInactive} begin={fadeIn} active={fadeActive}>
+            <div className={classes.content}>
+                <div>
+                    <Heading className={classes.flavorText}>Some things I've worked on:</Heading>
+                    <Title className={classes.headline}>Featured Projects</Title>
+                </div>
+                <div className={classes.projects}>{isClient?
+                    featured.map(({directory, name, description}) => (
+                        <ProjectCard image={`/images/${directory}/card.jpg`} heading={name} body={description} directory={directory} />
+                    ))
+                    :
+                    ""
+                }</div>
+                <Button  className={classes.button} appearance="outlined" onClick={() => setTimeout(() => window.location.href = "https://projects.kalvingarcia.com/", 300)}>
                     <Label>Want to see more?</Label>
                     <Icon icon="arrow_outward" />
                 </Button>
-            </Effect>
-        </div>
+            </div>
+        </Effect>
     );
 }
