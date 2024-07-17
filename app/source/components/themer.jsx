@@ -15,7 +15,7 @@ const silver = "#CDCDCD";
 const materialIconFont = Local({
     variable: "--material-icons",
     src: [{
-        path: "../../../public/fonts/MaterialIcons.woff2",
+        path: "../../../public/fonts/MaterialIcons.woff",
         weight: "400",
         style: "normal"
     }]
