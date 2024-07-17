@@ -17,8 +17,8 @@
         "primary": "#7739C2",
         "secondary": "#8A75A7",
         "tertiary": "#EFCB68",
-        "error": "#E9C784",
-        "neutral": "#000411"
+        "error": "#f5e4ee",
+        "neutral": "#14051f"
     },
     "office_core": {
         "primary": "#BFD7EA",
