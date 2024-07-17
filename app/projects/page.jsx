@@ -42,11 +42,14 @@ const useStyles = tss.create(({theme}) => ({
     openModal: {
         cursor: "pointer",
         "&:hover": {
-            color: theme.primary.accent.hex()
+            color: theme.primary.accent.hex(),
+            "& i": {
+                color: theme.primary.accent.hex(),
+            }
         },
         "& i": {
             display: "inline-block",
-            fontSize: "1rem",
+            fontSize: "1rem"
         }
     },
     technologies: {
@@ -111,7 +114,7 @@ export default function Projects({}) {
                         row.display?
                             <Row key={`row-${index}`}>
                                 <Label>{row.completionDate}</Label>
-                                <Label className={classes.openModal} onClick={() => router.push(`?open=${row.directory}`)}>{row.name} <Icon icon="arrow_outward" /></Label>
+                                <Label className={classes.openModal} onClick={() => router.push(`?open=${row.directory}`)}>{row.name} <Icon icon="open_in_new" /></Label>
                                 <Label>{row.madeFor}</Label>
                                 <div className={classes.technologies}>{row.technologiesUsed.map((tech, index) => <Chip key={tech}>{tech}</Chip>)}</div>
                                 <div className={classes.links}>{Object.entries(row.links).map(([name, link]) => <IconButton key={name} appearance="text" icon={name} iconClass="kalvin-icons" onClick={() => setTimeout(() => window.open(link, "_blank"), 300)} />)}</div>
