@@ -14,6 +14,7 @@ const useStyles = tss.create(({theme}) => ({
     content: {
         padding: 40,
         width: "100%",
+        maxWidth: 640,
         overflow: "hidden",
         display: "flex",
         gap: 40,
@@ -28,12 +29,14 @@ const useStyles = tss.create(({theme}) => ({
     contact: {
         padding: 20,
         width: "100%",
-        maxWidth: 640,
         borderRadius: 20,
         backgroundColor: theme.neutral.container.hex(),
     },
     submit: {
         alignSelf: "flex-end"
+    },
+    asterisk: {
+        textAlign: "right"
     },
     email: {
         color: theme.tertiary.onContainer.hex(),
@@ -79,7 +82,7 @@ export default function Contact({}) {
                         </Button>
                     </Form>
                 </div>
-                <Label>
+                <Label className={classes.asterisk}>
                     *You can also send emails directy to <a className={classes.email} href="mailto:contact@kalvingarcia.com">contact@kalvingarcia.com</a>!
                 </Label>
             </div>
