@@ -6,6 +6,13 @@ import {ContainerContextProvider, useContainerContext} from "../source/helper/co
 import Drawer from "../source/components/drawer";
 import IconButton from "../source/components/icon-button";
 
+const cookieOptions = {
+    domain: "kalvingarcia.com", 
+    maxAge: 3156000000,
+    sameSite: true,
+    secure: true
+}
+
 const useStyles = tss.create(({theme, open}) => ({
     picker: {
         margin: "auto",
@@ -87,11 +94,11 @@ export default function PalettePicker() {
     const [open, setOpen] = useState(false);
 
     const handleDarkMode = useCallback(() => {
-        setCookie("kalvinPortfolioDarkMode", !darkMode);
+        setCookie("kalvinPortfolioDarkMode", !darkMode, cookieOptions);
         toggleDarkMode();
     }, [darkMode]);
     const handleTheme = useCallback(themeName => {
-        setCookie("kalvinPortfolioTheme", themeName);
+        setCookie("kalvinPortfolioTheme", themeName, cookieOptions);
         changeTheme(themeName);
     }, [darkMode]);
 
