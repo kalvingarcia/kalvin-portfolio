@@ -46,10 +46,10 @@ const useStyles = tss.create(({theme, filled, rippleClass}) => ({
             backgroundColor: theme.neutral.onContainer.hex()
         },
         "&:hover::before": {
-            opacity: 0.1
+            opacity: 0.2
         },
         "&:focus-within::before": {
-            opacity: 0.2
+            opacity: 0.1
         },
         "&::after": {
             content: "''",
