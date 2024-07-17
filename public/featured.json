@@ -2,16 +2,16 @@
     {
         "directory": "kalvin-portfolio",
         "name": "My Personal Portfolio",
-        "description": "This project was made to showcase my other projects and acheivements."
+        "description": "I designed and built myself a website to showcase my skills and how much I've improved."
     },
     {
-        "directory": "kalvin-portfolio",
-        "name": "My Personal Portfolio",
-        "description": "This project was made to showcase my other projects and acheivements."
+        "directory": "urbarch-website",
+        "name": "Urban's Website",
+        "description": "While working at Urban Archaeology, I modernized their old website using NextJS and ReactJS to implement a scalable and maintainable codebase."
     },
     {
-        "directory": "kalvin-portfolio",
-        "name": "My Personal Portfolio",
-        "description": "This project was made to showcase my other projects and acheivements."
+        "directory": "ai-collections",
+        "name": "AI Project Anthology",
+        "description": "Throughout my coursework and beyond, I developed many projects using artificial intelligence and machine learning techniques. Here's a collection of them!"
     }
 ]
