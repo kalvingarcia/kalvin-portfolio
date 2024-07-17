@@ -47,10 +47,10 @@ export default function Remark({children}) {
                 return <Title className={classes.title}>{children}</Title>;
             },
             h2({children}) {
-                return <Subtitle className={classes.subtitle}>{children}</Subtitle>;
+                return <Heading className={classes.subtitle}>{children}</Heading>;
             },
             h3({children}) {
-                return <Heading className={classes.heading}>{children}</Heading>;
+                return <Subtitle className={classes.heading}>{children}</Subtitle>;
             },
             h4({children}) {
                 return <Subheading className={classes.subheading}>{children}</Subheading>;

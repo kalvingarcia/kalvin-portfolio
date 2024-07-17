@@ -21,7 +21,7 @@ const useStyles = tss.create(({theme, role, type}) => ({
     subtitle: {
         display: "block",
         position: "relative",
-        fontSize: "1.75rem",
+        fontSize: "1.5rem",
         fontFamily: "var(--title-font)",
         color: theme[role][`on${type[0].toUpperCase() + type.slice(1)}`].hex()
     },
@@ -100,7 +100,7 @@ export function Title({className, children, ...props}) {
 export function Subtitle({className, children, ...props}) {
     const {role, type} = useContainerContext();
     const {cx, classes} = useStyles({role, type});
-    return <h3 className={cx(classes.subtitle, className?? "")} {...props}>{children}</h3>;
+    return <h4 className={cx(classes.subtitle, className?? "")} {...props}>{children}</h4>;
 }
 
 /**
@@ -118,7 +118,7 @@ export function Subtitle({className, children, ...props}) {
 export function Heading({className, children, ...props}) {
     const {role, type} = useContainerContext();
     const {cx, classes} = useStyles({role, type});
-    return <h4 className={cx(classes.heading, className?? "")} {...props}>{children}</h4>;
+    return <h3 className={cx(classes.heading, className?? "")} {...props}>{children}</h3>;
 }
 
 /**
