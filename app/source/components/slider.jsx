@@ -15,12 +15,21 @@ const useStyles = tss.create(({theme, percentage}) => ({
         width: "100%",
         height: 10,
         borderRadius: 20,
+        transition: "background-color 300ms ease-in-out",
+        "&:hover": {
+            backgroundColor: theme.primary.container.alpha(0.75).hexa(),
+        },
         "&::-webkit-slider-thumb": {
             WebkitAppearance: "none",
+            position: "relative",
             backgroundColor: theme.primary.accent.hex(),
             width: 20,
             height: 20,
-            borderRadius: "100%"
+            borderRadius: "100%",
+            transition: "box-shadow 300ms ease-in-out",
+            "&:hover": {
+                boxShadow: `0px 0px 0px 10px ${theme.primary.onContainer.alpha(0.25).hexa()}`
+            }
         },
         "&::before": {
             content: "''",
@@ -29,8 +38,12 @@ const useStyles = tss.create(({theme, percentage}) => ({
             width: `calc(${percentage} * 100%)`,
             height: 10,
             borderRadius: 20,
-            backgroundColor: theme.primary.accent.alpha(0.75).hexa()
-        }
+            backgroundColor: theme.primary.accent.alpha(0.75).hexa(),
+            transition: "background-color 300ms ease-in-out"
+        },
+        "&:hover::before": {
+            backgroundColor: theme.primary.accent.alpha(0.8).hexa()
+        },
     }
 }));
 
