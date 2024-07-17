@@ -19,7 +19,7 @@ const useStyles = tss.create(({theme}) => ({
         maxWidth: 1280
     },
     backLink: {
-
+        marginBottom: 5
     },
     list: {
         width: "100%",
