@@ -1,3 +1,4 @@
+import { forwardRef } from "react";
 import { tss } from "../source/components/themer";
 import {Body, Subtitle} from "../source/components/typography";
 import {ContainerContextProvider} from "../source/helper/container";
@@ -92,11 +93,13 @@ const useStyles = tss.create(({theme, rippleClass}) => ({
     }
 }));
 
-export default function ProjectCard({className, image, heading, body, directory}) {
+const ProjectCard = forwardRef(({className, image, heading, body, directory}, ref) => {
     const {rippleClass, rippleExpand, rippleFade} = useRippleEffect();
     const {cx, classes} = useStyles({rippleClass});
     return (
-        <div className={cx(classes.card, className)} 
+        <div 
+            ref={ref}
+            className={cx(classes.card, className)} 
             onMouseDown={rippleExpand}
             onMouseUp={rippleFade}
             onClick={() => setTimeout(() => window.location.href = `https://projects.kalvingarcia.com?open=${directory}`, 300)}
@@ -112,4 +115,5 @@ export default function ProjectCard({className, image, heading, body, directory}
             </ContainerContextProvider>
         </div>
     );
-}
+});
+export default ProjectCard;
