@@ -1,5 +1,5 @@
 "use client"
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {tss} from './source/components/themer';
 import Overlay from "./content/overlay";
 import PalettePicker from "./content/palette-picker";
@@ -33,18 +33,25 @@ const useStyles = tss.create(({theme}) => ({
 }));
 
 export default function Homepage({}) {
-    const [show, setShow] = useState(true);
-    const {classes} = useStyles();
+    const [showTagline, setShowTagline] = useState(true);
+    const [showBio, setShowBio] = useState(false);
+    const [showProjects, setShowProjects] = useState(false);
+    useEffect(() => {
+        setShowTagline(true);
+        setTimeout(() => setShowBio(true), 200);
+        setTimeout(() => setShowProjects(true), 400);
+    }, []);
 
+    const {classes} = useStyles();
     return (
         <>
             <Overlay />
             <PalettePicker />
-            <section className={classes.homepage}>
+            <section id="homepage" className={classes.homepage}>
                 <div className={classes.content}>
-                    <Tagline show />
-                    <Bio show />
-                    <Project />
+                    <Tagline show={showTagline} />
+                    <Bio show={showBio} />
+                    <Project show={showProjects} />
                     <Contact />
                     <Label className={classes.accredation}>
                         Website designed and built by Kalvin Garcia.
