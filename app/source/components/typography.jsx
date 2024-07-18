@@ -1,6 +1,7 @@
 "use client"
 import {tss} from "./themer";
 import {useContainerContext} from "../helper/container";
+import { forwardRef } from "react";
 
 // Style list for typography components.
 const useStyles = tss.create(({theme, role, type}) => ({
@@ -173,8 +174,9 @@ export function Body({className, children, ...props}) {
  *
  * @returns A `span` jsx component.
  */
-export function Label({className, children, __isInButton = false, ...props}) {
+
+export const Label = forwardRef(({className, children, __isInButton = false, ...props}, ref) => {
     const {role, type} = useContainerContext();
     const {cx, classes} = useStyles({role, type});
-    return <span className={cx(classes.body, className?? "")} {...props}>{children}</span>
-}
+    return <span ref={ref} className={cx(classes.body, className?? "")} {...props}>{children}</span>
+});
