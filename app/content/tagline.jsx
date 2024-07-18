@@ -5,7 +5,7 @@ import {Label} from "../source/components/typography";
 import {useCallback, useState} from "react";
 import {useFadeAnimation} from "../source/hooks/fade";
 
-const useStyles = tss.withName("Splash").create(({theme}) => ({
+const useStyles = tss.create(({theme}) => ({
     tagline: {
         position: "sticky",
         zIndex: 100,
