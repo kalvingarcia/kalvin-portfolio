@@ -64,9 +64,6 @@ const useStyles = tss.create(({theme, height, duration}) => ({
     },
     close: {
         animation: `${close} ${duration}ms ease-out forwards`
-    },
-    lockScroll: {
-        overflow: "hidden"
     }
 }));
 
@@ -93,16 +90,6 @@ const DEFAULT_HEIGHT = 200;
  *  @returns A portal to the root component.
  */
 export default function Drawer({className, height = DEFAULT_HEIGHT, open, setOpen, duration = DEFAULT_ANIMATION_DURATION, children, ...props}) {
-    useEffect(() => {
-        if(!open) {
-            document.body.classList.remove(classes.lockScroll);
-            document.documentElement.classList.remove(classes.lockScroll);
-        } else if(open) {
-            document.body.classList.add(classes.lockScroll);
-            document.documentElement.classList.add(classes.lockScroll);
-        }
-    }, [open]);
-
     const {cx, classes} = useStyles({height, duration});
     return (
         <ContainerContextProvider role="primary" type="container">
