@@ -1,5 +1,5 @@
 "use client"
-import {Children, cloneElement, useCallback} from 'react';
+import {Children, cloneElement, forwardRef, useCallback} from 'react';
 import {tss} from './themer';
 import {useContainerContext, ContainerContextProvider} from '../helper/container';
 import useRippleEffect from '../hooks/ripple';
@@ -71,7 +71,7 @@ const useStyles = tss.create(({theme, role, appearance, containerRole, rippleCla
  *
  * @returns A styled `button` jsx element.
  */
-export default function Button({className, role = "primary", appearance = "filled", onMouseDown, onMouseUp, children, ...props}) {
+const Button = forwardRef(({className, role = "primary", appearance = "filled", onMouseDown, onMouseUp, children, ...props}, ref) => {
     // Here we assign the container type depending on the appearance given.
     const type = appearance === "filled"? "accent" : "container";
     const {role: containerRole} = useContainerContext(); // We also request the parent container's role for text and outlined buttons.
@@ -93,9 +93,10 @@ export default function Button({className, role = "primary", appearance = "fille
     const {cx, classes} = useStyles({role, appearance, containerRole, rippleClass});
     return (
         <ContainerContextProvider role={role} type={type}>
-            <button className={cx(classes.button, className?? "")} onMouseDown={mouseDownHandler} onMouseUp={mouseUpHandler} {...props}>
+            <button ref={ref} className={cx(classes.button, className?? "")} onMouseDown={mouseDownHandler} onMouseUp={mouseUpHandler} {...props}>
                 {Children.map(children, child => cloneElement(child, {__isInButton: true}))}
             </button>
         </ContainerContextProvider>
     );
-}
+});
+export default Button;
