@@ -176,10 +176,21 @@
             "display": true
         },
         {
+            "directory": "meet-me-halfway",
+            "name": "Meet Me Halfway",
+            "madeFor": "Academic",
+            "technologiesUsed": ["Python", "Kivy", "KivyMD"],
+            "links": {
+                "github": "https://github.com/WesleyGlover/TeamRocket"
+            },
+            "completionDate": "May 2022",
+            "display": true
+        },
+        {
             "directory": "image-processor",
             "name": "Image Processing Webapp",
             "madeFor": "Academic",
-            "technologiesUsed": [],
+            "technologiesUsed": ["HTML", "CSS", "JavaScript"],
             "links": {
                 "github": "https://www.github.com/kalvingarcia/image-processor/",
                 "deployment": "https://projects.kalvingarcia.com/image-processor/"
