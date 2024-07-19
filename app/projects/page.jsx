@@ -65,6 +65,13 @@ const useStyles = tss.create(({theme}) => ({
         [`@media (max-width: ${600}px)`]: {
             flexDirection: "column"
         }
+    },
+    modal: {
+        maxWidth: 1000,
+        height: "fit-content",
+        maxHeight: "80%",
+        top: "10%",
+        left: "calc((100% - min(80%, 1000px)) / 2)"
     }
 }));
 
@@ -128,7 +135,7 @@ export default function Projects({}) {
                                 ""
                         ))}
                     </Table>
-                    <Modal elevation="highest" open={open} setOpen={handleModalOpen}>
+                    <Modal className={classes.modal} elevation="highest" open={open} setOpen={handleModalOpen}>
                         <Remark>{markdown}</Remark>
                     </Modal>
                 </section>
