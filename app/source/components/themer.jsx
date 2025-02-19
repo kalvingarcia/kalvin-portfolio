@@ -220,6 +220,9 @@ export default function Themer({darkModeDefault = true, themeDefault = "default"
         'ul[role="list"], ol[role="list"]': {
             listStyle: "none"
         },
+        html: {
+            overflow: "hidden"
+        },
         "html, body": {
             position: "relative",
             width: "100%",
