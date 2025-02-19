@@ -1,5 +1,4 @@
-import {useState, useCallback, useEffect} from "react";
-import {keyframes} from "tss-react";
+import {useState, useEffect} from "react";
 import Button from "../source/components/button";
 import Form from "../source/components/form";
 import TextField from "../source/components/text-field";
@@ -7,7 +6,7 @@ import {TextArea} from "../source/components/text-area";
 import { Icon } from "../source/components/icon-button";
 import {tss} from "../source/components/themer";
 import { Title, Label, Heading } from "../source/components/typography";
-import { Trail, Effect } from "../source/components/animation";
+import { Effect } from "../source/components/animation";
 import { useFadeAnimation } from "../source/hooks/fade";
 import useIntersection from "../source/hooks/intersection";
 
@@ -16,7 +15,6 @@ const useStyles = tss.create(({theme}) => ({
         padding: 40,
         width: "100%",
         maxWidth: 640,
-        overflow: "hidden",
         display: "flex",
         gap: 40,
         flexDirection: "column"
@@ -50,28 +48,30 @@ const useStyles = tss.create(({theme}) => ({
 export default function Contact({}) {
     const {fadeInactive, fadeIn, fadeActive} = useFadeAnimation();
 
-    const {isIntersecting: headingIntersecting, setElement: setHeadingElement} = useIntersection({threshold: [0.5, 0.75]});
+    const {ratio: headingRatio, setElement: setHeadingElement} = useIntersection({threshold: [0, 0.25, 0.5, 0.75, 1]});
     const [showHeading, setShowHeading] = useState(false);
     useEffect(() => {
-        if(headingIntersecting)
+        console.log("Heading", headingRatio)
+        if(headingRatio >= 0.5)
             setShowHeading(true);
-    }, [headingIntersecting]);
+    }, [headingRatio]);
 
-    const {isIntersecting: formIntersecting, ratio: formRatio, setElement: setFormElement} = useIntersection({threshold: [0.5, 0.6, 0.7]});
+    const {ratio: formRatio, setElement: setFormElement} = useIntersection({threshold: [0, 0.25, 0.5, 0.75, 1]});
     const [showForm, setShowForm] = useState(false);
     useEffect(() => {
-        if(formIntersecting && formRatio >= 0.5)
+        console.log("Form", formRatio)
+        if(formRatio > 0.25)
             setShowForm(true);
-    }, [formIntersecting, formRatio]);
+    }, [formRatio]);
 
-    const {isIntersecting: labelIntersecting, setElement: setLabelElement} = useIntersection({threshold: [0.5, 0.75]});
+    const {isIntersecting: labelIntersecting, setElement: setLabelElement} = useIntersection({threshold: [0, 0.25, 0.5, 0.75, 1]});
     const [showLabel, setShowLabel] = useState(false);
     useEffect(() => {
         if(labelIntersecting)
             setShowLabel(true);
     }, [labelIntersecting]);
 
-    const {cx, classes} = useStyles();
+    const {classes} = useStyles();
     return (
         
             <div id="contact" className={classes.content}>
