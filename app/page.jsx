@@ -14,7 +14,6 @@ const useStyles = tss.create(({theme}) => ({
         width: "100%",
         maxHeight: "100vh",
         overflowX: "hidden",
-        overflowY: "auto",
         scrollBehavior: "smooth"
     },
     content: {
