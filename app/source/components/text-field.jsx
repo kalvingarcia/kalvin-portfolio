@@ -70,13 +70,13 @@ const useStyles = tss.create(({theme, filled, error}) => ({
             position: "relative",
             bottom: "-15px",
             backgroundColor: "transparent",
-            color: theme.body,
+            color: theme.neutral.onContainer.hex(),
             fontFamily: "var(--body-font)",
             "&::placeholder": {
                 color: "transparent"
             },
             "&:focus::placeholder": {
-                color: error? theme.onError + "7F" : theme.body + "7F"
+                color: error? theme.onError + "7F" : theme.neutral.onContainer.alpha(0.5).hexa()
             }
         },
         "& .label": {
