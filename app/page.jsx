@@ -4,9 +4,7 @@ import {tss} from './source/components/themer';
 import Overlay from "./content/overlay";
 import PalettePicker from "./content/palette-picker";
 import Bio from "./content/bio";
-import Project from "./content/project";
 import Contact from "./content/contact";
-import Tagline from "./content/tagline";
 import { Label } from "./source/components/typography";
 
 const useStyles = tss.create(({theme}) => ({
@@ -18,9 +16,15 @@ const useStyles = tss.create(({theme}) => ({
     },
     content: {
         margin: "auto",
+        marginTop: "40px",
+        display: "flex",
+        flexDirection: "row",
         width: "100%",
         maxWidth: 1280,
-        minHeight: "100%"
+
+        "@media (max-width: 1200px)": {
+            flexDirection: "column"
+        }
     },
     accredation: {
         margin: "auto",
@@ -32,13 +36,11 @@ const useStyles = tss.create(({theme}) => ({
 }));
 
 export default function Homepage({}) {
-    const [showTagline, setShowTagline] = useState(true);
     const [showBio, setShowBio] = useState(false);
-    const [showProjects, setShowProjects] = useState(false);
+    const [showContact, setShowContact] = useState(false);
     useEffect(() => {
-        setShowTagline(true);
-        setTimeout(() => setShowBio(true), 200);
-        setTimeout(() => setShowProjects(true), 400);
+        setTimeout(() => setShowBio(true));
+        setTimeout(() => setShowContact(true), 200);
     }, []);
 
     const {classes} = useStyles();
@@ -48,15 +50,15 @@ export default function Homepage({}) {
             <PalettePicker />
             <section id="homepage" className={classes.homepage}>
                 <div className={classes.content}>
-                    <Tagline show={showTagline} />
                     <Bio show={showBio} />
-                    <Project show={showProjects} />
-                    <Contact />
-                    <Label className={classes.accredation}>
-                        Website designed and built by Kalvin Garcia.
-                    </Label>
+                    <Contact show={showContact} />
                 </div>
+                <Label className={classes.accredation}>
+                    Website designed and built by Kalvin Garcia.
+                </Label>
             </section>
         </>
     );
 }
+
+//                     <Project show={showProjects} />

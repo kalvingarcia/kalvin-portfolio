@@ -12,6 +12,7 @@ import useIntersection from "../source/hooks/intersection";
 
 const useStyles = tss.create(({theme}) => ({
     content: {
+        alignSelf: "flex-end",
         padding: 40,
         width: "100%",
         maxWidth: 640,
@@ -45,13 +46,12 @@ const useStyles = tss.create(({theme}) => ({
     }
 }));
 
-export default function Contact({}) {
+export default function Contact({show}) {
     const {fadeInactive, fadeIn, fadeActive} = useFadeAnimation();
 
     const {ratio: headingRatio, setElement: setHeadingElement} = useIntersection({threshold: [0, 0.25, 0.5, 0.75, 1]});
     const [showHeading, setShowHeading] = useState(false);
     useEffect(() => {
-        console.log("Heading", headingRatio)
         if(headingRatio >= 0.5)
             setShowHeading(true);
     }, [headingRatio]);
@@ -59,7 +59,6 @@ export default function Contact({}) {
     const {ratio: formRatio, setElement: setFormElement} = useIntersection({threshold: [0, 0.25, 0.5, 0.75, 1]});
     const [showForm, setShowForm] = useState(false);
     useEffect(() => {
-        console.log("Form", formRatio)
         if(formRatio > 0.25)
             setShowForm(true);
     }, [formRatio]);
@@ -75,19 +74,19 @@ export default function Contact({}) {
     return (
         
             <div id="contact" className={classes.content}>
-                <Effect start={showHeading} inactive={fadeInactive} begin={fadeIn} active={fadeActive}>
+                <Effect start={show && showHeading} inactive={fadeInactive} begin={fadeIn} active={fadeActive}>
                     <div ref={setHeadingElement}>
                         <Heading className={classes.flavorText}>Need to reach me?</Heading>
                         <Title className={classes.title}>Contact Me*</Title>
                     </div>
                 </Effect>
-                <Effect start={showForm} inactive={fadeInactive} begin={fadeIn} active={fadeActive}>
+                <Effect start={show && showForm} inactive={fadeInactive} begin={fadeIn} active={fadeActive}>
                     <div ref={setFormElement} className={classes.contact}>
                         <Form className="gform" data-email="kalvigarcia@gmail.com" action="https://script.google.com/macros/s/AKfycbwbQkVagBCDvywt_KQrXJyEQX9QkPwnYTF1IV9chdv_m5gBrlWFCc8dIhfYiJzfJnMi7Q/exec">
                             <TextField label="Name" placeholder="John Doe" required />
                             <TextField label="Email" placeholder="sample@email.com" helperText="This will let me know where I can contact you." required />
                             <TextField label="Phone (optional)" placeholder="123-456-7890" />
-                            <TextArea label="Message" required>Hello, I'm inquiring about your car's extended warranty.</TextArea>
+                            <TextArea label="Message" placeholder="Hello, I'm inquiring about your car's extended warranty." required />
                             <Button className={classes.submit} type="submit">
                                 <Icon icon="send" />
                                 <Label>Send</Label>
@@ -95,7 +94,7 @@ export default function Contact({}) {
                         </Form>
                     </div>
                 </Effect>
-                <Effect start={showLabel} inactive={fadeInactive} begin={fadeIn} active={fadeActive}>
+                <Effect start={show && showLabel} inactive={fadeInactive} begin={fadeIn} active={fadeActive}>
                     <Label ref={setLabelElement} className={classes.asterisk}>
                         *You can also send emails directy to <a className={classes.email} href="mailto:contact@kalvingarcia.com">contact@kalvingarcia.com</a>!
                     </Label>

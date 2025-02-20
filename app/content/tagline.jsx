@@ -7,16 +7,10 @@ import {useFadeAnimation} from "../source/hooks/fade";
 
 const useStyles = tss.create(({theme}) => ({
     tagline: {
-        position: "sticky",
-        zIndex: 100,
-        top: 0,
         height: "fit-content",
-        padding: "20px 40px",
         display: "flex",
-        flexDirection: "column",
-        gap: 10,
-        backgroundColor: theme.neutral.background.alpha(0.6).hexa(),
-        backdropFilter: "blur(8px)",
+        alignItems: "flex-end",
+        gap: 15,
         "& > *": {
             textWrap: "nowrap"
         }
@@ -26,23 +20,24 @@ const useStyles = tss.create(({theme}) => ({
         fontWeight: "bold"
     },
     typewriter: {
-        minHeight: "2rem",
+        minHeight: "1.75rem",
         display: "block",
         position: "relative",
-        fontSize: "2rem",
+        fontSize: "1.75rem",
         fontFamily: "var(--display-font)",
         color: theme.primary.accent.hex(),
         lineHeight: 1,
         textDecoration: `${theme.tertiary.accent.hex()} wavy underline`,
-        textDecorationSkipInk: "none",
-        textUnderlineOffset: "10px"
+        textDecorationSkipInk: "auto",
+        textUnderlineOffset: "5px"
     }
 }));
 
 export default function Tagline({show = false}) {
     const {fadeInactive, fadeIn, fadeActive} = useFadeAnimation();
 
-    const tagLines = ["a Designer.", "a Developer.", "an Engineer.", "a Programmer.", "Kalvin Garcia!"];
+    const tagLines = ["a Home Cook.", "a Designer.", "a Developer.", "Kalvin Garcia!"];
+    
     const TYPE_FREQUENCY = 80;
     const [typing, setTyping] = useState(false);
     const typeAnimation = useCallback((element, atChar, currString) => {
