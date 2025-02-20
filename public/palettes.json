@@ -28,10 +28,10 @@
         "neutral": "#000000"
     },
     "bubble_gum": {
-        "primary": "#FF8CC6",
-        "secondary": "#EAA7C5",
-        "tertiary": "#613F75",
-        "error": "#EF6F94",
-        "neutral": "#EFD6D2"
+        "primary": "#F3ACD0",
+        "secondary": "#DD82B9",
+        "tertiary": "#79ADE7",
+        "error": "#A48FCB",
+        "neutral": "#D3E7F0"
     }
 }
