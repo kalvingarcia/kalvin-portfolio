@@ -8,7 +8,7 @@ import Themer from "./source/components/themer";
 const kalvinIconsFont = Local({
     variable: "--kalvin-icons",
     src: [{
-        path: "../public/fonts/KalvinIcons.woff",
+        path: "../public/fonts/Icons.woff",
         weight: "400",
         style: "normal"
     }]
