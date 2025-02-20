@@ -13,11 +13,11 @@ const useStyles = tss.create(({theme, filled, error}) => ({
             width: "100%",
             height: "fit-content",
             fontSize: "0.75rem",
-            color: error? theme.onError : theme.neutral.onContainer.alpha(0.5).hexa(),
+            color: theme[error? "error" : "neutral"].onContainer.alpha(0.5).hexa(),
             transition: "color 200ms ease-in-out"
         },
         "&:focus-within .helper": {
-            color: error? theme.onError : theme.tertiary.accent.hex()
+            color: theme[error? "error" : "tertiary"].accent.hex()
         }
     },
     textField: {
@@ -26,20 +26,19 @@ const useStyles = tss.create(({theme, filled, error}) => ({
         position: "relative",
         cursor: "text",
         borderRadius: "10px 10px 0 0",
-        backgroundColor: error? theme.error + "3F" : theme.neutral.containerHighest.hex(),
+        backgroundColor: error? theme.error.container.hex() : theme.neutral.containerHighest.hex(),
         padding: "10px 20px",
         overflow: "hidden",
-        borderBottom: `1pt solid ${error? theme.onError + "7F" : theme.neutral.onContainer.alpha(0.5).hexa()}`,
-        transition: "background-color 300ms ease, border-bottom 200ms ease-in-out",
+        borderBottom: `1pt solid ${theme[error? "error" : "neutral"].onContainer.alpha(0.5).hexa()}`,
         "&:focus-within": {
-            borderColor: error? theme.onError : theme.onSecondary
+            borderColor: theme[error? "error" : "tertiary"].accent.hex()
         },
         "&::before": {
             content: "''",
             position: "absolute",
             inset: 0,
             opacity: 0,
-            backgroundColor: error? theme.onError : theme.neutral.onContainer.hex()
+            backgroundColor: theme[error? "error" : "neutral"].onContainer.hex()
         },
         "&:hover::before": {
             opacity: 0.2
@@ -55,7 +54,7 @@ const useStyles = tss.create(({theme, filled, error}) => ({
             transform: "scale(0)",
             opacity: 0,
             transition: "transform 100ms ease, opacity 200ms ease",
-            borderBottom: `1pt solid ${error? theme.onError : theme.tertiary.accent.hex()}`
+            borderBottom: `1pt solid ${theme[error? "error" : "tertiary"].accent.hex()}`
         },
         "&:focus-within::after": {
             transform: "scale(1)",
@@ -73,10 +72,11 @@ const useStyles = tss.create(({theme, filled, error}) => ({
             color: theme.neutral.onContainer.hex(),
             fontFamily: "var(--body-font)",
             "&::placeholder": {
-                color: "transparent"
+                color: "transparent",
+                transition: "color 100ms ease-in-out"
             },
             "&:focus::placeholder": {
-                color: error? theme.onError + "7F" : theme.neutral.onContainer.alpha(0.5).hexa()
+                color: theme[error? "error" : "neutral"].onContainer.alpha(0.5).hexa()
             }
         },
         "& .label": {
@@ -85,14 +85,14 @@ const useStyles = tss.create(({theme, filled, error}) => ({
             transformOrigin: "top left",
             transform: filled? "translate(0, -80%) scale(0.7)" : "translate(0, -50%)",
             opacity: 0.5,
-            transition: "transform 200ms ease, opacity 200ms ease, color 200ms ease",
-            color: error? theme.onError : theme.neutral.onContainer.hex(),
+            transition: "transform 200ms ease, opacity 200ms ease",
+            color: theme[error? "error" : "neutral"].onContainer.hex(),
             fontWeight: "bold"
         },
         "&:focus-within .label": {
             transform: "translate(0, -80%) scale(0.7)",
             opacity: 1,
-            color: error? theme.onError : theme.tertiary.accent.hex()
+            color: theme[error? "error" : "tertiary"].accent.hex()
         },
         "&:has(input:required) .label::after": {
             content: "'*'"
