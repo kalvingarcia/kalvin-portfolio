@@ -34,7 +34,6 @@ export default function Overlay({}) {
             <div className={classes.socials}>
                 <IconButton appearance="text" icon="github" iconClass="kalvin-icons" onClick={() => setTimeout(() => window.open("https://github.com/kalvingarcia/", "_blank"), 300)} />
                 <IconButton appearance="text" icon="linkedin" iconClass="kalvin-icons" onClick={() => setTimeout(() => window.open("https://linkedin.com/in/kalvin-garcia/", "_blank"), 300)} />
-                <IconButton appearance="text" icon="itchio" iconClass="kalvin-icons" onClick={() => setTimeout(() => window.open("https://kalvingarcia.itch.io/", "_blank"), 300)} />
                 <div className="line" />
             </div>
         </section>
