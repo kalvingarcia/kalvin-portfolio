@@ -70,6 +70,28 @@ export default function Contact({show}) {
             setShowLabel(true);
     }, [labelIntersecting]);
 
+    const validate = async event => {
+        event.preventDefault();
+
+        const userIP = await fetch("https://ipinfo.io/json") 
+                .then(response => response.json())
+                .then(response => response.ip)
+                .catch(() => undefined);
+
+        const form = document.getElementById("gform");
+        const data = new FormData(form);
+        const spamCheck = await fetch(`http://api.stopforumspam.org/api?ip=${userIP?? ""}&email=${data.get("Email")}&json`, {method: "GET"})
+            .then(response => response.json());
+
+        if(!(spamCheck.email.appears || spamCheck.ip.appears) && !spamCheck.email.error)
+            fetch("https://script.google.com/macros/s/AKfycbwbQkVagBCDvywt_KQrXJyEQX9QkPwnYTF1IV9chdv_m5gBrlWFCc8dIhfYiJzfJnMi7Q/exec", {
+                method: "POST",
+                body: data
+            });
+
+        window.location.reload();
+    };
+
     const {classes} = useStyles();
     return (
         
@@ -82,12 +104,12 @@ export default function Contact({show}) {
                 </Effect>
                 <Effect start={show && showForm} inactive={fadeInactive} begin={fadeIn} active={fadeActive}>
                     <div ref={setFormElement} className={classes.contact}>
-                        <Form className="gform" data-email="kalvigarcia@gmail.com" action="https://script.google.com/macros/s/AKfycbwbQkVagBCDvywt_KQrXJyEQX9QkPwnYTF1IV9chdv_m5gBrlWFCc8dIhfYiJzfJnMi7Q/exec">
+                        <Form id="gform">
                             <TextField label="Name" placeholder="John Doe" required />
                             <TextField label="Email" placeholder="sample@email.com" helperText="This will let me know where I can contact you." required />
                             <TextField label="Phone (optional)" placeholder="123-456-7890" />
                             <TextArea label="Message" placeholder="Hello, I'm inquiring about your car's extended warranty." required />
-                            <Button className={classes.submit} type="submit">
+                            <Button className={classes.submit} onClick={validate}>
                                 <Icon icon="send" />
                                 <Label>Send</Label>
                             </Button>
