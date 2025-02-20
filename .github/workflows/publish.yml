@@ -32,7 +32,6 @@ jobs:
       - name: Build
         run:  npm run build;
               touch ./out/.nojekyll;
-              rm -r ./out/projects.* ./out/projects
 
       - name: Upload
         uses: actions/upload-pages-artifact@v3
