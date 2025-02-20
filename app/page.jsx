@@ -6,8 +6,9 @@ import PalettePicker from "./content/palette-picker";
 import Bio from "./content/bio";
 import Contact from "./content/contact";
 import { Label } from "./source/components/typography";
+import { Icon } from "./source/components/icon-button";
 
-const useStyles = tss.create(({theme}) => ({
+const useStyles = tss.create(({theme, showLogo}) => ({
     homepage: {
         width: "100%",
         maxHeight: "100vh",
@@ -15,8 +16,9 @@ const useStyles = tss.create(({theme}) => ({
         scrollBehavior: "smooth"
     },
     content: {
+        position: "relative",
         margin: "auto",
-        marginTop: "40px",
+        marginTop: "80px",
         display: "flex",
         flexDirection: "row",
         width: "100%",
@@ -25,6 +27,21 @@ const useStyles = tss.create(({theme}) => ({
         "@media (max-width: 1200px)": {
             flexDirection: "column"
         }
+    },
+    logoContainer: {
+        position: "absolute",
+        top: "-40px",
+        left: "40px",
+        width: "4rem",
+        height: "4rem",
+        overflow: "hidden",
+    },
+    logo: {
+        color: theme.secondary.accent.alpha(0.75).hexa(),
+        fontSize: "4rem",
+        transformOrigin: "bottom left",
+        transform: showLogo? "none" : "translate(-100%)",
+        transition: showLogo? "transform 300ms ease-out" : "transform 150ms ease-in"
     },
     accredation: {
         margin: "auto",
@@ -36,6 +53,14 @@ const useStyles = tss.create(({theme}) => ({
 }));
 
 export default function Homepage({}) {
+    const [showLogo, setShowLogo] = useState(true);
+    const setScroller = element => {
+        const checkScroll = ({target}) => {
+            setShowLogo(!(target.scrollTop > 0));
+        }
+        element?.addEventListener("scroll", checkScroll);
+    };
+
     const [showBio, setShowBio] = useState(false);
     const [showContact, setShowContact] = useState(false);
     useEffect(() => {
@@ -43,13 +68,16 @@ export default function Homepage({}) {
         setTimeout(() => setShowContact(true), 200);
     }, []);
 
-    const {classes} = useStyles();
+    const {classes} = useStyles({showLogo});
     return (
         <>
             <Overlay />
             <PalettePicker />
-            <section id="homepage" className={classes.homepage}>
+            <section ref={setScroller} id="homepage" className={classes.homepage}>
                 <div className={classes.content}>
+                    <div className={classes.logoContainer}>
+                        <Icon className={classes.logo} icon="logo" />
+                    </div>
                     <Bio show={showBio} />
                     <Contact show={showContact} />
                 </div>
