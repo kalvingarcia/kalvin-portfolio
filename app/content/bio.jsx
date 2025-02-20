@@ -32,7 +32,11 @@ const useStyles = tss.create(({theme}) => ({
     buttons: {
         display: "flex",
         gap: 10,
-        alignSelf: "flex-end"
+        alignSelf: "flex-end",
+
+        "@media (max-width: 600px)": {
+            flexDirection: "column"
+        }
     }
 }));
 
@@ -64,22 +68,20 @@ export default function Bio({show}) {
                     plot lines of whatever show we're watching). Also, I firmly believe all offices should have emotional support cats,
                     and I'm willing to die on that hill.
                 </Body>
-                <Effect start={show} inactive={fadeInactive} begin={fadeIn} active={fadeActive}>
-                    <div className={classes.buttons}>
-                        <Button className={classes.projectsButton} role="primary" appearance="outlined" onClick={() => setTimeout(() => window.location.href = "https://projects.kalvingarcia.com/", 300)}>
-                            <Icon icon="code" />
-                            <Label>Programming</Label>
-                        </Button>
-                        <Button role="primary" appearance="text" onClick={() => setTimeout(() => window.location.href = "https://food.kalvingarcia.com/", 300)}>
-                            <Icon icon="skillet" />
-                            <Label>Recipes</Label>
-                        </Button>
-                        <Button role="primary" appearance="text" onClick={() => setTimeout(() => window.location.href = "https://devlog.kalvingarcia.com/", 300)}>
-                            <Icon icon="skillet" />
-                            <Label>Blog</Label>
-                        </Button>
-                    </div>
-                </Effect>
+                <div className={classes.buttons}>
+                    <Button className={classes.projectsButton} role="primary" appearance="filled" onClick={() => setTimeout(() => window.location.href = "https://projects.kalvingarcia.com/", 300)}>
+                        <Icon icon="code" />
+                        <Label>Portfolio</Label>
+                    </Button>
+                    <Button role="primary" appearance="outlined" onClick={() => setTimeout(() => window.location.href = "https://food.kalvingarcia.com/", 300)}>
+                        <Icon icon="skillet" />
+                        <Label>Recipes</Label>
+                    </Button>
+                    <Button role="primary" appearance="outlined" onClick={() => setTimeout(() => window.location.href = "https://devlog.kalvingarcia.com/", 300)}>
+                        <Icon icon="docs" />
+                        <Label>Devlog</Label>
+                    </Button>
+                </div>
             </div>
         </Effect>
     );
