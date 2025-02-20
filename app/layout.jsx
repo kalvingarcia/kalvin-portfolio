@@ -105,12 +105,10 @@ export default function Layout({children}) {
             <html lang="en" className={[kalvinIconsFont.variable, displayFont.variable, titleFont.variable, headingFont.variable, bodyFont.variable, codeFont.variable].join(" ")}>
                 <body>
                     <GlobalStyles styles={prerenderDefaults} />
-                    {isClient?
+                    {isClient &&
                         <Themer darkModeDefault={(/true/i).test(getCookie("kalvinPortfolioDarkMode"))} themeDefault={getCookie("kalvinPortfolioTheme")} palettePresets={customPalettes}>
                             {children}
                         </Themer>
-                        :
-                        ""
                     }
                 </body>
             </html>

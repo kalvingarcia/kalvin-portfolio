@@ -223,7 +223,7 @@ export default function Themer({darkModeDefault = true, themeDefault = "default"
         html: {
             overflow: "hidden"
         },
-        "html, body": {
+        "html, body, #root": {
             position: "relative",
             width: "100%",
             minWidth: "100%",
