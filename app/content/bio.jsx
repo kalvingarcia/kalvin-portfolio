@@ -24,13 +24,14 @@ const useStyles = tss.create(({theme}) => ({
         fontSize: "5rem",
     },
     bio: {
-        height: 350,
+        height: 325,
         overflow: "auto"
     },
     buttons: {
         display: "flex",
         gap: 10,
         alignSelf: "flex-end",
+        alignItems: "flex-end",
 
         "@media (max-width: 600px)": {
             flexDirection: "column"
@@ -56,18 +57,18 @@ export default function Bio({show}) {
                     have an emotional support cat—and I'm prepared to die on that hill.
                 </Body>
                 <div className={classes.buttons}>
-                    <Button className={classes.projectsButton} role="primary" appearance="filled" onClick={() => setTimeout(() => window.location.href = "https://projects.kalvingarcia.com/", 300)}>
+                    <Button role="primary" appearance="filled" onClick={() => setTimeout(() => window.location.href = "https://projects.kalvingarcia.com/", 300)}>
                         <Icon icon="code" />
                         <Label>Portfolio</Label>
                     </Button>
-                    <Button role="primary" appearance="outlined" onClick={() => setTimeout(() => window.location.href = "https://food.kalvingarcia.com/", 300)}>
+                    {/* <Button role="primary" appearance="outlined" onClick={() => setTimeout(() => window.location.href = "https://food.kalvingarcia.com/", 300)}>
                         <Icon icon="skillet" />
                         <Label>Recipes</Label>
                     </Button>
                     <Button role="primary" appearance="outlined" onClick={() => setTimeout(() => window.location.href = "https://devlog.kalvingarcia.com/", 300)}>
                         <Icon icon="docs" />
                         <Label>Devlog</Label>
-                    </Button>
+                    </Button> */}
                 </div>
             </div>
         </Effect>

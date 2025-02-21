@@ -17,14 +17,15 @@ const useStyles = tss.create(({theme}) => ({
         width: "100%",
         maxWidth: 640,
         display: "flex",
-        gap: 40,
+        gap: 20,
         flexDirection: "column"
     },
     flavorText: {
-        color: theme.secondary.accent.hex()
+        color: theme.secondary.accent.hex(),
+        fontSize: "1.25rem"
     },
     title: {
-        fontSize: "5rem"
+        fontSize: "3.5rem"
     },
     contact: {
         padding: 20,

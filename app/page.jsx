@@ -13,7 +13,8 @@ const useStyles = tss.create(({theme, showLogo}) => ({
         width: "100%",
         maxHeight: "100vh",
         overflowX: "hidden",
-        scrollBehavior: "smooth"
+        scrollBehavior: "smooth",
+        scrollbarGutter: "stable"
     },
     content: {
         position: "relative",
